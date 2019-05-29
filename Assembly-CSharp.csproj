@@ -62,18 +62,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\AIMovement.cs" />
+    <Compile Include="Assets\Hurtbox.cs" />
     <Compile Include="Assets\LGK\BloodAlter.cs" />
     <Compile Include="Assets\LGK\Health.cs" />
     <Compile Include="Assets\LGK\Mob.cs" />
     <Compile Include="Assets\LGK\MoreStuff.cs" />
     <Compile Include="Assets\LGK\SpawnInfo.cs" />
     <Compile Include="Assets\LGK\TargetDesignator.cs" />
+    <Compile Include="Assets\MeleeWeapon.cs" />
     <Compile Include="Assets\Norb.cs" />
     <Compile Include="Assets\ParticlePack\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
+    <Compile Include="Assets\PickupMePls.cs" />
     <Compile Include="Assets\Player.cs" />
     <Compile Include="Assets\ShowHealth.cs" />
     <Compile Include="Assets\Spawner.cs" />
     <Compile Include="Assets\Swarm.cs" />
+    <Compile Include="Assets\Team.cs" />
+    <Compile Include="Assets\U.cs" />
     <None Include="Assets\ParticlePack\EffectExamples\Misc Effects\Shaders\Dissolve.shader" />
     <None Include="Assets\ParticlePack\EffectExamples\Misc Effects\Shaders\FireFly.shader" />
     <None Include="Assets\ParticlePack\EffectExamples\Misc Effects\Prefabs\Readme_Dissolve_Respawn_.txt" />
@@ -83,6 +89,9 @@
     <None Include="Assets\ParticlePack\EffectExamples\Magic Effects\Shaders\Ice.shader" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Lize/source/bgi/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>C:/Users/Lize/source/bgi/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Lize/source/bgi/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
@@ -96,17 +105,14 @@
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>C:/Users/Lize/source/bgi/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>C:/Users/Lize/source/bgi/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:/Users/Lize/source/bgi/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>C:/Users/Lize/source/bgi/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
-    </Reference>
-    <Reference Include="Cinemachine">
-      <HintPath>C:/Users/Lize/source/bgi/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
-    </Reference>
-    <Reference Include="com.unity.cinemachine.editor">
-      <HintPath>C:/Users/Lize/source/bgi/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.4f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

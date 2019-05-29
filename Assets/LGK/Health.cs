@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
+/// <summary>
+/// HATRED POINTS
+/// HINDERING POINTS
+/// HEADACHE PAIN
+/// HINDERING POINTS
+/// HERO POINTS
+/// </summary>
 public class Health : MonoBehaviour
 {
 	public float MaxHealth = 100;
@@ -24,9 +30,9 @@ public class Health : MonoBehaviour
 		CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + value);
 	}
 
-	public void Hurt(float value, DamageKind kind, Mob by)
+	public void Hurt(float value, DamageKind kind, Team by)
 	{
-		if (by?.Team == team)
+		if (!Team.Fighting(by,team))
 			return;
 
         lastHurt = Time.time;
@@ -36,10 +42,10 @@ public class Health : MonoBehaviour
 		CurrentHealth -= value;
 		if(CurrentHealth < 0)
 		{
-			if (by)
-			{
-				by.health.CurrentHealth += MaxHealth * killHealthBonus;
-			}
+			//if (by)
+			//{
+			//	by.CurrentHealth += MaxHealth * killHealthBonus;
+			//}
 			if(ragdoll)
 				Instantiate(ragdoll, transform.position, transform.rotation);
 

@@ -82,7 +82,7 @@ public class Mob : MonoBehaviour
 				if (health && health != this.health)
 				{
 					didAttack = true;
-					health.Hurt(Damage, DamageKind.Blunt, this);
+					health.Hurt(Damage, DamageKind.Blunt, Team);
 				}
 			}
 			else if(posible.Kind == TargetKind.Revive)
