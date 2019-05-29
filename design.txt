@@ -1,0 +1,29 @@
+building adds depth to game?
+mob types
+	bomb (black)
+	strengh (purple)
+	power (yellow)
+	medic (green)
+	fire (red)
+	hyptonic (white)
+world cap? about 100 total?
+
+
+k=25
+O(n^2) = O(k n^2)
+
+no research
+
+mines
+	static adds to complexity, and gives me
+mobs
+	
+when you die, become largest one left
+
+
+Locomotion
+->
+	Swap skins/meshes
+	Animation
+
+Goa
