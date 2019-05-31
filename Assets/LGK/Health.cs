@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,12 +26,14 @@ public class Health : MonoBehaviour
 
 	public Team team;
 
+    public event Action<Health> OnHurt;
+
 	public void Heal(float value)
 	{
 		CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + value);
 	}
 
-	public void Hurt(float value, DamageKind kind, Team by)
+	public void Hurt(float value, DamageKind kind, Team by, Health hurter = null)
 	{
 		if (!Team.Fighting(by,team))
 			return;
@@ -51,7 +54,10 @@ public class Health : MonoBehaviour
 
 			Destroy(gameObject);
 		}
-	}
+
+        OnHurt?.Invoke(hurter);
+
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -71,6 +77,7 @@ public class Health : MonoBehaviour
 public enum DamageKind
 {
 	Generic,
+    Sacrifice,
 	Fire,
 	Blunt,
 	Magic

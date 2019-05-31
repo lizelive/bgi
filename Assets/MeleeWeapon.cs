@@ -9,16 +9,21 @@ public class MeleeWeapon : MonoBehaviour
     public float damage = 1;
     private float lastAttack;
     public float attackRange = 1.2f;
+    private Health health;
 
-
+    public void Start()
+    {
+        health = GetComponentInParent<Health>();
+    }
     public void Attack()
     {
         if (Time.time - lastAttack > cooldown)
         {
+            lastAttack = Time.time;
             var stuffToHurt = Physics.OverlapSphere(transform.position, attackRange).Select(x => x.GetComponent<Health>()).Where(x => x);
             foreach (var thing in stuffToHurt)
             {
-                thing.Hurt(damage, DamageKind.Blunt, GetComponent<Health>()?.team);
+                thing.Hurt(damage, DamageKind.Blunt, health?.team, health);
             }
         }
     }

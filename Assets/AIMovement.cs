@@ -36,6 +36,7 @@ public class AIMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        agent.updatePosition = character.IsGrounded;
         if (target != null)
 
             targetpos = target.position;
@@ -62,7 +63,7 @@ public class AIMovement : MonoBehaviour
         character = GetComponent<ThirdPersonCharacter>();
 
         agent.updateRotation = false;
-        agent.updatePosition = true;
+        agent.updatePosition = false;
     }
 
     public bool AtTarget => Vector3.Distance(transform.position, targetpos) < targetDistanceGoal;
