@@ -8,7 +8,6 @@ using UnityEngine;
 /// HATRED POINTS
 /// HINDERING POINTS
 /// HEADACHE PAIN
-/// HINDERING POINTS
 /// HERO POINTS
 /// </summary>
 public class Health : MonoBehaviour
@@ -19,7 +18,9 @@ public class Health : MonoBehaviour
 	public float RegenCooldown = float.PositiveInfinity;
 	public float RegenSpeed = 0;
 	public GameObject ragdoll;
-    
+    public ParticleSystem deathParticle;
+
+
 
     private float lastHurt = 0;
 	public float killHealthBonus = 0.15f;
@@ -33,10 +34,10 @@ public class Health : MonoBehaviour
 		CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + value);
 	}
 
-	public void Hurt(float value, DamageKind kind, Team by, Health hurter = null)
+	public bool Hurt(float value, DamageKind kind, Team by, Health hurter = null)
 	{
 		if (!Team.Fighting(by,team))
-			return;
+			return false;
 
         lastHurt = Time.time;
         print($"{by?.name} attacked {gameObject?.name} for {value} {kind}");
@@ -49,16 +50,27 @@ public class Health : MonoBehaviour
 			//{
 			//	by.CurrentHealth += MaxHealth * killHealthBonus;
 			//}
-			if(ragdoll)
-				Instantiate(ragdoll, transform.position, transform.rotation);
-
-			Destroy(gameObject);
+			
+            Die();
 		}
 
         OnHurt?.Invoke(hurter);
+        return true;
+    }
+    void Die()
+    {
+        if (ragdoll)
+            Instantiate(ragdoll, transform.position, transform.rotation);
+        if (deathParticle)
+        {
+            var dp = Instantiate(deathParticle);
+            var shape = dp.shape;
+            var smr = shape.skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+            print(smr);
+        }
+        //Destroy(gameObject, 1);
 
     }
-
     // Start is called before the first frame update
     void Start()
     {

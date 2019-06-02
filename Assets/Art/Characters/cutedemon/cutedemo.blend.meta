@@ -3,7 +3,32 @@ guid: 9163fd382b6ae5244af1f1d580767172
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cute demon_mtl0
+    second: {fileID: 2100000, guid: 95fd0cbe5095ae847a72cdf9854d205b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cute demon_mtl1
+    second: {fileID: 2100000, guid: 28510e6c505dab048af36d5a781e637a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cute demon_mtl2
+    second: {fileID: 2100000, guid: 6069fc62b3e34b34f98e0a101fc0d5c0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cute demon_mtl4
+    second: {fileID: 2100000, guid: 9a65728c0f71d05418d6c979b41a3b9c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cute demon_mtl5
+    second: {fileID: 2100000, guid: 1cac8ee571aa7c34298bddef57ea3cd2, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

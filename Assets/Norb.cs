@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Linq;
 using UnityEngine;
-using System.Linq;
 using UnityStandardAssets.Characters.ThirdPerson;
 
 [RequireComponent(typeof(AIMovement))]
@@ -27,10 +25,14 @@ public class Norb : MonoBehaviour
     internal Health health;
 
 
-    public bool IsGrounded {
+    public float ownerHealRate = 0.1f;
+    public float ownerHealRange = 3;
+
+    public bool IsGrounded
+    {
         get => GetComponent<ThirdPersonCharacter>().IsGrounded;
         set => GetComponent<ThirdPersonCharacter>().IsGrounded = value;
-            }
+    }
 
     private float lastSeek;
     // Start is called before the first frame update
@@ -39,22 +41,33 @@ public class Norb : MonoBehaviour
 
         movement = GetComponent<AIMovement>();
         health = GetComponent<Health>();
-        weapon = GetComponentInChildren<MeleeWeapon> ();
+        weapon = GetComponentInChildren<MeleeWeapon>();
         SetJob(Job.Seek);
         health.OnHurt += OnHurt;
 
-    }
+        if(health.team)
+        foreach (var mr in GetComponentsInChildren<SkinnedMeshRenderer>())
+        {
+            foreach (var mat in mr.materials)
+            {
+                
+                mat.color = health.team.color;
 
+            }
+        }
+
+    }
 
     void OnHurt(Health by)
     {
-        if(by)
-        SetJob(new Job(JobKind.Attack, by.gameObject));
+        Drop();
+        if (by)
+            SetJob(new Job(JobKind.Attack, by.gameObject));
     }
 
     bool Drop()
     {
-        
+
         if (holding)
         {
             holding.transform.parent = null;
@@ -62,7 +75,8 @@ public class Norb : MonoBehaviour
             holding.GetComponent<Collider>().enabled = true;
             return true;
         }
-        else {
+        else
+        {
             return false;
         }
     }
@@ -73,7 +87,7 @@ public class Norb : MonoBehaviour
 
     bool Pickup(Rigidbody thing)
     {
-        if (holding||!thing||thing.transform.parent)
+        if (holding || !thing || thing.transform.parent)
             return false;
         holding = thing;
         thing.isKinematic = true;
@@ -90,7 +104,7 @@ public class Norb : MonoBehaviour
 
     public float SeekRange = 5;
 
-    void SetJob(Job job)
+    public void SetJob(Job job)
     {
         this.job = job;
         switch (job.Kind)
@@ -114,13 +128,12 @@ public class Norb : MonoBehaviour
         }
     }
 
-    void FollowPlayer()
-    {
 
-        if(owner)
-        SetJob(new Job { Kind = JobKind.Follow, target = owner.gameObject });
-        else
-        SetJob(Job.Seek);
+    Job FollowPlayerJob => owner ? new Job { Kind = JobKind.Follow, target = owner.gameObject } : Job.Seek;
+
+    public void FollowPlayer()
+    {
+        SetJob(FollowPlayerJob);
     }
 
 
@@ -128,7 +141,12 @@ public class Norb : MonoBehaviour
     void Update()
     {
 
-        print($"{name} is working on {job.Kind}");
+        if (owner && this.Distance(owner) < ownerHealRange)
+        {
+            owner.health.Heal(Time.deltaTime * ownerHealRate);
+        }
+
+
         //if (job == null) SetJob(Nextjob);
 
         if (job == null)
@@ -137,20 +155,30 @@ public class Norb : MonoBehaviour
             SetJob(Job.Idle);
             return;
         }
-            
+        print($"{name} is working on {job.Kind}");
 
         var atTarget = movement.AtTarget;
+
+        if (Time.time - lastSeek > 0.1)
+        {
+            var newMission = NextJob();
+            if (newMission != null)
+                SetJob(newMission);
+        }
+
         switch (job.Kind)
         {
             case JobKind.Goto:
-                if (atTarget)
+    
+
+                    if (atTarget)
                 {
                     SetJob(Job.Seek);
                 }
                 break;
             case JobKind.Pickup:
 
-                if(job.target.transform.parent)
+                if (job.target.transform.parent)
                     SetJob(Job.Seek);
                 else
                 if (atTarget)
@@ -168,8 +196,6 @@ public class Norb : MonoBehaviour
                 }
                 break;
             case JobKind.Idle:
-                if(Time.time - lastSeek > 1)
-                    SetJob(Job.Seek);
                 // when hurt defend self
                 break;
             case JobKind.Attack:
@@ -183,32 +209,11 @@ public class Norb : MonoBehaviour
                 }
                 break;
             case JobKind.Follow:
-                break;
+                if (!job.target)
+                    SetJob(Job.Seek); break;
             case JobKind.Seek:
-                lastSeek = Time.time;
-                var thingToKill = FindObjectsOfType<Health>().FirstOrDefault(h => Team.Fighting(team, h.team)
-&& Vector3.Distance(h.transform.position, transform.position) < SeekRange);
-                if (thingToKill)
-                {
-                    SetJob(new Job(JobKind.Attack, thingToKill.gameObject));
-                    break;
-                }
-                var thingToCarry = FindObjectsOfType<PickupMePls>().FirstOrDefault(h =>
-                this.Distance(h) < SeekRange && !h.transform.parent);
-                if (thingToCarry)
-                {
-                    SetJob(new Job(JobKind.Pickup, thingToCarry.gameObject));
-                    break;
-                }
 
-
-                if (owner && this.Distance(owner) < SeekRange)
-                {
-                    FollowPlayer();
-                    break;
-                }
-
-                SetJob(Job.Idle);
+                SetJob(NextJob() ?? Job.Idle);
 
                 // look for nerby things to attack or whatever
                 break;
@@ -216,6 +221,30 @@ public class Norb : MonoBehaviour
                 Debug.LogError("Invalid job type");
                 break;
         }
+    }
+    public virtual Job NextJob()
+    {
+        lastSeek = Time.time;
+        var thingToKill = FindObjectsOfType<Health>().FirstOrDefault(h => Team.Fighting(team, h.team) && Vector3.Distance(h.transform.position, transform.position) < SeekRange);
+        if (thingToKill)
+        {
+            return (new Job(JobKind.Attack, thingToKill.gameObject));
+        }
+        var thingToCarry = FindObjectsOfType<PickupMePls>().FirstOrDefault(h =>
+        this.Distance(h) < SeekRange && !h.transform.parent);
+        if (thingToCarry)
+        {
+            return (new Job(JobKind.Pickup, thingToCarry.gameObject));
+        }
+
+
+        if (owner && this.Distance(owner) < SeekRange)
+        {
+            print("Mother I miss you");
+            return FollowPlayerJob;
+        }
+
+        return null;
     }
 }
 

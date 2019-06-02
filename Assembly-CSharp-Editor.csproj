@@ -302,6 +302,18 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
+    <Reference Include="Substance.Game">
+      <HintPath>C:/Users/Lize/source/bgi/Assets/Allegorithmic/Plugins/Substance.Game.dll</HintPath>
+    </Reference>
+    <Reference Include="websocket-sharp">
+      <HintPath>C:/Users/Lize/source/bgi/Assets/Allegorithmic/Plugins/Substance/Livelink/Editor/Plugins/websocket-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Substance.Editor">
+      <HintPath>C:/Users/Lize/source/bgi/Assets/Allegorithmic/Plugins/Substance/Substance Engine/Editor/Substance.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="SourceUnityLib">
+      <HintPath>C:/Users/Lize/source/bgi/Assets/Allegorithmic/Plugins/Substance/Substance Source/Editor/SourceUnityLib.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>C:/Users/Lize/source/bgi/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
     </Reference>
@@ -316,18 +328,6 @@
     </Reference>
     <Reference Include="UnityEditor.Purchasing">
       <HintPath>C:/Users/Lize/source/bgi/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
-    </Reference>
-    <Reference Include="websocket-sharp">
-      <HintPath>C:/Users/Lize/source/bgi/Assets/Allegorithmic/Plugins/Substance/Livelink/Editor/Plugins/websocket-sharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Substance.Editor">
-      <HintPath>C:/Users/Lize/source/bgi/Assets/Allegorithmic/Plugins/Substance/Substance Engine/Editor/Substance.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Substance.Game">
-      <HintPath>C:/Users/Lize/source/bgi/Assets/Allegorithmic/Plugins/Substance.Game.dll</HintPath>
-    </Reference>
-    <Reference Include="SourceUnityLib">
-      <HintPath>C:/Users/Lize/source/bgi/Assets/Allegorithmic/Plugins/Substance/Substance Source/Editor/SourceUnityLib.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.4f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

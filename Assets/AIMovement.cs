@@ -37,10 +37,10 @@ public class AIMovement : MonoBehaviour
     void Update()
     {
         agent.updatePosition = character.IsGrounded;
-        if (target != null)
-
+        if (target)
             targetpos = target.position;
-
+        else
+            target = null;
 
         if (Vector3.Distance(lastTargetPos, targetpos) > targetPosMoveThreshold)
         {

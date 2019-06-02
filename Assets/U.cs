@@ -35,6 +35,17 @@ public static class U
         return best;
     }
 
+    public static T Random<T>(this IList<T> self)
+    {
+        return self[UnityEngine.Random.Range(0, self.Count)];
+    }
+
+    public static T Random<T>(this IEnumerable<T> self)
+    {
+        return self.ToArray().Random();
+    }
+
+
     public static T MinBy<T>(this IEnumerable<T> self, Func<T, float> eval)
     {
         return self.MaxBy(x => -eval(x));

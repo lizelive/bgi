@@ -11,20 +11,33 @@ public class MeleeWeapon : MonoBehaviour
     public float attackRange = 1.2f;
     private Health health;
 
+    public bool pierce;
+    Animator animator;
     public void Start()
     {
         health = GetComponentInParent<Health>();
+        animator= GetComponentInParent<Animator>() ?? GetComponentInChildren<Animator>();
     }
     public void Attack()
     {
+       
+        var didAttack = false;
         if (Time.time - lastAttack > cooldown)
         {
+            animator.SetTrigger("Attack");
             lastAttack = Time.time;
-            var stuffToHurt = Physics.OverlapSphere(transform.position, attackRange).Select(x => x.GetComponent<Health>()).Where(x => x);
+            var stuffToHurt = FindObjectsOfType<Health>().Where(x=>this.Distance(x)<attackRange).Select(x => x.GetComponent<Health>()).Where(x => x);
             foreach (var thing in stuffToHurt)
             {
-                thing.Hurt(damage, DamageKind.Blunt, health?.team, health);
+                if (thing.Hurt(damage, DamageKind.Blunt, health?.team, health))
+                {
+                    Debug.DrawLine(transform.position, thing.transform.position, Color.red, cooldown);
+                    didAttack = true;
+                    if (!pierce)
+                        break;
+                }
             }
         }
+        
     }
 }

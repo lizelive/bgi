@@ -78,11 +78,11 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5190657371216461770, guid: 9163fd382b6ae5244af1f1d580767172, type: 3}
-  - {fileID: 3085010859744504186, guid: 9163fd382b6ae5244af1f1d580767172, type: 3}
-  - {fileID: 348784602162596927, guid: 9163fd382b6ae5244af1f1d580767172, type: 3}
-  - {fileID: -7467383980687031544, guid: 9163fd382b6ae5244af1f1d580767172, type: 3}
-  - {fileID: 5423311225204189423, guid: 9163fd382b6ae5244af1f1d580767172, type: 3}
+  - {fileID: 2100000, guid: 28510e6c505dab048af36d5a781e637a, type: 2}
+  - {fileID: 2100000, guid: 9a65728c0f71d05418d6c979b41a3b9c, type: 2}
+  - {fileID: 2100000, guid: 06fe6c6708e509f43bb0959735887b01, type: 2}
+  - {fileID: 2100000, guid: 28510e6c505dab048af36d5a781e637a, type: 2}
+  - {fileID: 2100000, guid: 28510e6c505dab048af36d5a781e637a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 5747699869365459964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -12.81, y: 0, z: -7.22377}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.95052}
   m_Children:
   - {fileID: 1389291404617024256}
   - {fileID: 398277516932663656}
@@ -203,7 +203,7 @@ CapsuleCollider:
   m_Radius: 0.25
   m_Height: 0.75
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 0.375, z: 0}
 --- !u!195 &5747699869351208504
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -263,8 +263,10 @@ MonoBehaviour:
   holding: {fileID: 0}
   holdSpot: {fileID: 398277516932663656}
   test: {fileID: 0}
-  attackRange: 1.1
-  SeekRange: 5
+  ownerHealRate: 0.1
+  ownerHealRange: 3
+  attackRange: 1.5
+  SeekRange: 3
 --- !u!114 &398277517026642154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,6 +302,8 @@ MonoBehaviour:
   RegenCooldown: 60
   RegenSpeed: 1
   ragdoll: {fileID: 0}
+  deathParticle: {fileID: 7925395990273270106, guid: 65989700e59eec8438baaab0aad029cb,
+    type: 3}
   killHealthBonus: 0
   team: {fileID: 0}
 --- !u!114 &3148910654106154203
@@ -317,3 +321,4 @@ MonoBehaviour:
   cooldown: 1
   damage: 1
   attackRange: 1.2
+  pierce: 0
