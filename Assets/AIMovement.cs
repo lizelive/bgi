@@ -4,16 +4,15 @@ using UnityEngine;
 using UnityStandardAssets.Characters.ThirdPerson;
 
 [RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
-[RequireComponent(typeof(ThirdPersonCharacter))]
+[RequireComponent(typeof(Mob))]
 public class AIMovement : MonoBehaviour
 {
 
     public Vector3 targetpos;
     public float targetDistace;
-
+    Mob mob;
 
     public UnityEngine.AI.NavMeshAgent agent { get; private set; }             // the navmesh agent required for the path finding
-    public ThirdPersonCharacter character { get; private set; } // the character we are controlling
     public Transform target;                                    // target to aim for
 
     public void SetTarget(Transform target)
@@ -36,7 +35,7 @@ public class AIMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        agent.updatePosition = character.IsGrounded;
+        //agent.updatePosition = character.IsGrounded;
         if (target)
             targetpos = target.position;
         else
@@ -48,22 +47,22 @@ public class AIMovement : MonoBehaviour
             agent.SetDestination(targetpos);
             lastTargetPos = targetpos;
         }
-        
 
-        if (agent.remainingDistance > agent.stoppingDistance)
-            character.Move(agent.desiredVelocity, false, false);
-        else
-            character.Move(Vector3.zero, false, false);
+        var speed = Vector3.Project(agent.desiredVelocity, transform.forward).magnitude;
+        speed = agent.desiredVelocity.magnitude;
+        var realVel = speed * transform.forward;
+        //realVel = transform.InverseTransformDirection(agent.desiredVelocity).z*transform.forward;
+
+        //if (agent.remainingDistance > agent.stoppingDistance)
+        mob.Move(agent.desiredVelocity);
+        //else mob.Move(Vector3.zero);
     }
 
     private void Start()
     {
         // get the components on the object we need ( should not be null due to require component so no need to check )
         agent = GetComponentInChildren<UnityEngine.AI.NavMeshAgent>();
-        character = GetComponent<ThirdPersonCharacter>();
-
-        agent.updateRotation = false;
-        agent.updatePosition = false;
+        mob = GetComponent<Mob>();
     }
 
     public bool AtTarget => Vector3.Distance(transform.position, targetpos) < targetDistanceGoal;

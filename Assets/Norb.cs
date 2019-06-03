@@ -30,8 +30,8 @@ public class Norb : MonoBehaviour
 
     public bool IsGrounded
     {
-        get => GetComponent<ThirdPersonCharacter>().IsGrounded;
-        set => GetComponent<ThirdPersonCharacter>().IsGrounded = value;
+        get => GetComponent<Mob>().IsGrounded;
+        set => GetComponent<Mob>().IsGrounded = value;
     }
 
     private float lastSeek;
@@ -129,7 +129,9 @@ public class Norb : MonoBehaviour
     }
 
 
-    Job FollowPlayerJob => owner ? new Job { Kind = JobKind.Follow, target = owner.gameObject } : Job.Seek;
+    Job FollowPlayerJob => owner ? new Job { Kind = JobKind.Follow, target = owner.followPoint } : Job.Seek;
+
+    public Mob Mob => GetComponent<Mob>();
 
     public void FollowPlayer()
     {
@@ -240,7 +242,6 @@ public class Norb : MonoBehaviour
 
         if (owner && this.Distance(owner) < SeekRange)
         {
-            print("Mother I miss you");
             return FollowPlayerJob;
         }
 

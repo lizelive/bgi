@@ -55,7 +55,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: pasted__FloorPanel03_Mat
-    second: {fileID: 2100000, guid: 96b29c39d6e3d5c4a8bf9c1b9baeac8d, type: 2}
+    second: {fileID: 2100000, guid: e057975c046d6f846b86cfb712785640, type: 2}
   materials:
     importMaterials: 1
     materialName: 1
@@ -90,7 +90,7 @@ ModelImporter:
     - 0.01
     globalScale: 1
     meshCompression: 2
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     importVisibility: 1
     importBlendShapes: 1

@@ -26,7 +26,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: StairsNarrow01Broken_Mat
-    second: {fileID: 2100000, guid: 53e9d7bb7cc6abc4d803b285eabc3ffb, type: 2}
+    second: {fileID: 2100000, guid: e057975c046d6f846b86cfb712785640, type: 2}
   materials:
     importMaterials: 1
     materialName: 1
@@ -59,7 +59,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 2
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     importVisibility: 1
     importBlendShapes: 1

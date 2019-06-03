@@ -103,7 +103,7 @@ Shader "Custom/SpaceTextures"
 			int3 cellOffset = 0;
 
 			float4 c = 0;
-			float4 colorAcc = 1;
+			float4 colorAcc = 0;
 			for (cellOffset.x = -SEARCH_WIDTH; cellOffset.x <= SEARCH_WIDTH; cellOffset.x++) {
 				for (cellOffset.y = -SEARCH_WIDTH; cellOffset.y <= SEARCH_WIDTH; cellOffset.y++) {
 					for (cellOffset.z = -SEARCH_WIDTH; cellOffset.z <= SEARCH_WIDTH; cellOffset.z++) {
@@ -133,7 +133,7 @@ Shader "Custom/SpaceTextures"
 			c = c;
 			//c = weightMax;
 
-			c = texCUBE(_Cube, IN.worldNormal);
+			c = 0*texCUBE(_Cube, IN.worldNormal);
 
 			 //c = texCUBE(_Cube, IN.color);
 			c = c + colorAcc;

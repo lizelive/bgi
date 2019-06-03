@@ -73,7 +73,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: GateHuge01_Mat1
-    second: {fileID: 2100000, guid: 3af198a8305bde54aaa85d2e3fe11c74, type: 2}
+    second: {fileID: 2100000, guid: e057975c046d6f846b86cfb712785640, type: 2}
   materials:
     importMaterials: 1
     materialName: 1
@@ -109,7 +109,7 @@ ModelImporter:
     - 0.01
     globalScale: 1
     meshCompression: 2
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     importVisibility: 1
     importBlendShapes: 1

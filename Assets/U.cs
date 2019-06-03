@@ -19,6 +19,22 @@ public static class U
         return Vector3.Distance(self.transform.position, other.transform.position);
     }
 
+    public static Vector2 xz(this Vector3 self)
+    {
+        return new Vector2(self.x, self.z);
+    }
+
+
+    public static Vector3 x0y(this Vector2 self)
+    {
+        return new Vector3(self.x, 0, self.y);
+    }
+
+    public static Vector3 pos(this Component self)
+    {
+        return self.transform.position;
+    }
+
     public static T MaxBy<T>(this IEnumerable<T> self, Func<T, float> eval)
     {
         var bestVal = float.NegativeInfinity;
