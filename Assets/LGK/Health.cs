@@ -20,7 +20,7 @@ public class Health : MonoBehaviour
 	public GameObject ragdoll;
     public ParticleSystem deathParticle;
 
-
+    public DamageKind immunities;
 
     private float lastHurt = 0;
 	public float killHealthBonus = 0.15f;
@@ -34,17 +34,25 @@ public class Health : MonoBehaviour
 		CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + value);
 	}
 
-	public bool Hurt(float value, DamageKind kind, Team by, Health hurter = null)
+    public bool Hurt(float value, DamageKind kind, Health hurter = null)
+    {
+        return Hurt(value, kind, hurter?.team, hurter);
+    }
+
+
+
+    public bool Hurt(float value, DamageKind kind, Team by, Health hurter = null)
 	{
-		if (!Team.Fighting(by,team))
+        print($"{gameObject} was hurt for {value} {kind} by {hurter} but {immunities}");
+        if (!Team.Fighting(by, team) || immunities==kind)
 			return false;
 
-        lastHurt = Time.time;
-        print($"{by?.name} attacked {gameObject?.name} for {value} {kind}");
 
+
+        lastHurt = Time.time;
 		
 		CurrentHealth -= value;
-		if(CurrentHealth < 0)
+		if(CurrentHealth <= 0)
 		{
 			//if (by)
 			//{
@@ -89,8 +97,10 @@ public class Health : MonoBehaviour
 public enum DamageKind
 {
 	Generic,
-    Sacrifice,
 	Fire,
-	Blunt,
-	Magic
+	Melee,
+    Explosion,
+    Magic,
+    Water,
+    Sacrifice
 }

@@ -6,6 +6,13 @@ using UnityEngine;
 
 public static class U
 {
+    public static T Closest<T>(this IEnumerable<T> stuff) where T : Component
+    {
+        return default(T);
+    }
+
+    public static float Pow2(this float x) => x * x;
+
     public static float Distance(this GameObject self, GameObject other)
     {
         return Vector3.Distance(self.transform.position, other.transform.position);
@@ -13,6 +20,11 @@ public static class U
     public static float Distance(this Component self, Component other)
     {
         return Vector3.Distance(self.transform.position, other.transform.position);
+    }
+
+    public static float Distance(this Component self, Vector3 other)
+    {
+        return Vector3.Distance(self.transform.position, other);
     }
     public static float Distance(this GameObject self, Component other)
     {

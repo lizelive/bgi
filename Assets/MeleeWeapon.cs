@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using static UnityEngine.Mathf;
 public class MeleeWeapon : MonoBehaviour
 {
     public float cooldown = 1;
@@ -13,11 +13,42 @@ public class MeleeWeapon : MonoBehaviour
 
     public bool pierce;
     Animator animator;
+
+    public float stickStrength;
+
+    SpringJoint joint;
+
+    public float dropAttackTreshold = 3;
+    public float dropAttackBonus = 3;
     public void Start()
     {
         health = GetComponentInParent<Health>();
         animator= GetComponentInParent<Animator>() ?? GetComponentInChildren<Animator>();
     }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        var other = collision.gameObject.GetComponentInParent<Health>();
+        if (!other) return;
+
+
+        if (collision.relativeVelocity.y > dropAttackTreshold)
+        {
+            if (!joint)
+            {
+                print($"Stuck! {name} to {collision.gameObject}");
+                joint = gameObject.AddComponent<SpringJoint>();
+                joint.connectedBody = collision.rigidbody;
+                joint.spring = 1000;
+                joint.damper = 1;
+                joint.breakForce = stickStrength;
+            }
+
+            print($"landed {name} on {collision.gameObject.name} at {collision.relativeVelocity.y}");
+            other.Hurt(damage * dropAttackBonus, DamageKind.Melee, health);
+        }
+    }
+
     public void Attack()
     {
        
@@ -29,7 +60,7 @@ public class MeleeWeapon : MonoBehaviour
             var stuffToHurt = FindObjectsOfType<Health>().Where(x=>this.Distance(x)<attackRange).Select(x => x.GetComponent<Health>()).Where(x => x);
             foreach (var thing in stuffToHurt)
             {
-                if (thing.Hurt(damage, DamageKind.Blunt, health?.team, health))
+                if (thing.Hurt(damage, DamageKind.Melee, health?.team, health))
                 {
                     Debug.DrawLine(transform.position, thing.transform.position, Color.red, cooldown);
                     didAttack = true;

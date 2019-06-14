@@ -9,20 +9,33 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Hate Points
     /// </summary>
-    public Health health;
+    public Health Health
+    {
+        get
+        {
+            if (health)
+                return health;
+
+            return  health = GetComponent<Health>();
+        }
+    }
+    private Health health;
     public Swarm squad;
     public MeleeWeapon weapon;
     public Norb NorbPrefab;
 
     public Transform targeter;
+    public ParticleSystem caller;
 
     // Start is called before the first frame update
     void Start()
     {
         weapon = weapon ?? GetComponentInChildren<MeleeWeapon>();
-        health = GetComponent<Health>();
         squad = GetComponent<Swarm>();
-        health.OnHurt += Health_OnHurt;
+        Health.OnHurt += Health_OnHurt;
+
+        var shape = caller.shape;
+        shape.radius = maxCallRange;
     }
 
     private void Health_OnHurt(Health by)
@@ -72,11 +85,13 @@ public class Player : MonoBehaviour
 
 
         var doThrow = Input.GetButtonDown("Fire1");
-        var doSummon = Input.GetButtonDown("Fire2");
+        var doSummon = false && Input.GetButtonDown("Fire2");
         var doLocationController = Input.GetKey(KeyCode.Mouse2);
         var doWhistle = Input.GetKey(KeyCode.R);
 
-        followPoint.transform.position = doLocationController ? targeter.position : transform.position;
+        followPoint.transform.position = doLocationController ? targeter.position : transform.position - transform.forward;
+
+        caller.gameObject.SetActive(doWhistle);
 
         if (doThrow)
         {
@@ -107,7 +122,6 @@ public class Player : MonoBehaviour
 
                 
                 var theta = Mathf.Atan2(v2 + Mathf.Sqrt(v2 * v2 - gravity * (gravity * d2 + 2 * y * v2)), gravity*distance);
-                print($"throw at {theta}");
                 var vy = Mathf.Sin(theta)*v;
                 var vx = Mathf.Cos(theta) * v;
 
@@ -115,23 +129,18 @@ public class Player : MonoBehaviour
 
 
                 noob.transform.position = startPos;
+                noob.Throw(launchVel);
 
 
-                noob.SetJob(Job.Idle);
 
-                var mob = noob.Mob;
-                mob.IsGrounded = false;
-                noob.GetComponent<Rigidbody>().velocity = launchVel;
-
-                print($"throw at {theta} {launchVel}");
 
             }
         }
         if (doSummon)
         {
-            health.Hurt(NorbCost, DamageKind.Sacrifice, null, health);
+            Health.Hurt(NorbCost, DamageKind.Sacrifice, null, Health);
             var noob = Instantiate(NorbPrefab, transform.position + transform.forward+Vector3.up, Quaternion.identity);
-            noob.GetComponent<Health>().team = health.team;
+            noob.GetComponent<Health>().team = Health.team;
             noob.owner = this;
         }
 

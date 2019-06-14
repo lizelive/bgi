@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
+
+using UnityEngine.UI;
 using UnityStandardAssets.Characters.ThirdPerson;
 
 [RequireComponent(typeof(AIMovement))]
@@ -11,11 +14,11 @@ public class Norb : MonoBehaviour
 
     AIMovement movement;                         // target to aim for
 
-
+    public Text debugText;
     public Swarm swarm;
 
     public Rigidbody holding;
-
+    public float maxFollowRange = 5;
     public Transform holdSpot;
     MeleeWeapon weapon;
 
@@ -35,6 +38,8 @@ public class Norb : MonoBehaviour
     }
 
     private float lastSeek;
+    public bool CanDrown;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +48,9 @@ public class Norb : MonoBehaviour
         health = GetComponent<Health>();
         weapon = GetComponentInChildren<MeleeWeapon>();
         SetJob(Job.Seek);
+
+        if(owner)
+        health.team = owner?.Health?.team;
         health.OnHurt += OnHurt;
 
         if(health.team)
@@ -93,7 +101,7 @@ public class Norb : MonoBehaviour
         thing.isKinematic = true;
         var height = thing.transform.position.y - thing.ClosestPointOnBounds(thing.transform.position + 10 * Vector3.down).y;
         thing.transform.parent = holdSpot;
-        thing.GetComponent<Collider>().enabled = false;
+        thing.GetComponentInChildren<Collider>().enabled = false;
         thing.transform.localPosition = Vector3.up * height;
         thing.transform.localRotation = Quaternion.identity;
         return true;
@@ -109,17 +117,20 @@ public class Norb : MonoBehaviour
         this.job = job;
         switch (job.Kind)
         {
-
-            case JobKind.Goto:
             case JobKind.Pickup:
+                if (!holding)
+                    movement.SetTarget(job.target.transform);
+                break;
+            case JobKind.Goto:
+            
             case JobKind.Attack:
             case JobKind.Follow:
                 movement.SetTarget(job.target.transform);
                 break;
             case JobKind.Idle:
-                break;
             case JobKind.Seek:
-                // 1st 
+            case JobKind.Ragdoll:
+                movement.Clear();
 
                 break;
 
@@ -142,10 +153,15 @@ public class Norb : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (debugText)
+        {
+            debugText.text = $"{Mob?.Team?.name} {job?.Kind} {health?.CurrentHealth}";
+        }
 
+        
         if (owner && this.Distance(owner) < ownerHealRange)
         {
-            owner.health.Heal(Time.deltaTime * ownerHealRate);
+            owner.Health.Heal(Time.deltaTime * ownerHealRate);
         }
 
 
@@ -157,10 +173,23 @@ public class Norb : MonoBehaviour
             SetJob(Job.Idle);
             return;
         }
-        print($"{name} is working on {job.Kind}");
+
+        if (job.target)
+        {
+            var distToTarget = gameObject.Distance(job.target);
+            if (distToTarget > maxFollowRange)
+            {
+                SetJob(Job.Seek);
+                return;
+            }
+        }
+
+        //print($"{name} is working on {job.Kind}");
 
         var atTarget = movement.AtTarget;
 
+
+        if(job.Kind != JobKind.Ragdoll && job.Kind != JobKind.Drown)
         if (Time.time - lastSeek > 0.1)
         {
             var newMission = NextJob();
@@ -170,6 +199,13 @@ public class Norb : MonoBehaviour
 
         switch (job.Kind)
         {
+            case JobKind.Drown:
+                health.Hurt(1 * Time.deltaTime, DamageKind.Water);
+                break;
+            case JobKind.Ragdoll:
+                if (Mob.IsGrounded)
+                    SetJob(Job.Seek);
+                break;
             case JobKind.Goto:
     
 
@@ -180,7 +216,7 @@ public class Norb : MonoBehaviour
                 break;
             case JobKind.Pickup:
 
-                if (job.target.transform.parent)
+                if (job.target.transform.parent||holding)
                     SetJob(Job.Seek);
                 else
                 if (atTarget)
@@ -224,6 +260,15 @@ public class Norb : MonoBehaviour
                 break;
         }
     }
+
+    public void Throw(Vector3 launchVel)
+    {
+        Mob.IsGrounded = false;
+        SetJob(Job.Thrown);
+        GetComponent<Rigidbody>().velocity = launchVel;
+        movement.Clear();
+    }
+
     public virtual Job NextJob()
     {
         lastSeek = Time.time;
@@ -257,13 +302,20 @@ public enum JobKind
     Pickup,
     Attack,
     Seek,
-    Follow
+    Follow,
+    Ragdoll,
+    Drown
 }
 
 public class Job
 {
     public static Job Idle => new Job { Kind = JobKind.Idle };
     public static Job Seek => new Job { Kind = JobKind.Seek };
+
+    public static Job Thrown => new Job(JobKind.Ragdoll);
+
+    public static Job Drown => new Job(JobKind.Drown);
+
     public float priority;
     public JobKind Kind;
     public GameObject target;

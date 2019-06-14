@@ -24,6 +24,8 @@ public class Team : MonoBehaviour
 
     public static bool Fighting(Team a, Team b)
     {
+        if (a == null || b == null)
+            return true;
         return a != b;
     }
 
