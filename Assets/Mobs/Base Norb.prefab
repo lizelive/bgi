@@ -112,7 +112,6 @@ GameObject:
   - component: {fileID: 6364313701537220748}
   - component: {fileID: 6364313701537220750}
   - component: {fileID: 6364313701537220962}
-  - component: {fileID: 6364313701537220990}
   - component: {fileID: 6364313701537220961}
   - component: {fileID: 6364313701537220963}
   - component: {fileID: 6364313701537220960}
@@ -207,29 +206,14 @@ MonoBehaviour:
   debugText: {fileID: 6364313701537220964}
   swarm: {fileID: 0}
   holding: {fileID: 0}
+  maxFollowRange: 5
   holdSpot: {fileID: 6364313701537220743}
   test: {fileID: 0}
   ownerHealRate: 0.1
   ownerHealRange: 3
+  CanDrown: 0
   attackRange: 1.5
   SeekRange: 3
---- !u!114 &6364313701537220990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6364313701537220737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e5690f7037054c4e97ad34cc7d1af46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetpos: {x: 0, y: 0, z: 0}
-  targetDistace: 0
-  target: {fileID: 0}
-  targetDistanceGoal: 1
-  targetPosMoveThreshold: 0
 --- !u!114 &6364313701537220961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,6 +234,7 @@ MonoBehaviour:
   ragdoll: {fileID: 0}
   deathParticle: {fileID: 7925395990273270106, guid: 65989700e59eec8438baaab0aad029cb,
     type: 3}
+  immunities: 0
   killHealthBonus: 0
   team: {fileID: 0}
 --- !u!114 &6364313701537220963
@@ -268,6 +253,9 @@ MonoBehaviour:
   damage: 1
   attackRange: 1.2
   pierce: 0
+  stickStrength: 0
+  dropAttackTreshold: 3
+  dropAttackBonus: 3
 --- !u!114 &6364313701537220960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,8 +268,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 631db0f464d615a43aac3095e062958e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Behaviors: []
+  ActiveBehavior: {fileID: 0}
+  ViewRange: 10
   maxSpeed: 1
   GroundCheckDistance: 0.3
+  targetpos: {x: 0, y: 0, z: 0}
+  targetDistace: 0
+  target: {fileID: 0}
+  targetDistanceGoal: 1
+  targetPosMoveThreshold: 1
 --- !u!1 &6364313701537220741
 GameObject:
   m_ObjectHideFlags: 0

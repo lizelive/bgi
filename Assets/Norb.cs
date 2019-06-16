@@ -5,14 +5,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.ThirdPerson;
 
-[RequireComponent(typeof(AIMovement))]
+
 public class Norb : MonoBehaviour
 {
     public Player owner;
 
     Team team => health.team;
-
-    AIMovement movement;                         // target to aim for
+    
 
     public Text debugText;
     public Swarm swarm;
@@ -43,8 +42,7 @@ public class Norb : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        movement = GetComponent<AIMovement>();
+        
         health = GetComponent<Health>();
         weapon = GetComponentInChildren<MeleeWeapon>();
         SetJob(Job.Seek);
@@ -66,7 +64,7 @@ public class Norb : MonoBehaviour
 
     }
 
-    void OnHurt(Health by)
+    void OnHurt(Mob by)
     {
         Drop();
         if (by)
@@ -119,18 +117,18 @@ public class Norb : MonoBehaviour
         {
             case JobKind.Pickup:
                 if (!holding)
-                    movement.SetTarget(job.target.transform);
+                    Mob.SetTarget(job.target.transform);
                 break;
             case JobKind.Goto:
             
             case JobKind.Attack:
             case JobKind.Follow:
-                movement.SetTarget(job.target.transform);
+                Mob.SetTarget(job.target.transform);
                 break;
             case JobKind.Idle:
             case JobKind.Seek:
             case JobKind.Ragdoll:
-                movement.Clear();
+                Mob.Clear();
 
                 break;
 
@@ -186,7 +184,7 @@ public class Norb : MonoBehaviour
 
         //print($"{name} is working on {job.Kind}");
 
-        var atTarget = movement.AtTarget;
+        var atTarget = Mob.AtTarget;
 
 
         if(job.Kind != JobKind.Ragdoll && job.Kind != JobKind.Drown)
@@ -266,7 +264,7 @@ public class Norb : MonoBehaviour
         Mob.IsGrounded = false;
         SetJob(Job.Thrown);
         GetComponent<Rigidbody>().velocity = launchVel;
-        movement.Clear();
+        Mob.Clear();
     }
 
     public virtual Job NextJob()

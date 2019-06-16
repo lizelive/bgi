@@ -63,14 +63,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Behaviors\AiBehavior.cs" />
-    <Compile Include="Assets\Behaviors\Flee.cs" />
+    <Compile Include="Assets\Behaviors\DanceBehavior.cs" />
+    <Compile Include="Assets\Behaviors\FarmBehavior.cs" />
+    <Compile Include="Assets\Behaviors\FleeBehavior.cs" />
+    <Compile Include="Assets\Behaviors\IdleBehavior.cs" />
+    <Compile Include="Assets\Behaviors\PanicBehavior.cs" />
     <Compile Include="Assets\BombNorb.cs" />
     <Compile Include="Assets\Crushable.cs" />
     <Compile Include="Assets\CustomEditors\EnumFlagAttribute.cs" />
+    <Compile Include="Assets\Default.cs" />
     <Compile Include="Assets\Egg.cs" />
     <Compile Include="Assets\FaceCamera.cs" />
+    <Compile Include="Assets\FireBall.cs" />
     <Compile Include="Assets\Hazard.cs" />
     <Compile Include="Assets\Hurtbox.cs" />
+    <Compile Include="Assets\IBurnable.cs" />
+    <Compile Include="Assets\JobManager.cs" />
     <Compile Include="Assets\LGK\BloodAlter.cs" />
     <Compile Include="Assets\LGK\Health.cs" />
     <Compile Include="Assets\LGK\Mob.cs" />
@@ -80,6 +88,7 @@
     <Compile Include="Assets\MeleeWeapon.cs" />
     <Compile Include="Assets\Nest.cs" />
     <Compile Include="Assets\Norb.cs" />
+    <Compile Include="Assets\Offering.cs" />
     <Compile Include="Assets\ParticlePack\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
     <Compile Include="Assets\PickupMePls.cs" />
     <Compile Include="Assets\Planet.cs" />
@@ -87,11 +96,15 @@
     <Compile Include="Assets\Player.cs" />
     <Compile Include="Assets\PropTest.cs" />
     <Compile Include="Assets\RotateCamera.cs" />
+    <Compile Include="Assets\ShitsOnFireYo.cs" />
     <Compile Include="Assets\ShowHealth.cs" />
     <Compile Include="Assets\Spawner.cs" />
     <Compile Include="Assets\Swarm.cs" />
     <Compile Include="Assets\Team.cs" />
     <Compile Include="Assets\U.cs" />
+    <Compile Include="Assets\VillageController.cs" />
+    <Compile Include="Assets\Villager.cs" />
+    <Compile Include="Assets\VillagerHome.cs" />
     <None Include="Assets\Art\models\chicken\license.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />

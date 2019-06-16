@@ -10,8 +10,8 @@ public class AiBehavior : MonoBehaviour
 
 
     // need to figure out how these work
-    public Mob me;
-    public Team team;
+    public Mob Me => GetComponent<Mob>();
+    public Team Team => Me.Team;
 
 
     protected IEnumerable<Mob> Nearby;
@@ -24,6 +24,12 @@ public class AiBehavior : MonoBehaviour
     public virtual bool ComeFromIdle => false;
     public virtual bool ComeFromAny => false;
 
+    public virtual bool OnEnd() { return true; }
+    public virtual bool OnBegin() {
+        print($"Begin {GetType().Name}");
+        return true; }
+    public virtual void Run() { }
+
     public IEnumerable<AiBehavior> GetAllPossibleFrom()
     {
         if (ComeFromIdle)
@@ -35,13 +41,9 @@ public class AiBehavior : MonoBehaviour
             }
     }
 
-    public float CurrentPriority() => 0;
+    public virtual float CurrentPriority => 0;
 
 
-    void Start()
-    {
-        me = GetComponent<Mob>();
-    }
 
 
     /// <summary>

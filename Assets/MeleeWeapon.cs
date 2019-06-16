@@ -9,7 +9,7 @@ public class MeleeWeapon : MonoBehaviour
     public float damage = 1;
     private float lastAttack;
     public float attackRange = 1.2f;
-    private Health health;
+    private Mob Mob;
 
     public bool pierce;
     Animator animator;
@@ -22,7 +22,7 @@ public class MeleeWeapon : MonoBehaviour
     public float dropAttackBonus = 3;
     public void Start()
     {
-        health = GetComponentInParent<Health>();
+        Mob = GetComponentInParent<Mob>();
         animator= GetComponentInParent<Animator>() ?? GetComponentInChildren<Animator>();
     }
 
@@ -45,7 +45,7 @@ public class MeleeWeapon : MonoBehaviour
             }
 
             print($"landed {name} on {collision.gameObject.name} at {collision.relativeVelocity.y}");
-            other.Hurt(damage * dropAttackBonus, DamageKind.Melee, health);
+            other.Hurt(damage * dropAttackBonus, DamageKind.Melee, Mob);
         }
     }
 
@@ -60,7 +60,7 @@ public class MeleeWeapon : MonoBehaviour
             var stuffToHurt = FindObjectsOfType<Health>().Where(x=>this.Distance(x)<attackRange).Select(x => x.GetComponent<Health>()).Where(x => x);
             foreach (var thing in stuffToHurt)
             {
-                if (thing.Hurt(damage, DamageKind.Melee, health?.team, health))
+                if (thing.Hurt(damage, DamageKind.Melee, Mob))
                 {
                     Debug.DrawLine(transform.position, thing.transform.position, Color.red, cooldown);
                     didAttack = true;

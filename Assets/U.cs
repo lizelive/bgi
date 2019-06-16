@@ -17,6 +17,7 @@ public static class U
     {
         return Vector3.Distance(self.transform.position, other.transform.position);
     }
+
     public static float Distance(this Component self, Component other)
     {
         return Vector3.Distance(self.transform.position, other.transform.position);
@@ -40,6 +41,11 @@ public static class U
     public static Vector3 x0y(this Vector2 self)
     {
         return new Vector3(self.x, 0, self.y);
+    }
+
+    public static Vector3 x0z(this Vector3 self)
+    {
+        return new Vector3(self.x, 0, self.z);
     }
 
     public static Vector3 pos(this Component self)
@@ -70,12 +76,26 @@ public static class U
 
     public static T Random<T>(this IEnumerable<T> self)
     {
+        if (!self.Any())
+            return default(T);
         return self.ToArray().Random();
     }
 
 
+    public static T[] Find<T>(Vector3 pos, float range) where T:UnityEngine.Component
+    {
+        return GameObject.FindObjectsOfType<T>().Where(x => x.Distance(pos) <= range).ToArray();
+
+    }
+
+    public static T Closest<T>(this IEnumerable<T> self, Vector3 to) where T : UnityEngine.Component
+    {
+        return self.MinBy(x => x.Distance(to));
+    }
+
     public static T MinBy<T>(this IEnumerable<T> self, Func<T, float> eval)
     {
+
         return self.MaxBy(x => -eval(x));
     }
 }

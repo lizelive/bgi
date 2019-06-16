@@ -27,25 +27,19 @@ public class Health : MonoBehaviour
 
 	public Team team;
 
-    public event Action<Health> OnHurt;
+    public event Action<Mob> OnHurt;
+    public event Action<Mob> OnDie;
 
-	public void Heal(float value)
+    public void Heal(float value)
 	{
 		CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + value);
 	}
-
-    public bool Hurt(float value, DamageKind kind, Health hurter = null)
-    {
-        return Hurt(value, kind, hurter?.team, hurter);
-    }
-
-
-
-    public bool Hurt(float value, DamageKind kind, Team by, Health hurter = null)
+    
+    public bool Hurt(float value, DamageKind kind, Mob by = null)
 	{
-        print($"{gameObject} was hurt for {value} {kind} by {hurter} but {immunities}");
-        if (!Team.Fighting(by, team) || immunities==kind)
+        if (by == this || !Team.Fighting(team, by?.Team) || immunities==kind)
 			return false;
+        //print($"{gameObject} was hurt for {value} {kind} by {hurter} but {immunities}");
 
 
 
@@ -59,13 +53,13 @@ public class Health : MonoBehaviour
 			//	by.CurrentHealth += MaxHealth * killHealthBonus;
 			//}
 			
-            Die();
+            Die(by);
 		}
 
-        OnHurt?.Invoke(hurter);
+        OnHurt?.Invoke(by);
         return true;
     }
-    void Die()
+    void Die(Mob by)
     {
         if (ragdoll)
             Instantiate(ragdoll, transform.position, transform.rotation);
@@ -76,6 +70,7 @@ public class Health : MonoBehaviour
             var smr = shape.skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
             print(smr);
         }
+        OnDie?.Invoke(by);
         Destroy(gameObject);
 
     }
