@@ -11,6 +11,10 @@ public class Team : MonoBehaviour
 
     public List<Norb> norbs;
     public List<Player> players;
+
+
+    public List<Team> Allies;
+
     // Start is called before the first frame update
     void Start()
     {

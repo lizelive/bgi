@@ -169,7 +169,7 @@ MonoBehaviour:
     type: 3}
   immunities: 6
   killHealthBonus: 0
-  team: {fileID: 0}
+  team: {fileID: 4472536848245835836, guid: 20c57ad1c5b9ed144a536fc29e5fcd73, type: 3}
 --- !u!114 &3148910654106154203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Behaviors: []
   ActiveBehavior: {fileID: 0}
+  ViewRange: 10
   maxSpeed: 1
   GroundCheckDistance: 0.3
   targetpos: {x: 0, y: 0, z: 0}
@@ -210,6 +211,7 @@ MonoBehaviour:
   target: {fileID: 0}
   targetDistanceGoal: 1
   targetPosMoveThreshold: 1
+  rotationSpeed: 3
 --- !u!1 &6268587378401822456
 GameObject:
   m_ObjectHideFlags: 0

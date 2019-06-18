@@ -47,8 +47,7 @@ public class Norb : MonoBehaviour
         weapon = GetComponentInChildren<MeleeWeapon>();
         SetJob(Job.Seek);
 
-        if(owner)
-        health.team = owner?.Health?.team;
+
         health.OnHurt += OnHurt;
 
         if(health.team)
@@ -128,7 +127,7 @@ public class Norb : MonoBehaviour
             case JobKind.Idle:
             case JobKind.Seek:
             case JobKind.Ragdoll:
-                Mob.Clear();
+                Mob.ClearMovement();
 
                 break;
 
@@ -264,7 +263,7 @@ public class Norb : MonoBehaviour
         Mob.IsGrounded = false;
         SetJob(Job.Thrown);
         GetComponent<Rigidbody>().velocity = launchVel;
-        Mob.Clear();
+        Mob.ClearMovement();
     }
 
     public virtual Job NextJob()

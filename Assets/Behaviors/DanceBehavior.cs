@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class DanceBehavior : AiBehavior
 {
+
+    public float danceDuration = 10;
+
     public override bool OnBegin()
     {
         Me.Animator.SetBool("Dance", true);
@@ -13,5 +16,14 @@ public class DanceBehavior : AiBehavior
     {
         Me.Animator.SetBool("Dance", false);
         return base.OnBegin();
+    }
+
+    public override void Run()
+    {
+        if(Time.time - startTime > danceDuration)
+        {
+            Me.SwitchBehavior();
+        }
+        base.Run();
     }
 }

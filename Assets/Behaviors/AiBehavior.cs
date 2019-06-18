@@ -24,8 +24,12 @@ public class AiBehavior : MonoBehaviour
     public virtual bool ComeFromIdle => false;
     public virtual bool ComeFromAny => false;
 
+    public float startTime;
+
+
     public virtual bool OnEnd() { return true; }
     public virtual bool OnBegin() {
+        startTime = Time.time;
         print($"Begin {GetType().Name}");
         return true; }
     public virtual void Run() { }
@@ -41,7 +45,7 @@ public class AiBehavior : MonoBehaviour
             }
     }
 
-    public virtual float CurrentPriority => 0;
+    public virtual float CurrentPriority => BasePriority;
 
 
 

@@ -34,7 +34,7 @@ public class Mob : MonoBehaviour
 
     public bool SwitchBehavior()
     {
-        return SwitchBehavior(Behaviors.MaxBy(b => b.CurrentPriority));
+        return SwitchBehavior(Behaviors.ToDictionary(b=>b,b => b.CurrentPriority).WeightedRandom());
     }
 
 
@@ -169,8 +169,8 @@ public class Mob : MonoBehaviour
         UpdateAnimator();
         UpdateMovment();
 
-        Debug.DrawLine(agent.steeringTarget, this.pos());
-        Debug.DrawRay(transform.pos(), agent.desiredVelocity, Color.cyan);
+        //Debug.DrawLine(agent.steeringTarget, this.pos());
+        //Debug.DrawRay(transform.pos(), agent.desiredVelocity, Color.cyan);
     }
 
 
@@ -202,15 +202,15 @@ public class Mob : MonoBehaviour
     public void SetTarget(Transform target)
     {
         this.target = target;
-        if (agent.isActiveAndEnabled)
-            agent.isStopped = false;
+        //if (agent.isActiveAndEnabled)
+        //agent.isStopped = false;
     }
 
 
     public void SetTarget(Vector3 pos)
     {
         agent.SetDestination(pos);
-        agent.isStopped = false;
+        //agent.isStopped = false;
         target = null;
         targetpos = pos;
     }
@@ -237,22 +237,30 @@ public class Mob : MonoBehaviour
         //realVel = transform.InverseTransformDirection(agent.desiredVelocity).z*transform.forward;
         realVel = agent.desiredVelocity.magnitude * (agent.steeringTarget - this.pos()).normalized;
 
-        var lookDir = realVel.x0z();
+        var lookDir = realVel;
+
+        lookDir += 0.1f * (targetpos - this.pos()).normalized;
+        lookDir =lookDir.x0z();
         var rotation = Quaternion.LookRotation(lookDir);
-        transform.rotation = rotation;
+        //transform.rotation = rotation;
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+
         //if (agent.remainingDistance > agent.stoppingDistance)
         Move(realVel);
         //else mob.Move(Vector3.zero);
     }
 
+    public float rotationSpeed = 3;
+
 
 
     public bool AtTarget => Vector3.Distance(transform.position, targetpos) < targetDistanceGoal;
 
-    public void Clear()
+    public void ClearMovement()
     {
         target = null;
-        if (!agent || !agent.isOnNavMesh) return;
-        agent.isStopped = true;
+        agent.SetDestination(this.pos());
+        //if (!agent || !agent.isOnNavMesh) return;
+        //agent.isStopped = true;
     }
 }

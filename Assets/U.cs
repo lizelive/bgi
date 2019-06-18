@@ -82,11 +82,39 @@ public static class U
     }
 
 
+    public static T WeightedRandom<T>(this Dictionary<T,float> self)
+    {
+        var total = self.Sum(x => x.Value);
+        float target = UnityEngine.Random.value * total;
+
+        Debug.Log($"job rng is {target}/{total}");
+        foreach (var thing in self)
+        {
+            if ((target -= thing.Value) < 0)
+                return thing.Key;
+        }
+
+        return default(T);
+    }
+
     public static T[] Find<T>(Vector3 pos, float range) where T:UnityEngine.Component
     {
         return GameObject.FindObjectsOfType<T>().Where(x => x.Distance(pos) <= range).ToArray();
 
     }
+
+
+    public static T[] Find<T>(this GameObject self, float range) where T : UnityEngine.Component
+    {
+        return GameObject.FindObjectsOfType<T>().Where(x => self.Distance(x) <= range).ToArray();
+
+    }
+    public static IEnumerable<T> InRange<T>(this IEnumerable<T> self, Vector3 pos, float range) where T : UnityEngine.Component
+    {
+        return self.Where(x => x.Distance(pos) <= range);
+
+    }
+
 
     public static T Closest<T>(this IEnumerable<T> self, Vector3 to) where T : UnityEngine.Component
     {

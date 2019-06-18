@@ -62,7 +62,7 @@ public class FarmBehavior : AiBehavior
             {
                harvestStartTime = float.PositiveInfinity;
                 plant = null;
-                Me.SwitchBehavior<IdleBehavior>();
+                Me.SwitchBehavior<DepositBehavior>();
             }
         }
     }

@@ -64,10 +64,13 @@
   <ItemGroup>
     <Compile Include="Assets\Behaviors\AiBehavior.cs" />
     <Compile Include="Assets\Behaviors\DanceBehavior.cs" />
+    <Compile Include="Assets\Behaviors\DepositBehavior.cs" />
     <Compile Include="Assets\Behaviors\FarmBehavior.cs" />
     <Compile Include="Assets\Behaviors\FleeBehavior.cs" />
     <Compile Include="Assets\Behaviors\IdleBehavior.cs" />
     <Compile Include="Assets\Behaviors\PanicBehavior.cs" />
+    <Compile Include="Assets\Behaviors\SeekBehavior.cs" />
+    <Compile Include="Assets\Behaviors\SmellFlowersBehavior.cs" />
     <Compile Include="Assets\BombNorb.cs" />
     <Compile Include="Assets\Crushable.cs" />
     <Compile Include="Assets\CustomEditors\EnumFlagAttribute.cs" />
@@ -75,6 +78,7 @@
     <Compile Include="Assets\Egg.cs" />
     <Compile Include="Assets\FaceCamera.cs" />
     <Compile Include="Assets\FireBall.cs" />
+    <Compile Include="Assets\Flowery.cs" />
     <Compile Include="Assets\Hazard.cs" />
     <Compile Include="Assets\Hurtbox.cs" />
     <Compile Include="Assets\IBurnable.cs" />
