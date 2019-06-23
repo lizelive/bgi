@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public class AiBehavior : MonoBehaviour
 {
-
+    public bool Running;
     public static AiBehavior Idle => new AiBehavior();
 
 
@@ -14,21 +15,29 @@ public class AiBehavior : MonoBehaviour
     public Team Team => Me.Team;
 
 
-    protected IEnumerable<Mob> Nearby;
-    protected IEnumerable<Mob> NearbyEnemy;
+
     IEnumerable<AiBehavior> AllPossible;
     public float BasePriority;
-    protected float ViewRange;
 
 
     public virtual bool ComeFromIdle => false;
     public virtual bool ComeFromAny => false;
+    public virtual bool SwitchToAny => false;
 
     public float startTime;
 
 
-    public virtual bool OnEnd() { return true; }
+    public void End()
+    {
+        Me.SwitchBehavior();
+    }
+
+    public virtual bool OnEnd() {
+        Me.TargetClear();
+        Running = false;
+        return true; }
     public virtual bool OnBegin() {
+        Running = true;
         startTime = Time.time;
         print($"Begin {GetType().Name}");
         return true; }

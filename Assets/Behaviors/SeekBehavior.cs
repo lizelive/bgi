@@ -7,6 +7,10 @@ using UnityEngine;
 public class SeekBehavior<T> : AiBehavior where T: UnityEngine.Component
 {
     public T target;
+
+    public override float CurrentPriority => 
+        gameObject.Find<T>(Me.ViewRange).Where(IsValid).Any() ? BasePriority : 0;
+
     public virtual float TargetDistance => 1;
 
     public virtual bool IsValid(T thing) => thing;

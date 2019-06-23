@@ -52,7 +52,9 @@ public class VillageController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Fear *= (1 - Mathf.Pow(FearDecay* CurrentlyAliveVillager, Time.deltaTime));
+        var timeCorrectedDecay = FearDecay * CurrentlyAliveVillager;
+        timeCorrectedDecay *= Time.deltaTime;
+        Fear *= 1 - timeCorrectedDecay;
 
         if (Balance > HouseRepairCost)
         {

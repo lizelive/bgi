@@ -4,20 +4,47 @@ using UnityEngine;
 
 public class BloodAlter : MonoBehaviour
 {
-	public bool enabled = true;
-	public float BloodRate = 1;
-	public ParticleSystem particles;
-	public Health helping;
-    // Start is called before the first frame update
-    void Start()
-    {
-		particles = GetComponent<ParticleSystem>();
+    public Team team;
+    public float cost;
+    public Mob spawns;
 
+
+    public ParticleSystem spawnParticles;
+    public ParticleSystem despawnParticles;
+
+    public int freeRealestate;
+
+    public void Spawn(Player by)
+    {
+        if(freeRealestate > 0)
+        {
+            print("Free realestate");
+            freeRealestate--;
+            DoSpawn(by);
+            return;
+        }else if(by.balance >= cost)
+        {
+            by.balance -= cost;
+
+            print($"bought and have {by.balance}");
+            DoSpawn(by);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void DoSpawn(Player by)
     {
-		helping.Heal(BloodRate * Time.deltaTime);   
+        var noob = Instantiate(spawns, transform.position + Vector3.up * 3, Quaternion.identity);
+        noob.Health.team = team;
+        var norb = noob.GetComponent<Norb>();
+        if (norb) {
+            norb.owner = by;
+        }
     }
+
+    public void Despawn(Mob mob)
+    {
+        Destroy(mob);
+        freeRealestate++;
+    }
+   
 }

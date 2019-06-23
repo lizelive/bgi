@@ -1,0 +1,23 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System;
+using UnityEngine;
+
+public class TreasureChest : MonoBehaviour
+{
+    public Team team;
+    public float Value = 100;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}

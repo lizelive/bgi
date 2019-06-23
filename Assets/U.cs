@@ -87,7 +87,7 @@ public static class U
         var total = self.Sum(x => x.Value);
         float target = UnityEngine.Random.value * total;
 
-        Debug.Log($"job rng is {target}/{total}");
+        //Debug.Log($"job rng is {target}/{total}");
         foreach (var thing in self)
         {
             if ((target -= thing.Value) < 0)
@@ -95,6 +95,11 @@ public static class U
         }
 
         return default(T);
+    }
+
+    public static Vector3 Mul(this Vector3 s, Vector3 o)
+    {
+        return new Vector3(s.x * o.x, s.y * o.y, s.z * o.z);
     }
 
     public static T[] Find<T>(Vector3 pos, float range) where T:UnityEngine.Component

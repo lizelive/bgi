@@ -107,8 +107,6 @@ GameObject:
   - component: {fileID: 8016451389904065968}
   - component: {fileID: 8016451389912312826}
   - component: {fileID: 8016451389915116614}
-  - component: {fileID: 1148192307695850151}
-  - component: {fileID: 2667593116584417940}
   - component: {fileID: 2667593116584417941}
   - component: {fileID: 806402763970832037}
   - component: {fileID: 6725373551584386845}
@@ -128,7 +126,7 @@ Transform:
   m_GameObject: {fileID: 8016451389900786050}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.7914276, y: 0, z: -10.59}
-  m_LocalScale: {x: 1, y: 1, z: 0.95052}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2667593116963609366}
   - {fileID: 5684134714684192548}
@@ -187,46 +185,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1148192307695850151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8016451389900786050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b73fbf57e3e15b540997f4897571947a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  debugText: {fileID: 0}
-  swarm: {fileID: 0}
-  holding: {fileID: 0}
-  maxFollowRange: 5
-  holdSpot: {fileID: 2667593116963609366}
-  test: {fileID: 0}
-  ownerHealRate: 0.1
-  ownerHealRange: 3
-  attackRange: 1.5
-  SeekRange: 3
---- !u!114 &2667593116584417940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8016451389900786050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e5690f7037054c4e97ad34cc7d1af46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetpos: {x: 0, y: 0, z: 0}
-  targetDistace: 0
-  target: {fileID: 0}
-  targetDistanceGoal: 1
-  targetPosMoveThreshold: 1
 --- !u!114 &2667593116584417941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,6 +204,7 @@ MonoBehaviour:
   RegenSpeed: 1
   ragdoll: {fileID: 0}
   deathParticle: {fileID: 0}
+  immunities: 0
   killHealthBonus: 0
   team: {fileID: 0}
 --- !u!114 &806402763970832037
@@ -260,12 +219,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 015a217d44d08404a997e8a75344da4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 3
+  cooldown: 15
   damage: 2
   attackRange: 1.2
   pierce: 1
+  sfx: {fileID: 1314945738539566, guid: 32c9fd11a72259d45aa26ae41c34c5aa, type: 3}
   stickStrength: 0
-  dropAttackTreshold: 0.1
+  dropAttackTreshold: 3
   dropAttackBonus: 3
 --- !u!114 &6725373551584386845
 MonoBehaviour:
@@ -279,8 +239,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 631db0f464d615a43aac3095e062958e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Behaviors: []
+  ActiveBehavior: {fileID: 0}
+  ViewRange: 10
   maxSpeed: 1
   GroundCheckDistance: 1
+  targetpos: {x: 0, y: 0, z: 0}
+  targetDistace: 0
+  target: {fileID: 0}
+  targetDistanceGoal: 1
+  targetPosMoveThreshold: 1
+  rotationSpeed: 3
+  head: {fileID: 0}
 --- !u!1001 &835609762047335486
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -354,11 +324,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: 0564f0d607cd8cc4da6fd1db45e10a02,
         type: 2}
-    - target: {fileID: -3592486539187332935, guid: 448e5e1e164506440aec74b2d8547f64,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 17c2f99d48eb6ce4f8605f68445efdb2, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 448e5e1e164506440aec74b2d8547f64, type: 3}
 --- !u!4 &5684134714684192548 stripped

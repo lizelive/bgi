@@ -43,6 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da91294b2ad587f49b997ad5c8575873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Balance: 0
   color: {r: 0.4339623, g: 0.17029671, b: 0, a: 0}
   norbs: []
   players: []
+  Allies:
+  - {fileID: 4112666007579921107, guid: 66d8be1971c465045a65fd795223c40d, type: 3}
+  - {fileID: 9088456802776973935, guid: 5a88be5143ca1ba43bea5125de88dd27, type: 3}

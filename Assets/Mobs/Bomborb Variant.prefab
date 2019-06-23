@@ -12,17 +12,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bomborb Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6364313701537220962, guid: 7ade9c5a9f6852544902628052a88c37,
+        type: 3}
+      propertyPath: CanDrown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6364313701537220961, guid: 7ade9c5a9f6852544902628052a88c37,
         type: 3}
       propertyPath: ragdoll
       value: 
       objectReference: {fileID: 1329845292236604, guid: 9bba9cf244c53c5439505dfc96fdd11c,
         type: 3}
-    - target: {fileID: 6364313701537220962, guid: 7ade9c5a9f6852544902628052a88c37,
+    - target: {fileID: 6364313701537220961, guid: 7ade9c5a9f6852544902628052a88c37,
         type: 3}
-      propertyPath: CanDrown
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: team
+      value: 
+      objectReference: {fileID: 4472536848245835836, guid: 20c57ad1c5b9ed144a536fc29e5fcd73,
+        type: 3}
     - target: {fileID: 6364313701537220963, guid: 7ade9c5a9f6852544902628052a88c37,
         type: 3}
       propertyPath: dropAttackTreshold

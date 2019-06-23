@@ -62,15 +62,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\AudioMan.cs" />
     <Compile Include="Assets\Behaviors\AiBehavior.cs" />
+    <Compile Include="Assets\Behaviors\AttackBehavior.cs" />
+    <Compile Include="Assets\Behaviors\BloodrageBehavior.cs" />
     <Compile Include="Assets\Behaviors\DanceBehavior.cs" />
     <Compile Include="Assets\Behaviors\DepositBehavior.cs" />
+    <Compile Include="Assets\Behaviors\FallingBehavior.cs" />
     <Compile Include="Assets\Behaviors\FarmBehavior.cs" />
     <Compile Include="Assets\Behaviors\FleeBehavior.cs" />
+    <Compile Include="Assets\Behaviors\FollowBehavior.cs" />
+    <Compile Include="Assets\Behaviors\Hero.cs" />
     <Compile Include="Assets\Behaviors\IdleBehavior.cs" />
     <Compile Include="Assets\Behaviors\PanicBehavior.cs" />
+    <Compile Include="Assets\Behaviors\PickupBehavior.cs" />
+    <Compile Include="Assets\Behaviors\RobBehavior.cs" />
     <Compile Include="Assets\Behaviors\SeekBehavior.cs" />
     <Compile Include="Assets\Behaviors\SmellFlowersBehavior.cs" />
+    <Compile Include="Assets\Behaviors\TbagBehavior.cs" />
     <Compile Include="Assets\BombNorb.cs" />
     <Compile Include="Assets\Crushable.cs" />
     <Compile Include="Assets\CustomEditors\EnumFlagAttribute.cs" />
@@ -94,6 +103,7 @@
     <Compile Include="Assets\Norb.cs" />
     <Compile Include="Assets\Offering.cs" />
     <Compile Include="Assets\ParticlePack\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
+    <Compile Include="Assets\PhysicsUtils.cs" />
     <Compile Include="Assets\PickupMePls.cs" />
     <Compile Include="Assets\Planet.cs" />
     <Compile Include="Assets\Plant.cs" />
@@ -105,10 +115,14 @@
     <Compile Include="Assets\Spawner.cs" />
     <Compile Include="Assets\Swarm.cs" />
     <Compile Include="Assets\Team.cs" />
+    <Compile Include="Assets\TreasureChest.cs" />
     <Compile Include="Assets\U.cs" />
     <Compile Include="Assets\VillageController.cs" />
     <Compile Include="Assets\Villager.cs" />
     <Compile Include="Assets\VillagerHome.cs" />
+    <Compile Include="Assets\Worldgen\PRonii.cs" />
+    <Compile Include="Assets\Worldgen\SimplexNoiseGenerator.cs" />
+    <Compile Include="Assets\Worldgen\TerrainGen.cs" />
     <None Include="Assets\Art\models\chicken\license.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
@@ -121,6 +135,7 @@
     <None Include="Assets\Readme.txt" />
     <None Include="Assets\ParticlePack\EffectExamples\Misc Effects\Shaders\FireFly.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\Art\Shaders\ProcedualTerrainTess.shader" />
     <None Include="Assets\Art\Shaders\Noise\HLSL\SimplexNoise3D.hlsl" />
     <None Include="Assets\ParticlePack\EffectExamples\Misc Effects\Prefabs\Readme_Dissolve_Respawn_.txt" />
     <None Include="Assets\Art\Shaders\SpaceTextures.shader" />
@@ -137,11 +152,13 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\Art\Shaders\noise.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\Art\Shaders\ProcedualTerrain.shader" />
     <None Include="Assets\Art\Shaders\Noise\HLSL\SimplexNoise2D.hlsl" />
     <None Include="Assets\Art\Shaders\Noise\HLSL\ClassicNoise3D.hlsl" />
     <None Include="Assets\ParticlePack\EffectExamples\Magic Effects\Shaders\Ice.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
+    <None Include="Assets\credits.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
     <None Include="Assets\Allegorithmic\Plugins\EULA.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
@@ -155,6 +172,9 @@
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
       <HintPath>C:/Users/Lize/source/bgi/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
+      <HintPath>C:/Users/Lize/source/bgi/Library/ScriptAssemblies/Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>C:/Users/Lize/source/bgi/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
@@ -182,6 +202,9 @@
     </Reference>
     <Reference Include="com.unity.cinemachine.editor">
       <HintPath>C:/Users/Lize/source/bgi/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder.AddOns.Editor">
+      <HintPath>C:/Users/Lize/source/bgi/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ShaderGraph.Editor">
       <HintPath>C:/Users/Lize/source/bgi/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>

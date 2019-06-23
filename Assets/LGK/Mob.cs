@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,6 +8,25 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Health))]
 public class Mob : MonoBehaviour
 {
+    public bool CanSee(Vector3 pos)
+    {
+        var dir = pos - this.pos();
+        var dist = dir.magnitude;
+        dir.Normalize();
+
+        if (
+            Physics.Raycast(this.head.position + dir, dir, out var hit)
+            //&& hit.distance <= Me.ViewRange
+            && (Mathf.Abs(dist - hit.distance) < 2 || hit.distance > dist))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool CanSee(MonoBehaviour IWannaKill) => CanSee(IWannaKill.pos());
+
+
     public AiBehavior[] Behaviors = new AiBehavior[0];
 
 
@@ -32,9 +53,14 @@ public class Mob : MonoBehaviour
 
     }
 
+    internal void SetVelocity(Vector3 velocity)
+    {
+        rigidbody.velocity = velocity;
+    }
+
     public bool SwitchBehavior()
     {
-        return SwitchBehavior(Behaviors.ToDictionary(b=>b,b => b.CurrentPriority).WeightedRandom());
+        return SwitchBehavior(Behaviors.ToDictionary(b => b, b => b.CurrentPriority).WeightedRandom());
     }
 
 
@@ -45,11 +71,14 @@ public class Mob : MonoBehaviour
         {
             Debug.LogError($"Missing behavior {typeof(T).Name}");
         }
+
         return SwitchBehavior(next);
 
     }
 
 
+    public IEnumerable<Mob> Nearby => gameObject.Find<Mob>(ViewRange);
+    public IEnumerable<Mob> NearbyEnemies => Nearby.Where(x => Team.Fighting(Team, x.Team));
 
     Rigidbody carrying;
 
@@ -89,6 +118,13 @@ public class Mob : MonoBehaviour
     float lastYaw;
 
 
+    public enum State
+    {
+        Normal,
+        Ragdoll
+    }
+
+    public State state;
 
     // Start is called before the first frame update
     void Start()
@@ -96,15 +132,15 @@ public class Mob : MonoBehaviour
         Animator = GetComponentInChildren<Animator>();
         Animator.applyRootMotion = false;
         agent = GetComponent<NavMeshAgent>();
-
+        head = head ?? transform;
         Behaviors = GetComponents<AiBehavior>();
 
         if (agent)
         {
-            var mode = false;
-            agent.updatePosition = false;
-            agent.updateUpAxis = false;
-            agent.updateRotation = false;
+            var newtonIsALie = false;
+            agent.updatePosition = newtonIsALie;
+            agent.updateUpAxis = newtonIsALie;
+            agent.updateRotation = newtonIsALie;
         }
         rigidbody = GetComponent<Rigidbody>();
 
@@ -112,14 +148,67 @@ public class Mob : MonoBehaviour
         SwitchBehavior();
     }
 
+    public float stepHeight = 0.2f;
+    public float notAStepHeight = 0.05f;
+    public float jumpVelocity = 4;
 
     public void Move(Vector3 targetVel, float turn = 0)
     {
         //targetVel = transform.TransformVector(targetVel);
         if (IsGrounded)
         {
-            targetVel.y = rigidbody.velocity.y;
-            rigidbody.velocity = targetVel;
+
+            var checkPosLower = transform.position + targetVel.normalized;
+
+            var checkPos = checkPosLower + Vector3.up * stepHeight;
+
+
+            Debug.DrawLine(transform.position, checkPos, Color.green);
+
+
+            RaycastHit hit;
+            if (
+
+                Physics.Raycast(
+                ray: new Ray(checkPos, Vector3.down),
+                maxDistance: stepHeight- notAStepHeight,
+                layerMask: LayerMask.GetMask("Terrain"),
+                hitInfo: out hit) // should be true most of the time
+                ||
+                Physics.Raycast(
+                ray: new Ray(checkPosLower, Vector3.up),
+                maxDistance: stepHeight- notAStepHeight,
+                layerMask: LayerMask.GetMask("Terrain"),
+                hitInfo: out hit) // fuck sketchup
+
+
+                )
+            {
+                print("step detected!");
+
+
+                Debug.DrawLine(checkPos, hit.point);
+
+
+                //Todo proportanal jumps for the lols
+                //targetVel.y += jumpVelocity;
+
+
+                targetVel = PhysicsUtils.ComputeThrow(transform.pos(), hit.point, jumpVelocity);
+
+                //transform.position = rayhit.point;
+            }
+            else
+            {
+                targetVel.y = rigidbody.velocity.y;
+            }
+
+
+            if (state == State.Normal)
+                rigidbody.velocity = targetVel;
+
+
+
             //rigidbody.angularVelocity = Vector3.up * turn;
         }
     }
@@ -136,6 +225,8 @@ public class Mob : MonoBehaviour
         {
             m_GroundNormal = hitInfo.normal;
             m_IsGrounded = true;
+            if (state == State.Ragdoll)
+                state = State.Normal;
         }
         else
         {
@@ -151,19 +242,34 @@ public class Mob : MonoBehaviour
     {
         //rigidbody.velocity = Vector3.up+Vector3.forward;
         CheckGrounded();
-        agent.enabled = m_IsGrounded;
-        agent.updatePosition = false && m_IsGrounded;
-
-
-        var dict = Behaviors.Where(x => x.ComeFromAny).ToDictionary(x => x, b => b.CurrentPriority).Where(x => x.Value > CurrentJobPiority);
-
-        if (dict.Any())
+        if (agent)
         {
-            var next = dict.MaxBy(x => x.Value).Key;
-            SwitchBehavior(next);
+            agent.enabled = m_IsGrounded;
         }
+
+
+
+
         if (ActiveBehavior == null)
             SwitchBehavior();
+        else if (ActiveBehavior.ComeFromAny)
+        {
+            var dict = Behaviors
+                .Where(x => x.ComeFromAny)
+                .ToDictionary(x => x, b => b.CurrentPriority)
+                .Where(x => x.Value > CurrentJobPiority);
+
+            if (dict.Any())
+            {
+                var next = dict.MaxBy(x => x.Value).Key;
+                Debug.Log($"overide behvior to {next.GetType().Name}");
+                SwitchBehavior(next);
+            }
+        }
+
+        //Behaviors.Where()
+
+
         ActiveBehavior?.Run();
 
         UpdateAnimator();
@@ -174,7 +280,24 @@ public class Mob : MonoBehaviour
     }
 
 
+    public void Fling(Vector3 velocity)
+    {
+        state = State.Ragdoll;
+        rigidbody.velocity = velocity;
+    }
 
+
+    /// <summary>
+    /// act if i was thrown
+    /// </summary>
+    /// <param name="velocity">How fast and hard</param>
+    [Obsolete]
+    internal void Throw(Vector3 velocity)
+    {
+        SwitchBehavior<FallingBehavior>();
+        Fling(velocity);
+        //throw new NotImplementedException();
+    }
 
     void UpdateAnimator()
     {
@@ -202,6 +325,8 @@ public class Mob : MonoBehaviour
     public void SetTarget(Transform target)
     {
         this.target = target;
+        agent.SetDestination(target.pos());
+
         //if (agent.isActiveAndEnabled)
         //agent.isStopped = false;
     }
@@ -240,7 +365,7 @@ public class Mob : MonoBehaviour
         var lookDir = realVel;
 
         lookDir += 0.1f * (targetpos - this.pos()).normalized;
-        lookDir =lookDir.x0z();
+        lookDir = lookDir.x0z();
         var rotation = Quaternion.LookRotation(lookDir);
         //transform.rotation = rotation;
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
@@ -251,16 +376,36 @@ public class Mob : MonoBehaviour
     }
 
     public float rotationSpeed = 3;
-
-
+    public Transform head;
 
     public bool AtTarget => Vector3.Distance(transform.position, targetpos) < targetDistanceGoal;
 
-    public void ClearMovement()
+    public void TargetClear()
     {
+
         target = null;
-        agent.SetDestination(this.pos());
+
+        if (!agent)
+        {
+            Debug.LogWarning($"{name} does not have nav agent but is trying to navigate");
+        }
+        else
+        {
+            agent.SetDestination(this.pos());
+        }
         //if (!agent || !agent.isOnNavMesh) return;
         //agent.isStopped = true;
+    }
+
+    public override bool Equals(object obj)
+    {
+        var mob = obj as Mob;
+        return mob != null &&
+               base.Equals(obj) && mob.gameObject == gameObject;
+    }
+
+    public override int GetHashCode()
+    {
+        return gameObject.GetHashCode();
     }
 }

@@ -8,7 +8,7 @@ public class PanicBehavior : AiBehavior
     public override bool OnBegin()
     {
         Me.Animator.SetBool("Panic", true);
-        Me.ClearMovement();
+        Me.TargetClear();
         return base.OnBegin();
     }
     public override bool OnEnd()

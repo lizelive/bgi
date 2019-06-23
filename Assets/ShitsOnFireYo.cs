@@ -4,9 +4,28 @@ using UnityEngine;
 
 public class ShitsOnFireYo : MonoBehaviour
 {
-    public static void Burn(GameObject thing)
+    public static void Burn(GameObject thing, Team by = null)
     {
-        var lol = Instantiate(Default.YoOnFire, thing.transform, true);
+
+
+        thing.GetComponentInParent<IBurnable>()?.Burn();
+
+
+
+        var health = thing.GetComponent<Health>();
+
+        if (!health || !Team.Fighting(by, health.team))
+        {
+            return;
+        }
+
+        var lol = thing.GetComponentInChildren<ShitsOnFireYo>();
+        if (lol)
+        {
+            lol.start = Time.time;
+            return;
+        }
+        lol = Instantiate(Default.YoOnFire, thing.transform, true);
         lol.transform.localPosition = Vector3.zero;
 
     }

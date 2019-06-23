@@ -57,10 +57,7 @@ public class FleeBehavior : AiBehavior
 
     public void Update()
     {
-        var mobs = FindObjectsOfType<Mob>();
-        scaryThings = mobs
-            .Where(x => Team.Fighting(x.Team, Team) && Me.Distance(x) < Me.ViewRange)
-            .Select(x => x.transform).ToArray();
+        scaryThings = Me.NearbyEnemies.Select(x=>x.transform).ToArray();
     }
 
     public override void Run()

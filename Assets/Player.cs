@@ -10,6 +10,10 @@ public class Player : MonoBehaviour
     public float maxBalance = 100;
     public float balance;
     public Scrollbar foodBar;
+
+
+    public HashSet<Mob> Followers = new HashSet<Mob>();
+
     /// <summary>
     /// Hate Points
     /// </summary>
@@ -48,7 +52,9 @@ public class Player : MonoBehaviour
         if (followers.Any())
         {
             var savemesenpi = followers.Random();
-            savemesenpi.SetJob(new Job(JobKind.Attack, by.gameObject));
+
+            //TODO fix
+            //savemesenpi.SetJob(new Job(JobKind.Attack, by.gameObject));
 
         }
     }
@@ -63,7 +69,6 @@ public class Player : MonoBehaviour
 
     public Rigidbody fireballPrefab;
 
-    public IEnumerable<Norb> Followers => FindNearbyOwnedNorbs(norbGrabRange);
 
 
     public IEnumerable<Norb> FindNearbyOwnedNorbs(float range)
@@ -91,15 +96,22 @@ public class Player : MonoBehaviour
 
 
         var doThrow = Input.GetButtonDown("Fire1");
-        var doSummon = false;
+        var doSummon = Input.GetKeyDown(KeyCode.Y);
         var doFireball = Input.GetButtonDown("Fire2");
         var doHarvest = Input.GetKeyDown(KeyCode.H);
+        var doMelee = Input.GetKeyDown(KeyCode.M);
+
         var doLocationController = Input.GetKey(KeyCode.Mouse2);
         var doWhistle = Input.GetKey(KeyCode.R);
 
         followPoint.transform.position = doLocationController ? targeter.position : transform.position - transform.forward;
 
         caller.gameObject.SetActive(doWhistle);
+
+        if (doMelee)
+        {
+            weapon.Attack();
+        }
 
         if (doHarvest)
         {
@@ -117,44 +129,55 @@ public class Player : MonoBehaviour
 
         if (doFireball)
         {
-            var startPos = transform.position +3*Vector3.up;
             var targetPos = targeter.position;
-            var launchVel = ComputeThrow(startPos, targetPos, 3* LaunchVel,false);
+            var startPos = transform.position + 2 * Vector3.up;
+
+            var launchVel = PhysicsUtils.ComputeThrow(startPos, targetPos, 3* LaunchVel,false);
+
+            startPos += launchVel.normalized;
+
+            launchVel = PhysicsUtils.ComputeThrow(startPos, targetPos, 3 * LaunchVel, false);
 
             if (!float.IsNaN(launchVel.x))
             {
                 var fireball = Instantiate(fireballPrefab, startPos, Quaternion.identity);
+                fireball.GetComponent<FireBall>().team = health.team;
                 fireball.velocity = launchVel;
             }
         }
 
-        if (doThrow)
+        if (doThrow && Followers.Any())
         {
 
             var noob = Followers.MinBy(n => this.Distance(n));
-            if (noob)
+
+            if (noob && noob.Distance(this) < norbGrabRange)
             {
                 var startPos = transform.position + transform.forward + Vector3.up;
                 var targetPos = targeter.position;
 
 
 
-                var launchVel = ComputeThrow(startPos, targetPos, LaunchVel);
+                var launchVel = PhysicsUtils.ComputeThrow(startPos, targetPos, LaunchVel);
 
                 noob.transform.position = startPos;
                 noob.Throw(launchVel);
-
-
-
-
             }
         }
         if (doSummon)
         {
-            Health.Hurt(NorbCost, DamageKind.Sacrifice);
-            var noob = Instantiate(NorbPrefab, transform.position + transform.forward+Vector3.up, Quaternion.identity);
-            noob.GetComponent<Health>().team = Health.team;
-            noob.owner = this;
+            //Health.Hurt(NorbCost, DamageKind.Sacrifice);
+            //var noob = Instantiate(NorbPrefab, transform.position + transform.forward+Vector3.up, Quaternion.identity);
+            //noob.GetComponent<Health>().team = Health.team;
+            //noob.owner = this;
+
+            var alter = gameObject
+                .Find<BloodAlter>(interactionRange)
+                .MinBy(gameObject.Distance);
+            if (alter)
+            {
+                alter.Spawn(this);
+            }
         }
 
         if (doWhistle)
@@ -169,31 +192,5 @@ public class Player : MonoBehaviour
         }
     }
 
-    public Vector3 ComputeThrow(Vector3 start, Vector3 target, float launchVel, bool throwHigh = true)
-    {
-        var y = target.y - start.y;
 
-        var startPos2d = start.xz();
-        var targetPos2d = target.xz();
-
-        var distance = Vector2.Distance(startPos2d, targetPos2d);
-
-        var gravity = 9.81f;
-
-        var v = launchVel;
-        var v2 = v * v;
-        var d2 = Mathf.Pow(distance, 2);
-
-        var y2 = Mathf.Pow(y, 2);
-
-        //var vy0 = -Mathf.Sqrt(-(2*d2*g*y) / (d2 + y2) + (d2*LV)/ (d2 + y2) + (2*LV*y2)/ (d2 + y2) - Mathf.Sqrt(-d ^ 4(4*d2*g2 - 4*g*LV*y - Mathf.Pow(LV, 2))) / (d ^ 2 + y ^ 2))/ sqrt(2)
-
-        var det = Mathf.Sqrt(v2 * v2 - gravity * (gravity * d2 + 2 * y * v2));
-        if (!throwHigh) det = -det;
-        var theta = Mathf.Atan2(v2 + det, gravity * distance);
-        var vy = Mathf.Sin(theta) * v;
-        var vx = Mathf.Cos(theta) * v;
-
-        return Vector3.up * vy + vx * (targetPos2d - startPos2d).normalized.x0y();
-    }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Team : MonoBehaviour
 {
+    public float Balance;
 
     public readonly Team Gia = null;
 

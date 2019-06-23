@@ -127,7 +127,7 @@ public class Norb : MonoBehaviour
             case JobKind.Idle:
             case JobKind.Seek:
             case JobKind.Ragdoll:
-                Mob.ClearMovement();
+                Mob.TargetClear();
 
                 break;
 
@@ -263,7 +263,7 @@ public class Norb : MonoBehaviour
         Mob.IsGrounded = false;
         SetJob(Job.Thrown);
         GetComponent<Rigidbody>().velocity = launchVel;
-        Mob.ClearMovement();
+        Mob.TargetClear();
     }
 
     public virtual Job NextJob()
