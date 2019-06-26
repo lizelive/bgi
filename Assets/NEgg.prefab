@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81060343925d5cc4f8b1864b9fbd6835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawns: {fileID: 6072273835800347338, guid: ac01381196ad08246b1aa033becde19c, type: 3}
+  spawns: {fileID: 6072273835800347336, guid: ac01381196ad08246b1aa033becde19c, type: 3}
   owner: {fileID: 0}
   effect: {fileID: 8042726752801928325}
   hatchTime: 0

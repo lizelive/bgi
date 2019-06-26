@@ -20,6 +20,6 @@ public class PanicBehavior : AiBehavior
 
     public override void Run()
     {
-        print("Reeeeeeeeeeeeee");
+        //print("Reeeeeeeeeeeeee");
     }
 }

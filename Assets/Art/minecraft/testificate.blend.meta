@@ -3,7 +3,12 @@ guid: 69210dbf15b2b5b4f9e4ff69e4ea69ff
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Villager
+    second: {fileID: 2100000, guid: 9455b78e7c248fa4380efa793474d155, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

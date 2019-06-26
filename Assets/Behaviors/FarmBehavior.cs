@@ -11,8 +11,9 @@ public class FarmBehavior : AiBehavior
     public float HarvestSpeed = 1;
     public Plant plant;
     public float harvestStartTime = float.PositiveInfinity;
+	public override bool SwitchToAny => true;
 
-    public override bool OnBegin()
+	public override bool OnBegin()
     {
         if(!plant)
         {
@@ -48,13 +49,14 @@ public class FarmBehavior : AiBehavior
             Me.SwitchBehavior();
             return;
         }
-        Me.SetTarget(plant.transform, 2);
+        //Me.SetTarget(plant.transform, 2);
 
         if (Me.AtTarget)
         {
+			Debug.DrawLine(transform.position, plant.transform.position, Color.magenta);
             Me.Animator.SetBool("PickFruit", true);
 
-            var got = plant.Harvest(HarvestSpeed * Time.deltaTime);
+            var got = plant.Harvest(plant.harvestPerSecond * Time.deltaTime);
 
             VillageController.I.DepositFood(got);
 

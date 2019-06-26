@@ -34,6 +34,9 @@ public class Mob : MonoBehaviour
 
     public bool SwitchBehavior(AiBehavior next)
     {
+		if (ActiveBehavior == next)
+			return false;
+
         if (ActiveBehavior)
         {
             if (!ActiveBehavior.OnEnd())
@@ -191,10 +194,10 @@ public class Mob : MonoBehaviour
 
 
                 //Todo proportanal jumps for the lols
-                //targetVel.y += jumpVelocity;
+                targetVel.y += jumpVelocity;
 
 
-                targetVel = PhysicsUtils.ComputeThrow(transform.pos(), hit.point, jumpVelocity);
+                //targetVel = PhysicsUtils.ComputeThrow(transform.pos(), hit.point, jumpVelocity);
 
                 //transform.position = rayhit.point;
             }
@@ -252,7 +255,7 @@ public class Mob : MonoBehaviour
 
         if (ActiveBehavior == null)
             SwitchBehavior();
-        else if (ActiveBehavior.ComeFromAny)
+        else if (ActiveBehavior.SwitchToAny)
         {
             var dict = Behaviors
                 .Where(x => x.ComeFromAny)
@@ -261,8 +264,8 @@ public class Mob : MonoBehaviour
 
             if (dict.Any())
             {
-                var next = dict.MaxBy(x => x.Value).Key;
-                Debug.Log($"overide behvior to {next.GetType().Name}");
+                var next = dict.Where(x=>x.Key!=ActiveBehavior).MaxBy(x => x.Value).Key;
+                //Debug.Log($"overide behvior to {next.GetType().Name}");
                 SwitchBehavior(next);
             }
         }
@@ -273,7 +276,6 @@ public class Mob : MonoBehaviour
         ActiveBehavior?.Run();
 
         UpdateAnimator();
-        UpdateMovment();
 
         //Debug.DrawLine(agent.steeringTarget, this.pos());
         //Debug.DrawRay(transform.pos(), agent.desiredVelocity, Color.cyan);
@@ -282,6 +284,9 @@ public class Mob : MonoBehaviour
 
     public void Fling(Vector3 velocity)
     {
+		if (float.IsNaN(velocity.magnitude))
+			return;
+
         state = State.Ragdoll;
         rigidbody.velocity = velocity;
     }
@@ -299,9 +304,13 @@ public class Mob : MonoBehaviour
         //throw new NotImplementedException();
     }
 
-    void UpdateAnimator()
+
+	private void FixedUpdate()
+	{
+		UpdateMovment();
+	}
+	void UpdateAnimator()
     {
-        Animator.SetBool("OnGround", IsGrounded);
 
         var vel = transform.InverseTransformVector(rigidbody.velocity);
 
@@ -310,7 +319,8 @@ public class Mob : MonoBehaviour
         var turn = (yaw - lastYaw) / Time.deltaTime;
         lastYaw = yaw;
 
-        Animator.SetFloat("Forward", vel.z, 0.1f, Time.deltaTime);
+		Animator.SetBool("OnGround", IsGrounded);
+		Animator.SetFloat("Forward", vel.z, 0.1f, Time.deltaTime);
         Animator.SetFloat("Turn", turn, 0.1f, Time.deltaTime);
 
     }
@@ -322,36 +332,43 @@ public class Mob : MonoBehaviour
         SetTarget(target);
     }
 
+
+
+	public bool navDirty = false;
     public void SetTarget(Transform target)
     {
         this.target = target;
-        agent.SetDestination(target.pos());
-
-        //if (agent.isActiveAndEnabled)
-        //agent.isStopped = false;
-    }
+		navDirty = true;
+		navigationActive = true;
+		//if (agent.isActiveAndEnabled)
+		//agent.isStopped = false;
+	}
 
 
     public void SetTarget(Vector3 pos)
     {
-        agent.SetDestination(pos);
-        //agent.isStopped = false;
-        target = null;
+		navDirty = true;
+		navigationActive = true;
+		//agent.isStopped = false;
+		target = null;
         targetpos = pos;
     }
     // Update is called once per frame
     void UpdateMovment()
     {
+		if (!navigationActive)
+			return;
+
         //agent.updatePosition = character.IsGrounded;
         if (target)
             targetpos = target.position;
         else
             target = null;
 
-        if (agent.isActiveAndEnabled)
-            if (Vector3.Distance(lastTargetPos, targetpos) > targetPosMoveThreshold)
+        if (agent.isActiveAndEnabled && agent.isOnNavMesh)
+            if ( Vector3.Distance(lastTargetPos, targetpos) > targetPosMoveThreshold)
             {
-
+				navDirty = false;
                 agent.SetDestination(targetpos);
                 lastTargetPos = targetpos;
             }
@@ -380,22 +397,16 @@ public class Mob : MonoBehaviour
 
     public bool AtTarget => Vector3.Distance(transform.position, targetpos) < targetDistanceGoal;
 
+
+	bool navigationActive = false;
     public void TargetClear()
     {
 
         target = null;
-
-        if (!agent)
-        {
-            Debug.LogWarning($"{name} does not have nav agent but is trying to navigate");
-        }
-        else
-        {
-            agent.SetDestination(this.pos());
-        }
-        //if (!agent || !agent.isOnNavMesh) return;
-        //agent.isStopped = true;
-    }
+		navigationActive = false;
+		//if (!agent || !agent.isOnNavMesh) return;
+		//agent.isStopped = true;
+	}
 
     public override bool Equals(object obj)
     {

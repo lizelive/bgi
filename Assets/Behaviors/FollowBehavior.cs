@@ -32,9 +32,17 @@ public class FollowBehavior : AiBehavior
         return base.OnEnd();
     }
 
-    public override void Run()
+
+	public void OnDestroy()
+	{
+		if(following)
+			following.Followers.Remove(Me);
+	}
+	public override void Run()
     {
-        if (!following)
+		following.Followers.Add(Me);
+
+		if (!following)
             Me.SwitchBehavior<PanicBehavior>();
         base.Run();
     }

@@ -18,84 +18,104 @@ public class Health : MonoBehaviour
 	public float RegenCooldown = float.PositiveInfinity;
 	public float RegenSpeed = 0;
 	public GameObject ragdoll;
-    public ParticleSystem deathParticle;
+	public ParticleSystem deathParticle;
 
-    public DamageKind immunities;
+	public DamageKind immunities;
 
-    private float lastHurt = 0;
+	private float lastHurt = 0;
 	public float killHealthBonus = 0.15f;
 
 	public Team team;
 
-    public event Action<Mob> OnHurt;
-    public event Action<Mob> OnDie;
+	public event Action<Health> OnHurt;
+	public event Action<Health> OnDie;
 
-    public void Heal(float value)
+	public void Heal(float value)
 	{
 		CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + value);
 	}
-    
-    public bool Hurt(float value, DamageKind kind, Mob by = null)
+
+	public bool Hurt(float value, DamageKind kind, Health by = null, bool allowFriendlyFire = false, bool ignoreCooldown = false)
 	{
-        if (by == this || !Team.Fighting(team, by?.Team) || immunities==kind)
+		if(kind==DamageKind.None)
+		{
+			Debug.LogWarning("That's not very effective.");
 			return false;
-        //print($"{gameObject} was hurt for {value} {kind} by {hurter} but {immunities}");
+		}
+		if (by == this || (!Team.Fighting(team, by?.team) && !allowFriendlyFire) || immunities == kind)
+			return false;
+
+
+		if (Time.time - lastHurt < HitCooldown)
+		{
+			return false;
+		}
+		//print($"{gameObject} was hurt for {value} {kind} by {hurter} but {immunities}");
 
 
 
-        lastHurt = Time.time;
-		
+		lastHurt = Time.time;
+
 		CurrentHealth -= value;
-		if(CurrentHealth <= 0)
+		if (CurrentHealth <= 0)
 		{
 			//if (by)
 			//{
 			//	by.CurrentHealth += MaxHealth * killHealthBonus;
 			//}
-			
-            Die(by);
+
+			Die(by);
 		}
 
-        OnHurt?.Invoke(by);
-        return true;
-    }
-    void Die(Mob by)
-    {
-        if (ragdoll)
-            Instantiate(ragdoll, transform.position, transform.rotation);
-        if (deathParticle)
-        {
-            var dp = Instantiate(deathParticle, transform.position, Quaternion.identity);
-            var shape = dp.shape;
-            var smr = shape.skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-            print(smr);
-        }
-        OnDie?.Invoke(by);
-        Destroy(gameObject);
+		OnHurt?.Invoke(by);
+		return true;
+	}
+	void Die(Health by)
+	{
+		if (ragdoll)
+			Instantiate(ragdoll, transform.position, transform.rotation);
+		if (deathParticle)
+		{
+			var dp = Instantiate(deathParticle, transform.position, Quaternion.identity);
+			var shape = dp.shape;
+			var smr = shape.skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+			print(smr);
+		}
+		OnDie?.Invoke(by);
+		Destroy(gameObject);
 
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Time.time - lastHurt > RegenCooldown)
-            Heal(RegenSpeed * Time.deltaTime);
-        
-    }
+	public Vector3 CenterPoint => transform.TransformPoint(centerOffset);
+	public Vector3 centerOffset;
+	public float radius;
+	// Start is called before the first frame update
+	void Start()
+	{
+		centerOffset = GetComponentInChildren<Rigidbody>()?.centerOfMass
+			?? GetComponentInChildren<Collider>()?.bounds.center ??
+			Vector3.zero;
+
+		radius = GetComponentInChildren<Collider>()?.bounds.size.magnitude ?? 0;
+	}
+
+	// Update is called once per frame
+	void Update()
+	{
+		if (Time.time - lastHurt > RegenCooldown)
+			Heal(RegenSpeed * Time.deltaTime);
+
+	}
 }
 
 public enum DamageKind
 {
+	None,
 	Generic,
 	Fire,
 	Melee,
-    Explosion,
-    Magic,
-    Water,
-    Sacrifice
+	Explosion,
+	Magic,
+	Water,
+	Sacrifice
 }

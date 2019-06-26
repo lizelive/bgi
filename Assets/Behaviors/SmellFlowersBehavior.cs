@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class SmellFlowersBehavior : SeekBehavior<Flowery>
 {
-    public override void Interact(Flowery thing) {
+	public override bool SwitchToAny => true;
+	public override void Interact(Flowery thing) {
         if (Smells >= thing.smells)
         {
             Me.SwitchBehavior();
@@ -16,6 +17,7 @@ public class SmellFlowersBehavior : SeekBehavior<Flowery>
         {
             Me.Animator.SetTrigger("SmellFlowers");
         }
+
         thing.lastSmelt = Time.time;
         Smells += Time.deltaTime;
     }

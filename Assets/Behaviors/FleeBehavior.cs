@@ -12,7 +12,7 @@ public class FleeBehavior : AiBehavior
     public float PanicThreshold = 1;
     public int numberOfTries = 10;
 
-
+	
     public float EvalSpot(Vector3 pos)
     {
         if (scaryThings ==null)
@@ -58,7 +58,9 @@ public class FleeBehavior : AiBehavior
     public void Update()
     {
         scaryThings = Me.NearbyEnemies.Select(x=>x.transform).ToArray();
-    }
+		if (!Running && CurrentPriority > 1)
+			Me.SwitchBehavior(this);
+	}
 
     public override void Run()
     {

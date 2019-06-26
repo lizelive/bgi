@@ -76,8 +76,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8663d6ea66782b8428e46aa3891e1ff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  growTime: 0
+  growthRate: 0.016666668
   cropType: {fileID: 0}
+  growth: 0
+  harvestPerSecond: 1
+  maxGrowth: 1
 --- !u!114 &2520339654518706299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,7 +97,7 @@ MonoBehaviour:
   thingToSpawn: {fileID: 4665702831689490203, guid: ec5eef6cc56037348b5ad8917c1af6a7,
     type: 3}
   spawnPoint: {fileID: 2520339652682707507}
-  owner: {fileID: 0}
+  owner: {fileID: 4472536848245835836, guid: 20c57ad1c5b9ed144a536fc29e5fcd73, type: 3}
   farEnough: 3
 --- !u!64 &2520339653222632132
 MeshCollider:

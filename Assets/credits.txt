@@ -1,8 +1,5 @@
-Hawk Screech Valley Sound
-Mike Koenig 
-
-Bush
-JomokoJP
+Patron
+Matheus Vieira
 
 Twitch Subscribers
 pixelatedfyre
@@ -12,8 +9,23 @@ pespidoge
 lilyrose2798
 euphius
 
-Patron
-nobody lol
+Hawk Screech Valley Sound
+Mike Koenig 
+
+Bush
+JomokoJP
+
+Osaka Castle
+SeaGate
+
+Bus Scan
+https://www.artec3d.com/3d-models/vw-bus
+
+ShieldFX
+https://github.com/vux427/ForceFieldFX
 
 Gamemaker Kit
 Unity
+
+Placeholder Crap
+Unity Asset Store
