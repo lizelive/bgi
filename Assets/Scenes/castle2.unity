@@ -5253,16 +5253,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4595983786776455394, guid: a06b204ae32712143878b8985c1f9d7d,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1096774768712051455, guid: a06b204ae32712143878b8985c1f9d7d,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 1521593314396977218, guid: a06b204ae32712143878b8985c1f9d7d,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -5274,6 +5264,16 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1910197456611341977, guid: a06b204ae32712143878b8985c1f9d7d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595983786776455394, guid: a06b204ae32712143878b8985c1f9d7d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1096774768712051455, guid: a06b204ae32712143878b8985c1f9d7d,
         type: 3}
       propertyPath: m_Layer
       value: 8

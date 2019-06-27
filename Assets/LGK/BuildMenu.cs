@@ -7,5 +7,11 @@ public class BuildMenu : MonoBehaviour
 	public Team team;
 	public Building[] buildings;
 	public Building[] ValidBuildings => buildings;
-	public Building Current => ValidBuildings[0];
+	public Building Current => ValidBuildings[index % ValidBuildings.Length];
+	
+	public int index;
+	public void Next()
+	{
+		index++;
+	}
 }

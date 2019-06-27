@@ -35,6 +35,9 @@ public static class U
     {
         return Vector3.Distance(self.transform.position, other);
     }
+
+	public static TValue Key<TKey, TValue>(KeyValuePair<TKey, TValue> keyValuePair) => keyValuePair.Value;
+
     public static float Distance(this GameObject self, Component other)
     {
         return Vector3.Distance(self.transform.position, other.transform.position);

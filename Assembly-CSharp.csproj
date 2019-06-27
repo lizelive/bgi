@@ -132,6 +132,7 @@
     <Compile Include="Assets\LGK\Villager.cs" />
     <Compile Include="Assets\LGK\VillagerHome.cs" />
     <Compile Include="Assets\ParticlePack\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
+    <Compile Include="Assets\VillagerUI.cs" />
     <Compile Include="Assets\Worldgen\PRonii.cs" />
     <Compile Include="Assets\Worldgen\SimplexNoiseGenerator.cs" />
     <Compile Include="Assets\Worldgen\TerrainGen.cs" />
@@ -167,11 +168,13 @@
     <None Include="Assets\Art\Shaders\noise.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\Art\Shaders\ProcedualTerrain.shader" />
+    <None Include="Assets\Art\fonts\john-stracke_essays-1743\OFL.txt" />
     <None Include="Assets\Art\Shaders\Noise\HLSL\SimplexNoise2D.hlsl" />
     <None Include="Assets\Art\Shaders\Noise\HLSL\ClassicNoise3D.hlsl" />
     <None Include="Assets\ParticlePack\EffectExamples\Magic Effects\Shaders\Ice.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
+    <None Include="Assets\Art\fonts\livin-hell_got-heroin\README.txt" />
     <None Include="Assets\credits.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
@@ -203,6 +206,12 @@
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Postprocessing.Editor">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Postprocessing.Runtime">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

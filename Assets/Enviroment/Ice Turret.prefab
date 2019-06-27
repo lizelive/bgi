@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 1822860194638771080}
   - component: {fileID: 1811863449959772458}
   - component: {fileID: 1805043341448255666}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: IceBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1822860194638771080
 Transform:
@@ -88,12 +88,12 @@ GameObject:
   - component: {fileID: 1823147704063284446}
   - component: {fileID: 1989538707377854776}
   - component: {fileID: 1990133229844825056}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: TinyShards
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1823147704063284446
 Transform:
@@ -4736,12 +4736,12 @@ GameObject:
   - component: {fileID: 1823177522275023472}
   - component: {fileID: 1989554624867121278}
   - component: {fileID: 1988808353849849254}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Mist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1823177522275023472
 Transform:
@@ -9513,12 +9513,13 @@ GameObject:
   - component: {fileID: 6012461561016277281}
   - component: {fileID: 239263671664644800}
   - component: {fileID: 8823375742409636547}
-  m_Layer: 0
+  - component: {fileID: 6622344944593680879}
+  m_Layer: 12
   m_Name: Ice Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1822910219208444904
 Transform:
@@ -13238,7 +13239,7 @@ ParticleSystem:
     radiusScale: 0.2
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 3895
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
@@ -14299,6 +14300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63878165adc9d194493f091e045b411e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildSpawnHeight: 10
   cost: 0
 --- !u!114 &8823375742409636547
 MonoBehaviour:
@@ -14323,6 +14325,21 @@ MonoBehaviour:
   killHealthBonus: 0.15
   team: {fileID: 4472536848245835836, guid: 20c57ad1c5b9ed144a536fc29e5fcd73, type: 3}
   centerOffset: {x: 0, y: 0, z: 0}
+  radius: 0
+--- !u!136 &6622344944593680879
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827149020348559550}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: -1, z: 0}
 --- !u!1 &1827206173130695954
 GameObject:
   m_ObjectHideFlags: 0
@@ -14334,12 +14351,12 @@ GameObject:
   - component: {fileID: 1822887732496407140}
   - component: {fileID: 1989779353042785382}
   - component: {fileID: 1989280791158181530}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: MistTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1822887732496407140
 Transform:

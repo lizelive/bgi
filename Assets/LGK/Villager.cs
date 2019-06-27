@@ -15,7 +15,7 @@ public class Villager : MonoBehaviour
     {
         //if (obj.GetComponent<Player>())
         {
-            VillageController.I.KilledAVillager();
+            VillageController.I.KilledAVillager(obj);
         }
     }
 

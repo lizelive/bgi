@@ -46,7 +46,7 @@ public class Health : MonoBehaviour
 			return false;
 
 
-		if (Time.time - lastHurt < HitCooldown)
+		if (!ignoreCooldown && Time.time - lastHurt < HitCooldown)
 		{
 			return false;
 		}
@@ -117,5 +117,7 @@ public enum DamageKind
 	Explosion,
 	Magic,
 	Water,
-	Sacrifice
+	Sacrifice,
+	Step,
+	Fall
 }

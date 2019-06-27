@@ -50,7 +50,7 @@ public class MeleeWeapon : MonoBehaviour
             }
 
             //print($"landed {name} on {collision.gameObject.name} at {collision.relativeVelocity.y}");
-            other.Hurt(damage * dropAttackBonus, DamageKind.Melee, Mob.Health);
+            other.Hurt(damage * dropAttackBonus, DamageKind.Step, Mob.Health);
         }
     }
 

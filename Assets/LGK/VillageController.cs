@@ -13,12 +13,13 @@ public class VillageController : MonoBehaviour
 
     public Offering offering;
 
-    public float Fear = 0;
+	//public float Fear = 0;
     public float FearDecay = 0.1f;
-    public const float MaxFear = 10;
+    //public const float MaxFear = 10;
 
     public float FearPerVillagerKiled = 1;
     public int CurrentlyAliveVillager => Villagers.Length;
+
 
     public VillageController()
     {
@@ -33,10 +34,13 @@ public class VillageController : MonoBehaviour
     public VillagerHome[] Houses => FindObjectsOfType<VillagerHome>();
     public Villager[] Villagers => FindObjectsOfType<Villager>();
 
-    public void KilledAVillager()
+    public void KilledAVillager(Health murder)
     {
-        print("Murder.");
-        Fear += FearPerVillagerKiled;
+
+		if(murder?.team)
+		team.AddRep(murder.team, -FearPerVillagerKiled);
+        //print("Murder.");
+        //Fear += FearPerVillagerKiled;
     }
     public float Balance
 	{
@@ -56,20 +60,50 @@ public class VillageController : MonoBehaviour
 
     public void DepositFood(float ammount)
     {
-        var fearp = Fear / MaxFear;
-        var payoutP =  fearCurve.Evaluate(fearp);
+		
+        var fearp = 1 - team.GetRep(team) / team.TotalRep;
+
+		var payoutP = 0;// fearCurve.Evaluate(fearp);
 
         offering.curret += payoutP * ammount;
         Balance += (1 - payoutP) * ammount;
 
     }
+	public Mob heroPrefab;
+	public float heroFearTreshold = 18;
+	public float heroFearRestored = 5;
 
-    // Update is called once per frame
-    void Update()
+	public Transform spawnPoint;
+
+	public Mob myHero;
+
+	public float Fear;
+
+	// Update is called once per frame
+	void Update()
     {
-        var timeCorrectedDecay = FearDecay * CurrentlyAliveVillager;
+		team.mobs = new HashSet<Mob>(Villagers.Select(x => x.GetComponent<Mob>()));
+		team.SetRep(team, Villagers.Count());
+		var timeCorrectedDecay = FearDecay * CurrentlyAliveVillager;
         timeCorrectedDecay *= Time.deltaTime;
-        Fear *= 1 - timeCorrectedDecay;
+
+
+		Fear = 1 - team.Confidance;
+
+		if (!myHero)
+		{
+			myHero = null;
+			if (Fear > heroFearTreshold && heroPrefab)
+			{
+				var spawnPos = spawnPoint.pos();
+
+				Fear -= heroFearTreshold;
+				myHero = Instantiate(heroPrefab, spawnPos, Quaternion.identity);
+				myHero.transform.position = spawnPos;
+				myHero.Team = team;
+			}
+		}
+
 
         if (Balance > HouseRepairCost)
         {

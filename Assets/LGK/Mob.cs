@@ -102,7 +102,10 @@ public class Mob : MonoBehaviour
 
     public float ViewRange = 10;
     public float maxSpeed = 1;
-    public Team Team => Health.team;
+    public Team Team {
+		get => Health.team;
+		set => Health.team = value;
+	}
 
     private bool m_IsGrounded;
     private Vector3 m_GroundNormal;
@@ -284,7 +287,7 @@ public class Mob : MonoBehaviour
 
     public void Fling(Vector3 velocity)
     {
-		if (float.IsNaN(velocity.magnitude))
+		if (!rigidbody || float.IsNaN(velocity.magnitude))
 			return;
 
         state = State.Ragdoll;

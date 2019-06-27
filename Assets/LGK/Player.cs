@@ -122,6 +122,10 @@ public class Player : MonoBehaviour
         caller.gameObject.SetActive(doWhistle);
 
 
+		if (Input.GetKeyDown(KeyCode.N))
+		{
+			buildMenu.Next();
+		}
 
 		if (doBuild) {
 			var spawnLocation = targeter.pos();

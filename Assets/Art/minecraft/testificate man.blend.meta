@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 52246b3e473a8e1498d9dc3442f40c52, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Villager
     second: {fileID: 2100000, guid: 9455b78e7c248fa4380efa793474d155, type: 2}
   materials:

@@ -10,7 +10,13 @@ public class BloodrageBehavior : AiBehavior
 
     public bool onLookout = true;
 
-    public bool IsVisible()
+	public void Start()
+	{
+		IWannaKill = FindObjectOfType<Player>()?.GetComponent<Mob>();
+	}
+
+
+	public bool IsVisible()
     {
         if (!IWannaKill) return false;
         var dir = IWannaKill.pos() - Me.pos();

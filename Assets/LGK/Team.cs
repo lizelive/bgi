@@ -1,29 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Team : MonoBehaviour
 {
-    public float Balance;
+    public float Balance = 0;
 
     public readonly Team Gia = null;
 
     public Color color;
 
-    public List<Norb> norbs;
-    public List<Player> players;
+    public HashSet<Mob> mobs = new HashSet<Mob>();
+
+	public Dictionary<Team, float> reputation = new Dictionary<Team, float>();
 
 
 
-	Dictionary<Team, float> reputation = new Dictionary<Team, float>();
+	public float TotalRep => reputation.Sum(u=>u.Value);
 
-
+	public float Confidance => Mathf.Max(0,TotalRep/GetRep(this));
 
 	public float GetRep(Team team)
 	{
-		float value = 0;
-		reputation.TryGetValue(team, out value);
-		return value;
+		return reputation.TryGetValue(team, out var value) ? value : 0;
 	}
 
 	public float SetRep(Team team,float value)
@@ -60,7 +60,8 @@ public class Team : MonoBehaviour
     {
         if (a == null || b == null)
             return true;
-        return a != b;
+		if (a == b) return false;
+		return !a.Allies.Contains(b);
     }
 
 

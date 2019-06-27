@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: c63a73c607238104fb55794cf043bf24
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Essays1743
+  fontNames:
+  - Essays1743
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: c2a65ca0bac8e5e42a748e72030cefc7, type: 3}
+  - {fileID: 12800000, guid: 39418d359e2a8d941afde56c9ccd23e3, type: 3}
+  - {fileID: 12800000, guid: a0328c4a1b3420446ac8b29f05de5e65, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
