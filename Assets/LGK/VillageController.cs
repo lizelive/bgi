@@ -80,7 +80,7 @@ public class VillageController : MonoBehaviour
 			fear = 0;
 		}
 		var payoutP = fearCurve.Evaluate(fear);
-		print($"{fear} is {payoutP}");
+		//print($"{fear} is {payoutP}");
 
 
 		offering.curret += payoutP * ammount;

@@ -95,7 +95,7 @@ public class Player : MonoBehaviour
 		var mousePos = Input.mousePosition;
 		var ray = Camera.main.ScreenPointToRay(mousePos);
 
-		if (Physics.Raycast(ray, out RaycastHit hit))
+		if (Physics.Raycast(ray, out RaycastHit hit, LayerMask.GetMask(Layers.Terrain)))
 		{
 			targeter.position = hit.point;
 		}

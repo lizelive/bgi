@@ -87,6 +87,7 @@
     <Compile Include="Assets\DecalSystem\Plugins\DecalSystem\Helpers\MeshUtils.cs" />
     <Compile Include="Assets\DecalSystem\Plugins\DecalSystem\Helpers\PolygonUtils.cs" />
     <Compile Include="Assets\DecalSystem\Plugins\DecalSystem\Helpers\TerrainUtils.cs" />
+    <Compile Include="Assets\Layers.cs" />
     <Compile Include="Assets\LGK\AudioMan.cs" />
     <Compile Include="Assets\LGK\BloodAlter.cs" />
     <Compile Include="Assets\LGK\BombNorb.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Assets\LGK\Villager.cs" />
     <Compile Include="Assets\LGK\VillagerHome.cs" />
     <Compile Include="Assets\ParticlePack\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
+    <Compile Include="Assets\Timer.cs" />
     <Compile Include="Assets\VillagerUI.cs" />
     <Compile Include="Assets\Worldgen\PRonii.cs" />
     <Compile Include="Assets\Worldgen\SimplexNoiseGenerator.cs" />

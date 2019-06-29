@@ -9,10 +9,11 @@ public class FollowBehavior : AiBehavior
     public override bool SwitchToAny => true;
     public Player following;
 
+		
     public override bool OnBegin()
     {
         if(!following)
-        following = FindObjectOfType<Player>();
+			following = FindObjectOfType<Player>();
         if (following)
         {
             Me.SetTarget(following.followPoint.transform);
@@ -21,9 +22,9 @@ public class FollowBehavior : AiBehavior
         }
         print("Nothing to follow");
         return false;
-    }
+	}
 
-    public override bool OnEnd()
+	public override bool OnEnd()
     {
         if(following)
         following.Followers.Remove(Me);

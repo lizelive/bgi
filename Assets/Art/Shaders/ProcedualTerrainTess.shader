@@ -17,7 +17,8 @@
 		CGPROGRAM
 		#pragma surface surf BlinnPhong addshadow vertex:disp tessellate:tessEdge
 		#include "Tessellation.cginc"
-		#include "Noise/HLSL/SimplexNoise2D.hlsl"
+		//#include "Noise/HLSL/SimplexNoise2D.hlsl"
+		#include "Noise/HLSL/SimplexNoise3D.hlsl"
 
 		struct appdata {
 			float4 vertex : POSITION;
@@ -39,7 +40,17 @@
 		sampler2D _ParallaxMap;
 
 
-		float getHeight(float2 uv) {
+		//float getHeight(float2 uv) {
+
+		//	float d = snoise(uv);
+
+		//	for (int i = 0; i < 3; i++) {
+		//		d += pow(2, -i) * snoise(pow(2, i) * uv);
+		//	}
+		//	return d;
+		//}
+
+		float getHeight(float3 uv) {
 
 			float d = snoise(uv);
 
@@ -51,7 +62,10 @@
 
 		void disp(inout appdata v)
 		{
-			float2 uv = v.texcoord.xy;
+			//float2 uv = v.texcoord.xy;
+			float4 pos = mul(unity_ObjectToWorld, v.vertex);
+			float3 uv = pos.xyz;
+			uv.y = 0;
 			float d = getHeight(uv);
 			v.vertex.xyz += v.normal * d;
 		}

@@ -5,7 +5,8 @@ using System.Linq;
 
 public class FleeBehavior : AiBehavior
 {
-    Transform[] scaryThings = { };
+	private Timer checkTimer = new Timer(1);
+	Transform[] scaryThings = { };
     public float MaxStepHight = 1;
     public float FleeRange = 5;
     public float FeelSafeThreshold = 0.2f;
@@ -55,11 +56,14 @@ public class FleeBehavior : AiBehavior
         }
     }
 
-    public void Update()
-    {
-        scaryThings = Me.NearbyEnemies.Select(x=>x.transform).ToArray();
-		if (!Running && CurrentPriority > 1)
-			Me.SwitchBehavior(this);
+	public void Update()
+	{
+		if (!checkTimer.Check)
+		{
+			scaryThings = Me.NearbyEnemies.Select(x => x.transform).ToArray();
+			if (!Running && CurrentPriority > 1)
+				Me.SwitchBehavior(this);
+		}
 	}
 
     public override void Run()

@@ -40,7 +40,7 @@ public class AudioMan : MonoBehaviour
 			var end = path.LastIndexOf('.');
 			var dir = path.Substring(start, end - start);
 
-			print($"{path} has {clip} {name} {dir}");
+			//print($"{path} has {clip} {name} {dir}");
 			nameToClip.Add(dir, clip);
         }
     }
