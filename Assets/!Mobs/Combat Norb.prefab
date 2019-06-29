@@ -166,7 +166,7 @@ MonoBehaviour:
   cooldown: 1
   damage: 1
   attackRange: 1.2
-  launchForce: 0
+  launchForce: 1000
   pierce: 0
   sfx: {fileID: 0}
   stickStrength: 0

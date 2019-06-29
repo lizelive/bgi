@@ -5,6 +5,8 @@ using UnityEngine;
 public class Plant : MonoBehaviour
 {
 
+	public Team Owner => GetComponent<Health>()?.team;
+
     public float growthRate= 1 / 60f;
     public GameObject cropType;
 
@@ -13,15 +15,10 @@ public class Plant : MonoBehaviour
     public float harvestPerSecond = 1;
     public float maxGrowth = 1;
 
-    public bool Ready => growth == maxGrowth;
+	public bool Ready => growth == maxGrowth && Time.time - lastLookat > 1;
+	public float lastLookat;
 
-    public float PGrowth => growth / maxGrowth;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+	public float PGrowth => growth / maxGrowth;
     
     public float Harvest(float amount)
     {
@@ -36,9 +33,9 @@ public class Plant : MonoBehaviour
         growth = Mathf.Min(growth + growthRate * Time.deltaTime, maxGrowth);
 
         var growthP = growth / maxGrowth;
-        var numApples= growthP*transform.childCount;
+		var numApples = growthP * (transform.childCount - 1);
 
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 1; i < transform.childCount; i++)
         {
             transform.GetChild(i).gameObject.SetActive(i <= numApples);
         }

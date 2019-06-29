@@ -30,6 +30,14 @@ public class Health : MonoBehaviour
 	public event Action<Health> OnHurt;
 	public event Action<Health> OnDie;
 
+
+
+	public Func<Health, bool> InRange(float range) => (x) => InRange(range, x);
+	public bool InRange(float range, Health other)
+	{
+		return this.Distance(other) < range + other.radius + radius;
+	}
+
 	public void Heal(float value)
 	{
 		CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + value);
@@ -42,7 +50,7 @@ public class Health : MonoBehaviour
 			Debug.LogWarning("That's not very effective.");
 			return false;
 		}
-		if (by == this || (!Team.Fighting(team, by?.team) && !allowFriendlyFire) || immunities == kind)
+		if (by == this || (!Team.Fighting(by?.team, team) && !allowFriendlyFire) || immunities == kind)
 			return false;
 
 
@@ -96,7 +104,7 @@ public class Health : MonoBehaviour
 			?? GetComponentInChildren<Collider>()?.bounds.center ??
 			Vector3.zero;
 
-		radius = GetComponentInChildren<Collider>()?.bounds.size.magnitude ?? 0;
+		radius = GetComponentInChildren<Collider>()?.bounds.size.Max() ?? 0;
 	}
 
 	// Update is called once per frame

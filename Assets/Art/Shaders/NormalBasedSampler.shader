@@ -61,7 +61,7 @@
 		void surf(Input IN, inout SurfaceOutputStandard o)
 		{
 
-			float3 normal = IN.worldNormal + _NoiseStrength * snoise_grad(_NoiseScale*IN.worldPos);
+			float3 normal = IN.worldNormal + _NoiseStrength * snoise(_NoiseScale*IN.worldPos);
 			
 
 

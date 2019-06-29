@@ -96,6 +96,7 @@
     <Compile Include="Assets\LGK\Default.cs" />
     <Compile Include="Assets\LGK\Egg.cs" />
     <Compile Include="Assets\LGK\FaceCamera.cs" />
+    <Compile Include="Assets\LGK\FenceBuilder.cs" />
     <Compile Include="Assets\LGK\FireBall.cs" />
     <Compile Include="Assets\LGK\Flowery.cs" />
     <Compile Include="Assets\LGK\Hazard.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Assets\LGK\Nest.cs" />
     <Compile Include="Assets\LGK\Norb.cs" />
     <Compile Include="Assets\LGK\Offering.cs" />
+    <Compile Include="Assets\LGK\PassiveResourceGenerator.cs" />
     <Compile Include="Assets\LGK\PickupMePls.cs" />
     <Compile Include="Assets\LGK\Planet.cs" />
     <Compile Include="Assets\LGK\Plant.cs" />
@@ -198,6 +200,12 @@
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Postprocessing.Editor">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Postprocessing.Runtime">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="com.unity.cinemachine.editor">
       <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
@@ -206,12 +214,6 @@
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Postprocessing.Editor">
-      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Postprocessing.Runtime">
-      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

@@ -5,30 +5,37 @@ using System.Linq;
 
 public class Team : MonoBehaviour
 {
-    public float Balance = 0;
+    public double Balance = 0;
 
     public readonly Team Gia = null;
 
     public Color color;
 
+
+	public bool autoAlly;
+	public float fightThreshold = -3;
+
     public HashSet<Mob> mobs = new HashSet<Mob>();
 
-	public Dictionary<Team, float> reputation = new Dictionary<Team, float>();
+	public Dictionary<Team, float> reputations = new Dictionary<Team, float>();
 
 
 
-	public float TotalRep => reputation.Sum(u=>u.Value);
+	public float TotalRep => reputations.Sum(u=>u.Value);
 
 	public float Confidance => Mathf.Max(0,TotalRep/GetRep(this));
 
 	public float GetRep(Team team)
 	{
-		return reputation.TryGetValue(team, out var value) ? value : 0;
+		var val = reputations.TryGetValue(team, out var value) ? value : 0;
+		if (float.IsNaN(val))
+			val = 0;
+		return val;
 	}
 
 	public float SetRep(Team team,float value)
 	{
-		return reputation[team] = value;
+		return reputations[team] = value;
 	}
 
 	public float AddRep(Team team, float value)
@@ -61,7 +68,15 @@ public class Team : MonoBehaviour
         if (a == null || b == null)
             return true;
 		if (a == b) return false;
-		return !a.Allies.Contains(b);
+
+		if (a.autoAlly)
+		{
+			return (a.GetRep(b) <= a.fightThreshold);
+		}
+		else
+		{
+			return !a.Allies.Contains(b);
+		}
     }
 
 

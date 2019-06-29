@@ -2,21 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Health))]
 public class Building : MonoBehaviour
 {
 	public bool dropBuild;
 	Player builder;
 	public float buildSpawnHeight = 10;
+	public float buildRep = 3;
+
 	public void Place(Player by)
 	{
 		builder = by;
-		if(dropBuild)
+		//if(dropBuild)
 		Beckons();
 	}
 
 	private new Rigidbody  rigidbody;
+
+	public Team Team
+	{
+		get => GetComponent<Health>()?.team;
+		set => GetComponent<Health>().team = value;
+	}
 	private void Beckons()
 	{
+
+		print($"void beckons to {name}");
 		gameObject.isStatic = false;
 		var rigidbody = GetComponent<Rigidbody>();
 
@@ -33,7 +44,7 @@ public class Building : MonoBehaviour
 
 
 		rigidbody.isKinematic = false;
-		//rigidbody.constraints |= RigidbodyConstraints.FreezeRotation;
+		rigidbody.constraints |= RigidbodyConstraints.FreezeRotation;
 
 
 

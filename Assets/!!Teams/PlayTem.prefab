@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4472536848245835839}
   - component: {fileID: 4472536848245835836}
   m_Layer: 0
-  m_Name: BGI
+  m_Name: PlayTem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,8 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da91294b2ad587f49b997ad5c8575873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Balance: 30
-  color: {r: 0, g: 0.060203552, b: 1, a: 0}
-  norbs: []
-  players: []
+  Balance: 0.1
+  color: {r: 0, g: 0.060203552, b: 1, a: 1}
+  autoAlly: 0
+  fightThreshold: 0
   Allies: []

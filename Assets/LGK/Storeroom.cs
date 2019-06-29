@@ -12,8 +12,9 @@ public class Storeroom : MonoBehaviour
 		if (by == team)
 			return;
 
-		team.AddRep(by, -robPenalty);
-		var stolen = Mathf.Min(maxBalance, team.Balance);
+		
+		var stolen = Mathf.Min(maxBalance, (float)team.Balance);
+		team.AddRep(by, -robPenalty * stolen);
 		team.Balance -= stolen;
 		by.Balance += stolen;
 		

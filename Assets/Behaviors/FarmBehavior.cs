@@ -24,7 +24,9 @@ public class FarmBehavior : AiBehavior
         {
             return false;
         }
-        Me.SetTarget(plant.transform, 2);
+		plant.lastLookat = Time.time;
+
+		Me.SetTarget(plant.transform, plant.GetComponent<Health>().radius + Me.Health.radius + 1);
 
         return base.OnBegin();
     }
@@ -44,14 +46,17 @@ public class FarmBehavior : AiBehavior
 
     public override void Run()
     {
-        if (!plant)
+		if (!plant)
         {
             Me.SwitchBehavior();
             return;
         }
-        //Me.SetTarget(plant.transform, 2);
+		//Me.SetTarget(plant.transform, 2);
 
-        if (Me.AtTarget)
+		plant.lastLookat = Time.time;
+
+
+		if (Me.AtTarget)
         {
 			Debug.DrawLine(transform.position, plant.transform.position, Color.magenta);
             Me.Animator.SetBool("PickFruit", true);

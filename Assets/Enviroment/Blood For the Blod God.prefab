@@ -89,7 +89,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: -5495902117074765545, guid: 5670427ca0c54a34783853ec6c16b6c6, type: 3}
 --- !u!1 &1521593314396977218
@@ -5094,6 +5094,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63878165adc9d194493f091e045b411e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropBuild: 0
+  buildSpawnHeight: 10
+  buildRep: 3
   cost: 100
 --- !u!1 &8004031245822636491
 GameObject:
@@ -5184,6 +5187,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 2534964839176971238, guid: 5670427ca0c54a34783853ec6c16b6c6, type: 3}

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7591205634149672190}
   - component: {fileID: 5717105062679299201}
   - component: {fileID: 2264176115723012964}
+  - component: {fileID: 6673530149325582755}
   m_Layer: 0
   m_Name: FruitBush
   m_TagString: Untagged
@@ -129,6 +130,30 @@ MonoBehaviour:
   growth: 1
   harvestPerSecond: 0.02
   maxGrowth: 1
+--- !u!114 &6673530149325582755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7570210455799485012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ccea295841457449a25200931d930c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 100
+  CurrentHealth: 100
+  HitCooldown: 1
+  RegenCooldown: Infinity
+  RegenSpeed: 0
+  ragdoll: {fileID: 0}
+  deathParticle: {fileID: 0}
+  immunities: 8
+  killHealthBonus: 0.15
+  team: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  radius: 0
 --- !u!1001 &439798295427284158
 PrefabInstance:
   m_ObjectHideFlags: 0

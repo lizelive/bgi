@@ -130,10 +130,10 @@ Shader "Custom/SpaceTextures"
 					}
 				}
 			}
-			c = c;
+			c = 0*c;
 			//c = weightMax;
 
-			c = 0*texCUBE(_Cube, IN.worldNormal);
+			//c = texCUBE(_Cube, IN.worldNormal);
 
 			 //c = texCUBE(_Cube, IN.color);
 			c = c + colorAcc;

@@ -69,7 +69,7 @@ public class MeleeWeapon : MonoBehaviour
 			var me = Mob.Health;
 
 			lastAttack = Time.time;
-            var stuffToHurt = FindObjectsOfType<Health>().Where(x=>this.Distance(x)<attackRange+x.radius+me.radius).Where(U.Is);
+            var stuffToHurt = FindObjectsOfType<Health>().Where(me.InRange(attackRange)).Where(U.Is).OrderBy(me.Distance);
 			foreach (var thing in stuffToHurt)
             {
                 if (thing.Hurt(damage, DamageKind.Melee, me))
@@ -77,9 +77,12 @@ public class MeleeWeapon : MonoBehaviour
                     Debug.DrawLine(transform.position, thing.transform.position, Color.red, cooldown);
 
 
-
-					var mass = thing.GetComponent<Rigidbody>()?.mass ?? 1;
-                    thing.GetComponent<Mob>().Fling( ((Vector3.up + (thing.pos()- this.pos())).normalized * launchForce/ mass));
+					var rb = thing.GetComponent<Rigidbody>();
+					if (rb)
+					{
+						var mass = rb?.mass ?? 1;
+						thing.GetComponent<Mob>()?.Fling(((Vector3.up + (thing.pos() - this.pos())).normalized * launchForce / mass));
+					}
 
                     didAttack = true;
                     if (!pierce)

@@ -248,10 +248,6 @@ public class Mob : MonoBehaviour
     {
         //rigidbody.velocity = Vector3.up+Vector3.forward;
         CheckGrounded();
-        if (agent)
-        {
-            agent.enabled = m_IsGrounded;
-        }
 
 
 
@@ -367,9 +363,9 @@ public class Mob : MonoBehaviour
             targetpos = target.position;
         else
             target = null;
-
-        if (agent.isActiveAndEnabled && agent.isOnNavMesh)
-            if ( Vector3.Distance(lastTargetPos, targetpos) > targetPosMoveThreshold)
+		
+        if (agent.isOnNavMesh)
+            if (navDirty || Vector3.Distance(lastTargetPos, targetpos) > targetPosMoveThreshold)
             {
 				navDirty = false;
                 agent.SetDestination(targetpos);

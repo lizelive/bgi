@@ -11,6 +11,8 @@ public static class U
 		return stuff.MinBy(to.Distance);
     }
 
+
+	public static float Max(this Vector3 m) => Mathf.Max(m.x, m.y, m.z);
     public static float Pow2(this float x) => x * x;
 
     public static float Distance(this GameObject self, GameObject other)

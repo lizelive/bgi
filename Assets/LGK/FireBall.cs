@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class FireBall : MonoBehaviour
 {
-    public Team team;
+    public Health by;
     public GameObject explosion;
     private void OnCollisionEnter(Collision collision)
     {
         //print($"You just fireballed the {collision.gameObject.name}");
 
-        ShitsOnFireYo.Burn(collision.gameObject, team);
+        ShitsOnFireYo.Burn(collision.gameObject, by);
         
         if (explosion)
             Instantiate(explosion, transform.position, Quaternion.identity);

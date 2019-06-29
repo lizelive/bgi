@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShitsOnFireYo : MonoBehaviour
 {
-    public static void Burn(GameObject thing, Team by = null)
+    public static void Burn(GameObject thing, Health by = null)
     {
 
 
@@ -14,7 +14,7 @@ public class ShitsOnFireYo : MonoBehaviour
 
         var health = thing.GetComponent<Health>();
 
-        if (!health || !Team.Fighting(by, health.team))
+        if (!health || !by.team.Fighting(health.team))
         {
             return;
         }
@@ -26,7 +26,8 @@ public class ShitsOnFireYo : MonoBehaviour
             return;
         }
         lol = Instantiate(Default.YoOnFire, thing.transform, true);
-        lol.transform.localPosition = Vector3.zero;
+		lol.by = by;
+		lol.transform.localPosition = Vector3.zero;
 
     }
 
@@ -34,7 +35,7 @@ public class ShitsOnFireYo : MonoBehaviour
     public float dps = 10;
     public float durration = 10;
 
-
+	public Health by;
     private float start;
 
     private ParticleSystem particles;
@@ -60,7 +61,7 @@ public class ShitsOnFireYo : MonoBehaviour
         else
         {
 
-			hurts.Hurt(dps * Time.deltaTime, DamageKind.Fire, allowFriendlyFire: true, ignoreCooldown: true);
+			hurts.Hurt(dps * Time.deltaTime, DamageKind.Fire, by, allowFriendlyFire: true, ignoreCooldown: true);
         }
     }
 }
