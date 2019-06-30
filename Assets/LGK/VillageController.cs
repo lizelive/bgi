@@ -22,7 +22,7 @@ public class VillageController : MonoBehaviour
 	//public const float MaxFear = 10;
 
 	public float FearPerVillagerKiled = 1;
-	public int CurrentlyAliveVillager => Villagers.Length;
+	public int CurrentlyAliveVillager => Villagers.Count();
 
 
 	public VillageController()
@@ -35,8 +35,8 @@ public class VillageController : MonoBehaviour
 
 	public AnimationCurve fearCurve;
 
-	public VillagerHome[] Houses => FindObjectsOfType<VillagerHome>();
-	public Villager[] Villagers => FindObjectsOfType<Villager>();
+	public IEnumerable<VillagerHome> Houses => team.GetMembers<VillagerHome>();
+	public IEnumerable<Villager> Villagers => team.GetMembers<Villager>();
 
 	public void KilledAVillager(Health murder)
 	{

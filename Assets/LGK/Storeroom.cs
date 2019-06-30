@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Storeroom : MonoBehaviour
 {
+	public Timer timer = new Timer(10);
+
 	public float maxBalance = 50;
 	public Team team;
 	public float robPenalty = 1;
 	public void Rob(Team by)
 	{
-		if (by == team)
+		if (by == team || !timer.Check)
 			return;
 
 		

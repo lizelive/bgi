@@ -87,6 +87,8 @@
     <Compile Include="Assets\DecalSystem\Plugins\DecalSystem\Helpers\MeshUtils.cs" />
     <Compile Include="Assets\DecalSystem\Plugins\DecalSystem\Helpers\PolygonUtils.cs" />
     <Compile Include="Assets\DecalSystem\Plugins\DecalSystem\Helpers\TerrainUtils.cs" />
+    <Compile Include="Assets\Followable.cs" />
+    <Compile Include="Assets\Interactable.cs" />
     <Compile Include="Assets\Layers.cs" />
     <Compile Include="Assets\LGK\AudioMan.cs" />
     <Compile Include="Assets\LGK\BloodAlter.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="Assets\LGK\Offering.cs" />
     <Compile Include="Assets\LGK\PassiveResourceGenerator.cs" />
     <Compile Include="Assets\LGK\PickupMePls.cs" />
+    <Compile Include="Assets\LGK\Piechart.cs" />
     <Compile Include="Assets\LGK\Planet.cs" />
     <Compile Include="Assets\LGK\Plant.cs" />
     <Compile Include="Assets\LGK\Player.cs" />
@@ -135,6 +138,9 @@
     <Compile Include="Assets\LGK\Villager.cs" />
     <Compile Include="Assets\LGK\VillagerHome.cs" />
     <Compile Include="Assets\ParticlePack\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
+    <Compile Include="Assets\Tileset\TileGrid.cs" />
+    <Compile Include="Assets\Tileset\UnboundArray2D.cs" />
+    <Compile Include="Assets\Tileset\VecU.cs" />
     <Compile Include="Assets\Timer.cs" />
     <Compile Include="Assets\VillagerUI.cs" />
     <Compile Include="Assets\Worldgen\PRonii.cs" />
@@ -147,6 +153,8 @@
     <None Include="Assets\Art\Characters\mr sock\VertexColor.shader" />
     <None Include="Assets\Art\Shaders\Noise\HLSL\NoiseTest.shader" />
     <None Include="Assets\Art\Shaders\Noise\GLSL\NoiseTest.shader" />
+    <None Include="Assets\Art\Shaders\MaskedShader.shader" />
+    <None Include="Assets\Art\Shaders\UI\PiechartShader.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\Art\Shaders\Noise\HLSL\ClassicNoise2D.hlsl" />
     <None Include="Assets\ParticlePack\EffectExamples\Misc Effects\Shaders\Dissolve.shader" />
@@ -190,8 +198,47 @@
     <Reference Include="Cinemachine">
       <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Entities.Properties">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Entities.Properties.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Jobs">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Jobs.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Jobs.Editor">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Jobs.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Entities.Editor">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Entities.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Entities.StaticTypeRegistry">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Entities.StaticTypeRegistry.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VectorGraphics">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.VectorGraphics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Scenes.Hybrid">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Scenes.Hybrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Scenes.Editor">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Scenes.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEditorBridge.003">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.003.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics.Extensions">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Mathematics.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics.Extensions.Hybrid">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Mathematics.Extensions.Hybrid.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
       <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
@@ -205,17 +252,53 @@
     <Reference Include="Unity.Postprocessing.Editor">
       <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Entities.BuildUtils">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Entities.BuildUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VectorGraphics.Editor">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.VectorGraphics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Entities.Hybrid">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Entities.Hybrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Properties">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Properties.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Postprocessing.Runtime">
       <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Entities">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Entities.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Properties.Reflection">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Properties.Reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Transforms">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Transforms.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Transforms.Editor">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Transforms.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="com.unity.cinemachine.editor">
       <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Editor">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics.Editor">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Transforms.Hybrid">
+      <HintPath>C:/Users/prosa/bgi/Library/ScriptAssemblies/Unity.Transforms.Hybrid.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -408,6 +491,9 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>C:/Users/prosa/bgi/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>C:/Users/prosa/bgi/Library/PackageCache/com.unity.collections@0.0.9-preview.20/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.8f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

@@ -45,7 +45,7 @@ public class Health : MonoBehaviour
 
 	public bool Hurt(float value, DamageKind kind, Health by = null, bool allowFriendlyFire = false, bool ignoreCooldown = false)
 	{
-		if(kind==DamageKind.None)
+		if (kind == DamageKind.None)
 		{
 			Debug.LogWarning("That's not very effective.");
 			return false;
@@ -78,8 +78,18 @@ public class Health : MonoBehaviour
 		OnHurt?.Invoke(by);
 		return true;
 	}
+
+	private bool dead = false;
+
 	void Die(Health by)
 	{
+		dead = true;
+
+
+		if (!(team?.Unregister(this) ?? true))
+		{
+			Debug.LogWarning("How did I die?");
+		}
 		if (ragdoll)
 			Instantiate(ragdoll, transform.position, transform.rotation);
 		if (deathParticle)
@@ -103,6 +113,8 @@ public class Health : MonoBehaviour
 		centerOffset = GetComponentInChildren<Rigidbody>()?.centerOfMass
 			?? GetComponentInChildren<Collider>()?.bounds.center ??
 			Vector3.zero;
+
+		team?.Register(this);
 
 		radius = GetComponentInChildren<Collider>()?.bounds.size.Max() ?? 0;
 	}

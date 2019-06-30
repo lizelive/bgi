@@ -27,11 +27,9 @@ public class FenceBuilder : MonoBehaviour
 		{
 			var curPos = targeter.position;
 			if(Vector3.Distance(lastPost, curPos) >= fenceLength) {
-
 				var direction = (curPos - lastPost).normalized;
 				var nextPost = lastPost + direction * fenceLength;
 				var dir = Vector3.Cross(direction, Vector3.up);
-
 				var rot = Quaternion.LookRotation(dir);
 				var pos = (nextPost + lastPost) / 2;
 				var noob = Instantiate(fencePrefab, transform);

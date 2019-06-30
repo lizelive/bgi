@@ -98,6 +98,9 @@ public class Player : MonoBehaviour
 		if (Physics.Raycast(ray, out RaycastHit hit, LayerMask.GetMask(Layers.Terrain)))
 		{
 			targeter.position = hit.point;
+			targeter.rotation = transform.rotation;
+
+			targeter.up = hit.normal;  
 		}
 		else
 		{
@@ -136,8 +139,10 @@ public class Player : MonoBehaviour
 				var spawnLocation = targeter.pos();
 
 				var noob = Instantiate(tobuild, spawnLocation, targeter.rotation);
-
+				//start
 				balance -= noob.cost;
+				tobuild.Team = Team;
+
 				var village = gameObject.Find<VillageController>(100).Closest(gameObject);
 				village.IBuilt(Team, noob);
 				noob.Place(this);

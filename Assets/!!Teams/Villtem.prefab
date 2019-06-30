@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da91294b2ad587f49b997ad5c8575873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Balance: 100
+  Balance: NaN
   color: {r: 0.5283019, g: 0.36390716, b: 0, a: 1}
   autoAlly: 1
   fightThreshold: -3
