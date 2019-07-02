@@ -4888,8 +4888,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e57f75df7baf1f4ab280093235e9d1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxBalance: 100
-  balance: 0
   foodBar: {fileID: 0}
   squad: {fileID: 0}
   weapon: {fileID: 0}
@@ -4905,6 +4903,9 @@ MonoBehaviour:
   fireballPrefab: {fileID: 4601835141322903977, guid: 023037e3ce088094f9a03a1e31308286,
     type: 3}
   interactionRange: 3
+  currentBuild: {fileID: 0}
+  buildMenu: {fileID: 5755259578076504980, guid: edb1f3151dff42f4090102d67993a8f6,
+    type: 3}
 --- !u!114 &411794623736036373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4926,7 +4927,9 @@ MonoBehaviour:
   deathParticle: {fileID: 0}
   immunities: 0
   killHealthBonus: 0.15
-  team: {fileID: 4472536848245835836, guid: 20c57ad1c5b9ed144a536fc29e5fcd73, type: 3}
+  team: {fileID: 11400000, guid: bc38b09bd345fee4b92615d8456fc2b3, type: 2}
+  centerOffset: {x: 0, y: 0, z: 0}
+  radius: 0
 --- !u!114 &411794623736036374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4942,6 +4945,7 @@ MonoBehaviour:
   cooldown: 1
   damage: 3
   attackRange: 2
+  launchForce: 100
   pierce: 1
   sfx: {fileID: 0}
   stickStrength: 0
@@ -4982,8 +4986,13 @@ MonoBehaviour:
   target: {fileID: 0}
   targetDistanceGoal: 1
   targetPosMoveThreshold: 1
+  state: 0
+  stepHeight: 0.2
+  notAStepHeight: 0.05
+  jumpVelocity: 4
+  navDirty: 0
   rotationSpeed: 3
-  head: {fileID: 0}
+  head: {fileID: 411794624021412776}
 --- !u!1 &411794624021412783
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,7 +21,7 @@ public class FleeBehavior : AiBehavior
             Debug.LogError("scarry stuff is null that is bad.");
             return 0;
         }
-        var sumOfSquares = scaryThings.Sum(boo => 1/boo.Distance(pos));
+        var sumOfSquares = scaryThings.Where(U.Is).Sum(boo => 1/boo.Distance(pos));
         return sumOfSquares;
     }
 

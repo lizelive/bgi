@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ee741509a39174092141eac30990b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  village: {fileID: 4112666007579921107, guid: 66d8be1971c465045a65fd795223c40d, type: 3}
+  village: {fileID: 11400000, guid: 9507aea42a064484094933db73196357, type: 2}
   nameText: {fileID: 8939595596183270581}
   repText: {fileID: 8939595597483397687}
   popText: {fileID: 8939595595981804784}

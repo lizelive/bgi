@@ -32,6 +32,7 @@ public class AudioMan : MonoBehaviour
     {
         foreach (var clip in clips)
         {
+#if UNITY_EDITOR
 			var path = AssetDatabase.GetAssetPath(clip);
             //print($"{path} has {clip}");
 			var name = Path.GetFileNameWithoutExtension(path);
@@ -42,7 +43,8 @@ public class AudioMan : MonoBehaviour
 
 			//print($"{path} has {clip} {name} {dir}");
 			nameToClip.Add(dir, clip);
-        }
+#endif
+		}
     }
 
     public void Play(string clip, Vector3 pos)

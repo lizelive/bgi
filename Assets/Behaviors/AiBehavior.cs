@@ -39,7 +39,7 @@ public class AiBehavior : MonoBehaviour
     public virtual bool OnBegin() {
         Running = true;
         startTime = Time.time;
-        print($"Begin {GetType().Name}");
+        //print($"Begin {GetType().Name}");
         return true; }
     public virtual void Run() { }
 

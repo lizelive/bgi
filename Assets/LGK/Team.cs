@@ -4,9 +4,12 @@ using UnityEngine;
 using System.Linq;
 using System;
 
-public class Team : MonoBehaviour
+[CreateAssetMenu(menuName ="BGI/Team")]
+public class Team : ScriptableObject
 {
-	public double Balance = 0;
+
+
+	public double balance = 0;
 
 	public readonly Team Gia = null;
 
@@ -36,6 +39,17 @@ public class Team : MonoBehaviour
 
 	public float Confidance => Mathf.Max(0, TotalRep / GetRep(this));
 
+	public double Balance {
+		get => balance;
+
+		set {
+			if (double.IsNaN(value))
+				return;
+			balance = value;
+		}
+
+	}
+
 	public float GetRep(Team team)
 	{
 		var val = reputations.TryGetValue(team, out var value) ? value : 0;
@@ -51,7 +65,7 @@ public class Team : MonoBehaviour
 
 	public float AddRep(Team team, float value)
 	{
-		print($"{name} gave {team} {value} rep");
+		//Debug.print($"{name} gave {team} {value} rep");
 		return SetRep(team, GetRep(team) + value);
 	}
 
@@ -62,6 +76,11 @@ public class Team : MonoBehaviour
 	void Start()
 	{
 
+	}
+
+	public bool Fighting(Mob other)
+	{
+		return Fighting(this, other.Team);
 	}
 
 	public bool Fighting(Team other)
@@ -101,9 +120,9 @@ public class Team : MonoBehaviour
 
 	internal void Register(Health health)
 	{
-		members.Remove(health);
+		members.Add(health);
 		var mob = health.GetComponent<Mob>();
 		if (mob)
-			mobs.Remove(mob);
+			mobs.Add(mob);
 	}
 }

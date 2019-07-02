@@ -5,19 +5,20 @@ using UnityEngine.UI;
 
 public class ShowHealth : MonoBehaviour
 {
-    private Scrollbar scrollbar;
+    private Image scrollbar;
     public Health health;
+
     // Start is called before the first frame update
     void Start()
     {
-        scrollbar = GetComponent<Scrollbar>();
+        scrollbar = GetComponent<Image>();
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        scrollbar.size = health.CurrentHealth / health.MaxHealth;
+        scrollbar.fillAmount = health.CurrentHealth / health.MaxHealth;
         
     }
 }

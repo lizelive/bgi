@@ -12,7 +12,7 @@ public class ShitsOnFireYo : MonoBehaviour
 
 
 
-        var health = thing.GetComponent<Health>();
+        var health = thing.GetComponentInParent<Health>();
 
         if (!health || !by.team.Fighting(health.team))
         {

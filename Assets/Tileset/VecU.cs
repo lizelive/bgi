@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,6 +30,11 @@ public static class VecU
 		var x = value % mod;
 		return x < 0 ? x + mod : x;
 
+	}
+
+	public static Vector2Int Zip(this Vector2Int a, Vector2Int b, Func<int, int, int> f)
+	{
+		return new Vector2Int(f(a.x, b.x), f(a.y, b.y));
 	}
 	public static T Index<T>(this T[,] array, Vector2Int pos)
 	{

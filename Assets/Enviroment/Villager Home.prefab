@@ -41,7 +41,6 @@ GameObject:
   - component: {fileID: 493550204997175745}
   - component: {fileID: 7402932234437538704}
   - component: {fileID: 6696373039107809809}
-  - component: {fileID: 5963379516842634088}
   m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
@@ -108,20 +107,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &5963379516842634088
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2018635642373907209}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &3768359371393553091
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,6 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63878165adc9d194493f091e045b411e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  looksLike: {fileID: 0}
   dropBuild: 0
   buildSpawnHeight: 10
   buildRep: 3
@@ -251,7 +237,7 @@ MonoBehaviour:
   deathParticle: {fileID: 0}
   immunities: 8
   killHealthBonus: 0.15
-  team: {fileID: 4112666007579921107, guid: 66d8be1971c465045a65fd795223c40d, type: 3}
+  team: {fileID: 11400000, guid: 9507aea42a064484094933db73196357, type: 2}
   centerOffset: {x: 0, y: 0, z: 0}
   radius: 0
 --- !u!208 &953773597940834263
@@ -574,11 +560,6 @@ PrefabInstance:
         type: 3}
       propertyPath: UVModule.flipU
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 198663536934198432, guid: bb98861c48ad2024ca93498c7dd93a6c,
-        type: 3}
-      propertyPath: ShapeModule.radiusThickness
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 199770912466261370, guid: bb98861c48ad2024ca93498c7dd93a6c,
         type: 3}

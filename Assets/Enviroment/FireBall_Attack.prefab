@@ -9443,7 +9443,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa153d17dc16b5419d1d3dda0f231c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 100010, guid: 031d08f52af1daa4f929b85221519426, type: 3}
+  by: {fileID: 0}
+  explosion: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
+  radius: 2
 --- !u!54 &4601835141322903977
 Rigidbody:
   m_ObjectHideFlags: 0

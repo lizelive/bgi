@@ -79,9 +79,21 @@ public class Mob : MonoBehaviour
 
     }
 
+#if UNITY_EDITOR
+	void OnDrawGizmos()
+	{
+		// Draw a yellow sphere at the transform's position
+		Gizmos.color = Team.color;
+		UnityEditor.Handles.color = Team.color;
+		if (!head)
+			print(name);
+		else
+		UnityEditor.Handles.Label(head.position, ActiveBehavior?.GetType()?.Name);
+	}
+#endif
 
-    public IEnumerable<Mob> Nearby => gameObject.Find<Mob>(ViewRange);
-    public IEnumerable<Mob> NearbyEnemies => Nearby.Where(x => Team.Fighting(Team, x.Team));
+	public IEnumerable<Mob> Nearby => gameObject.Find<Mob>(ViewRange);
+    public IEnumerable<Mob> NearbyEnemies => Nearby.Where(this.Team.Fighting);
 
     Rigidbody carrying;
 

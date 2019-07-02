@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 public class Building : MonoBehaviour
 {
+	public Sprite looksLike;
 	public bool dropBuild;
 	Player builder;
 	public float buildSpawnHeight = 10;
