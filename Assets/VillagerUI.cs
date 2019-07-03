@@ -33,7 +33,7 @@ public class VillagerUI : MonoBehaviour
 
 
 		if (popText)
-			popText.text = $"Population {village.mobs.Count}";
+			popText.text = $"Population {village.mobs.Count} / {village.maxNumMobs}";
 
 
 		if (worthText)
@@ -45,9 +45,6 @@ public class VillagerUI : MonoBehaviour
 			wheelImage.fillAmount = village.Confidance;
 		}
 		if (relationsText)
-			relationsText.text = $"Repution {village.reputations.Count}\n" + string.Join("\n", village.reputations.Select(x => $"{x.Key} :\t {x.Value}"));
-
-		if (village.Confidance > 1)
-			print($"I am so humble {village.Confidance}");
+			relationsText.text = $"Rep {village.Confidance}\n" + string.Join("\n", village.reputations.Select(x => $"{x.Key} :\t {x.Value}"));
 	}
 }

@@ -41,6 +41,11 @@ public static class VecU
 		return array[pos.x, pos.y];
 	}
 
+	public static bool InBounds<T>(this T[,] array, Vector2Int pos)
+	{
+		return pos.x >= 0 && pos.y >= 0 && pos.x < array.GetLength(0) && pos.y < array.GetLength(1);
+	}
+
 	public static T Index<T>(this T[,] array, Vector2Int pos, T set)
 	{
 		return array[pos.x, pos.y] = set;

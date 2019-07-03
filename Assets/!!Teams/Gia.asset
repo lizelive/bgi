@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da91294b2ad587f49b997ad5c8575873, type: 3}
   m_Name: Gia
   m_EditorClassIdentifier: 
+  maxNumMobs: 100
   balance: 0
-  color: {r: 0, g: 0, b: 0, a: 0}
+  color: {r: 0.08167672, g: 1, b: 0, a: 1}
   autoAlly: 0
   fightThreshold: -3
   Allies: []

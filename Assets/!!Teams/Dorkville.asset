@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da91294b2ad587f49b997ad5c8575873, type: 3}
   m_Name: Dorkville
   m_EditorClassIdentifier: 
-  balance: 913.0965401975251
-  color: {r: 0.0073928833, g: 0, b: 1, a: 0}
+  maxNumMobs: 100
+  balance: 806.7249204456398
+  color: {r: 0.0073928833, g: 0, b: 1, a: 1}
   autoAlly: 1
   fightThreshold: -3
   Allies: []

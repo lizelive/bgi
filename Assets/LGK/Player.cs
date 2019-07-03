@@ -33,6 +33,9 @@ public class Player : MonoBehaviour
 	private Health health;
 
 	public Team Team => health.team;
+
+	public Mob Mob => GetComponent<Mob>();
+
 	public Swarm squad;
 	public MeleeWeapon weapon;
 	public Norb NorbPrefab;
@@ -108,6 +111,8 @@ public class Player : MonoBehaviour
 		}
 
 
+
+
 		var doThrow = Input.GetButtonDown("Fire1");
 		var doSummon = Input.GetKeyDown(KeyCode.Y);
 		var doFireball = Input.GetButtonDown("Fire2");
@@ -141,7 +146,7 @@ public class Player : MonoBehaviour
 				var noob = Instantiate(tobuild, spawnLocation, targeter.rotation);
 				//start
 				balance -= noob.cost;
-				tobuild.Team = Team;
+				noob.Team = Team;
 
 				var village = gameObject.Find<VillageController>(100).Closest(gameObject);
 				village.IBuilt(Team, noob);

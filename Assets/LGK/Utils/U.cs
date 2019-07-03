@@ -50,8 +50,11 @@ public static class U
         return new Vector2(self.x, self.z);
     }
 
-
-    public static Vector3 x0y(this Vector2 self)
+	public static Vector3Int x0y(this Vector2Int self)
+	{
+		return new Vector3Int(self.x, 0, self.y);
+	}
+	public static Vector3 x0y(this Vector2 self)
     {
         return new Vector3(self.x, 0, self.y);
     }

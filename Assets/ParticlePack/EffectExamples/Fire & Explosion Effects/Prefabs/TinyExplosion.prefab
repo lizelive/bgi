@@ -4822,6 +4822,7 @@ GameObject:
   - component: {fileID: 198175801688348628}
   - component: {fileID: 199922078765427110}
   - component: {fileID: 2310152763638644331}
+  - component: {fileID: 8234702529353271826}
   m_Layer: 0
   m_Name: TinyExplosion
   m_TagString: Untagged
@@ -9673,6 +9674,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TimeOut: 2
   m_DetachChildren: 0
+--- !u!114 &8234702529353271826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337198075554910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ac1691131a8c844dafe8b6ace6a172a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionForce: 8
 --- !u!1 &1793989332680384
 GameObject:
   m_ObjectHideFlags: 0

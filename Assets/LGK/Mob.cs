@@ -8,6 +8,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Health))]
 public class Mob : MonoBehaviour
 {
+	public float cost = 1;
     public bool CanSee(Vector3 pos)
     {
         var dir = pos - this.pos();
@@ -26,33 +27,33 @@ public class Mob : MonoBehaviour
 
     public bool CanSee(MonoBehaviour IWannaKill) => CanSee(IWannaKill.pos());
 
-
+	public bool physicsMovement;
     public AiBehavior[] Behaviors = new AiBehavior[0];
 
 
     public AiBehavior ActiveBehavior;
 
-    public bool SwitchBehavior(AiBehavior next)
+    public AiBehavior SwitchBehavior(AiBehavior next)
     {
 		if (ActiveBehavior == next)
-			return false;
+			return ActiveBehavior;
 
         if (ActiveBehavior)
         {
             if (!ActiveBehavior.OnEnd())
             {
-                return false;
+                return null;
             }
             else
                 ActiveBehavior = null;
         }
-        if (next?.OnBegin() ?? true)
-        {
-            ActiveBehavior = next;
+		if (next?.OnBegin() ?? true)
+		{
+			ActiveBehavior = next;
 
-            return true;
-        }
-        else return false;
+			return ActiveBehavior;
+		}
+		else return null;
 
     }
 
@@ -61,13 +62,13 @@ public class Mob : MonoBehaviour
         rigidbody.velocity = velocity;
     }
 
-    public bool SwitchBehavior()
+    public AiBehavior SwitchBehavior()
     {
         return SwitchBehavior(Behaviors.ToDictionary(b => b, b => b.CurrentPriority).WeightedRandom());
     }
 
 
-    public bool SwitchBehavior<T>() where T : AiBehavior
+    public T SwitchBehavior<T>() where T : AiBehavior
     {
         var next = GetComponent<T>();
         if (!next)
@@ -75,7 +76,7 @@ public class Mob : MonoBehaviour
             Debug.LogError($"Missing behavior {typeof(T).Name}");
         }
 
-        return SwitchBehavior(next);
+        return SwitchBehavior(next) as T;
 
     }
 
@@ -155,13 +156,14 @@ public class Mob : MonoBehaviour
 
         if (agent)
         {
-            var newtonIsALie = false;
+            var newtonIsALie = !physicsMovement;
             agent.updatePosition = newtonIsALie;
             agent.updateUpAxis = newtonIsALie;
             agent.updateRotation = newtonIsALie;
         }
         rigidbody = GetComponent<Rigidbody>();
 
+		rigidbody.isKinematic = !physicsMovement;
         rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         SwitchBehavior();
     }
@@ -202,7 +204,7 @@ public class Mob : MonoBehaviour
 
                 )
             {
-                print("step detected!");
+                //print("step detected!");
 
 
                 Debug.DrawLine(checkPos, hit.point);
@@ -410,7 +412,9 @@ public class Mob : MonoBehaviour
 
 
 	bool navigationActive = false;
-    public void TargetClear()
+	public IJob job;
+
+	public void TargetClear()
     {
 
         target = null;

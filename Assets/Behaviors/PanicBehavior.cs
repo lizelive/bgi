@@ -9,6 +9,7 @@ public class PanicBehavior : AiBehavior
     {
         Me.Animator.SetBool("Panic", true);
         Me.TargetClear();
+		
         return base.OnBegin();
     }
     public override bool OnEnd()
@@ -20,6 +21,7 @@ public class PanicBehavior : AiBehavior
 
     public override void Run()
     {
-        //print("Reeeeeeeeeeeeee");
-    }
+		Me.Move(Vector3.zero);
+		//print("Reeeeeeeeeeeeee");
+	}
 }

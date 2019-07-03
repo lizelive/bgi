@@ -8,19 +8,19 @@ public class FollowBehavior : AiBehavior
 {
     public override bool SwitchToAny => true;
     public Player following;
-
+	public float maxFolowRange = 10;
 		
     public override bool OnBegin()
     {
         if(!following)
 			following = FindObjectOfType<Player>();
-        if (following)
+        if (following && Me.Distance(following) < maxFolowRange)
         {
             Me.SetTarget(following.followPoint.transform);
             following.Followers.Add(Me);
             return base.OnBegin();
         }
-        print("Nothing to follow");
+        //print("Nothing to follow");
         return false;
 	}
 
@@ -41,10 +41,14 @@ public class FollowBehavior : AiBehavior
 	}
 	public override void Run()
     {
-		following.Followers.Add(Me);
-
 		if (!following)
-            Me.SwitchBehavior<PanicBehavior>();
-        base.Run();
+			End();
+		//Me.SwitchBehavior<PanicBehavior>();
+		else if (Me.Distance(following) > maxFolowRange)
+		{
+			following = null;
+			End();
+		}
+		base.Run();
     }
 }

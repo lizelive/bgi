@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class IdleBehavior : AiBehavior
 {
-    public override void Run()
+	public override bool SwitchToAny => true;
+	public override void Run()
     {
-        print($"I tried an i {Me.SwitchBehavior()}");
+		Me.Move(Vector3.zero);
+		End();
+        //print($"I tried an i {Me.SwitchBehavior()}");
     }
 }

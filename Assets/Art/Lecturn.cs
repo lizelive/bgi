@@ -16,8 +16,16 @@ public class Lecturn : MonoBehaviour
 
 
 	public Transform moveMe;
-    // Start is called before the first frame update
-    void Update()
+
+
+	private void Start()
+	{
+		moveMe.localPosition = start.localPosition;
+		moveMe.localRotation = start.localRotation;
+		moveMe.localScale = start.localScale;
+	}
+	// Start is called before the first frame update
+	void Update()
     {
 		player = gameObject.Find<Player>(maxDistance).Closest(gameObject)?.transform;
 		if (player)
@@ -30,8 +38,6 @@ public class Lecturn : MonoBehaviour
 			moveMe.position = Vector3.Lerp(start.position, end.position, lerp);
 			moveMe.rotation = Quaternion.Lerp(start.rotation, end.rotation, lerp);
 			moveMe.localScale = Vector3.Lerp(start.localScale, end.localScale, lerp);
-
-			print($"lerp {dist}->{distp}->{lerp}");
 		}
 	}
 }

@@ -138,6 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63878165adc9d194493f091e045b411e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  looksLike: {fileID: -8130102953475386710, guid: f685746f08a305c48b2db8adce433361,
+    type: 3}
   dropBuild: 0
   buildSpawnHeight: 10
   buildRep: 0.1

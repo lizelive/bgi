@@ -7,8 +7,7 @@ using System;
 [CreateAssetMenu(menuName ="BGI/Team")]
 public class Team : ScriptableObject
 {
-
-
+	public int maxNumMobs = 100;
 	public double balance = 0;
 
 	public readonly Team Gia = null;
@@ -71,6 +70,7 @@ public class Team : ScriptableObject
 
 
 	public List<Team> Allies;
+	internal JobManager JobManager;
 
 	// Start is called before the first frame update
 	void Start()

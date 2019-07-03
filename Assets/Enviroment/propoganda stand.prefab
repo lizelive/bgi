@@ -88,7 +88,7 @@ MonoBehaviour:
   looksLike: {fileID: 21300000, guid: e860381c8f085fd4f9946dd7b54f3631, type: 3}
   dropBuild: 0
   buildSpawnHeight: 10
-  buildRep: 3
+  buildRep: 10
   cost: 25
 --- !u!1 &8179430783829102536
 GameObject:

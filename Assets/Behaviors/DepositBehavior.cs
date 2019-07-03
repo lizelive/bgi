@@ -11,7 +11,7 @@ public class DepositBehavior : SeekBehavior<Offering>
 
     public override void Interact(Offering thing)
     {
-        print("EA get in the game");
+        //print("EA get in the game");
         Me.SwitchBehavior();
     }
 }

@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63878165adc9d194493f091e045b411e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  looksLike: {fileID: 0}
+  looksLike: {fileID: 21300000, guid: 5dc051a1144777c439b729d364161abc, type: 3}
   dropBuild: 0
   buildSpawnHeight: 10
   buildRep: 3
@@ -560,6 +560,11 @@ PrefabInstance:
         type: 3}
       propertyPath: UVModule.flipU
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198663536934198432, guid: bb98861c48ad2024ca93498c7dd93a6c,
+        type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 199770912466261370, guid: bb98861c48ad2024ca93498c7dd93a6c,
         type: 3}

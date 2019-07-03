@@ -103,7 +103,7 @@ MonoBehaviour:
   looksLike: {fileID: 21300000, guid: 603f7b70176647645b0e56c8e212fd8e, type: 3}
   dropBuild: 0
   buildSpawnHeight: 10
-  buildRep: 3
+  buildRep: -3
   cost: 0
 --- !u!114 &2510240249301326232
 MonoBehaviour:

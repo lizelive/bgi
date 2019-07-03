@@ -86,10 +86,7 @@ public class Health : MonoBehaviour
 		dead = true;
 
 
-		if (!(team?.Unregister(this) ?? true))
-		{
-			Debug.LogWarning("How did I die?");
-		}
+
 		if (ragdoll)
 			Instantiate(ragdoll, transform.position, transform.rotation);
 		if (deathParticle)
@@ -102,6 +99,14 @@ public class Health : MonoBehaviour
 		OnDie?.Invoke(by);
 		Destroy(gameObject);
 
+	}
+
+	private void OnDestroy()
+	{
+		if (!(team?.Unregister(this) ?? true))
+		{
+			Debug.LogWarning("How did I die?");
+		}
 	}
 
 	public Vector3 CenterPoint => transform.TransformPoint(centerOffset);

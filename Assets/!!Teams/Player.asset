@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da91294b2ad587f49b997ad5c8575873, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  balance: 672.5350360870361
-  color: {r: 0.0073928833, g: 0, b: 1, a: 0}
+  maxNumMobs: 100
+  balance: 23
+  color: {r: 1, g: 0.0670706, b: 0, a: 1}
   autoAlly: 0
   fightThreshold: -3
   Allies: []
