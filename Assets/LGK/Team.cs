@@ -46,7 +46,6 @@ public class Team : ScriptableObject
 				return;
 			balance = value;
 		}
-
 	}
 
 	public float GetRep(Team team)

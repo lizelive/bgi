@@ -51,7 +51,7 @@ public enum JobStatus
 
 public abstract class BaseJob : IJob
 {
-	HashSet<Mob> workers;
+	HashSet<Mob> workers = new HashSet<Mob>();
 
 	public virtual JobTypes kind => JobTypes.None;
 	public virtual float BasePriority => 0;
@@ -65,6 +65,7 @@ public abstract class BaseJob : IJob
 	public virtual bool IsComplete => true;
 
 	public float Currentpriority => BasePriority / Workers.Count();
+	public virtual void OnRun(Mob me) { }
 
 	public virtual bool IsValidMob(Mob mob) => !!mob;
 	public bool Register(Mob me)
@@ -72,6 +73,7 @@ public abstract class BaseJob : IJob
 		if (IsValidMob(me) && workers.Add(me))
 		{
 			me.job = this;
+			OnRun(me);
 			return true;
 		}
 		return false;
@@ -103,14 +105,15 @@ public class MurderJob : BaseJob
 	public override int MaxNumWorkers => 100;
 
 
-	public virtual bool IsValidMob(Mob mob) => mob.Behaviors.Any(x => x is AttackBehavior);
+	public  override bool IsValidMob(Mob mob) => mob.Behaviors.Any(x => x is AttackBehavior);
 
 	public override bool IsComplete => !target;
 
-	public void OnRun(Mob me)
+	public override void OnRun(Mob me)
 	{
+		var jfk = target;
+		me.GetComponent<AttackBehavior>().target = jfk;
 		var behavior = me.SwitchBehavior<AttackBehavior>();
-		behavior.target = target;
 	}
 }
 
@@ -163,8 +166,6 @@ public class JobManager : MonoBehaviour
 
 		foreach (var yoma in idleMobs)
 		{
-
-			print(transform.hierarchyCapacity);
 			var myJob = sortedJobs.FirstOrDefault(x => x.IsValidMob(yoma));
 			if (myJob != null && myJob.Register(yoma))
 			{

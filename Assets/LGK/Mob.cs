@@ -265,29 +265,31 @@ public class Mob : MonoBehaviour
 
 
 
+		if (state == State.Normal)
+		{
 
-        if (ActiveBehavior == null)
-            SwitchBehavior();
-        else if (ActiveBehavior.SwitchToAny)
-        {
-            var dict = Behaviors
-                .Where(x => x.ComeFromAny)
-                .ToDictionary(x => x, b => b.CurrentPriority)
-                .Where(x => x.Value > CurrentJobPiority);
+			if (ActiveBehavior == null)
+				SwitchBehavior();
+			else if (ActiveBehavior.SwitchToAny)
+			{
+				var dict = Behaviors
+					.Where(x => x.ComeFromAny)
+					.ToDictionary(x => x, b => b.CurrentPriority)
+					.Where(x => x.Value > CurrentJobPiority);
 
-            if (dict.Any())
-            {
-                var next = dict.Where(x=>x.Key!=ActiveBehavior).MaxBy(x => x.Value).Key;
-                //Debug.Log($"overide behvior to {next.GetType().Name}");
-                SwitchBehavior(next);
-            }
-        }
+				if (dict.Any())
+				{
+					var next = dict.Where(x => x.Key != ActiveBehavior).MaxBy(x => x.Value).Key;
+					//Debug.Log($"overide behvior to {next.GetType().Name}");
+					SwitchBehavior(next);
+				}
+			}
 
-        //Behaviors.Where()
+			//Behaviors.Where()
 
+			ActiveBehavior?.Run();
 
-        ActiveBehavior?.Run();
-
+		}
         UpdateAnimator();
 
         //Debug.DrawLine(agent.steeringTarget, this.pos());
@@ -312,7 +314,7 @@ public class Mob : MonoBehaviour
     [Obsolete]
     internal void Throw(Vector3 velocity)
     {
-        SwitchBehavior<FallingBehavior>();
+        //SwitchBehavior<FallingBehavior>();
         Fling(velocity);
         //throw new NotImplementedException();
     }

@@ -95,9 +95,13 @@ public class TileGrid : MonoBehaviour
 
 	void Break(Vector2Int cell)
 	{
-		print($"Break {cell} {this[cell]}");
-		Destroy(this[cell].gameObject);
-		this[cell] = null;
+		var boi = this[cell];
+		print($"Break {cell} {boi}");
+		if (boi)
+		{
+			Destroy(this[cell].gameObject);
+			this[cell] = null;
+		}
 	}
 
 	void Update()

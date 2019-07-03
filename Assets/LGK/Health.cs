@@ -119,9 +119,15 @@ public class Health : MonoBehaviour
 			?? GetComponentInChildren<Collider>()?.bounds.center ??
 			Vector3.zero;
 
-		team?.Register(this);
+		
 
 		radius = GetComponentInChildren<Collider>()?.bounds.size.Max() ?? 0;
+	}
+
+	private void Awake()
+	{
+		//ha lol hotswap this
+		team?.Register(this);
 	}
 
 	// Update is called once per frame

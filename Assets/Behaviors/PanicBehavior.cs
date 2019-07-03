@@ -18,7 +18,6 @@ public class PanicBehavior : AiBehavior
         return base.OnBegin();
     }
 
-
     public override void Run()
     {
 		Me.Move(Vector3.zero);

@@ -8,7 +8,7 @@ public class IdleBehavior : AiBehavior
 	public override void Run()
     {
 		Me.Move(Vector3.zero);
-		End();
+		//End();
         //print($"I tried an i {Me.SwitchBehavior()}");
     }
 }

@@ -98,20 +98,17 @@ public class Player : MonoBehaviour
 		var mousePos = Input.mousePosition;
 		var ray = Camera.main.ScreenPointToRay(mousePos);
 
+		Mob over = null;
+
 		if (Physics.Raycast(ray, out RaycastHit hit, LayerMask.GetMask(Layers.Terrain)))
 		{
 			targeter.position = hit.point;
 			targeter.rotation = transform.rotation;
 
-			targeter.up = hit.normal;  
+			targeter.up = hit.normal;
+
+			over = hit.collider.GetComponentInParent<Mob>();
 		}
-		else
-		{
-
-		}
-
-
-
 
 		var doThrow = Input.GetButtonDown("Fire1");
 		var doSummon = Input.GetKeyDown(KeyCode.Y);
@@ -119,12 +116,19 @@ public class Player : MonoBehaviour
 		var doHarvest = Input.GetKeyDown(KeyCode.H);
 		var doMelee = Input.GetKeyDown(KeyCode.M);
 		var doBuild = Input.GetKeyDown(KeyCode.B);
-
-
-
-
+		var doKill = Input.GetKeyDown(KeyCode.K);
 		var doLocationController = Input.GetKey(KeyCode.Mouse2);
 		var doWhistle = Input.GetKey(KeyCode.R);
+
+
+		if (doKill)
+		{
+			var job = new MurderJob()
+			{
+				target = over.Health
+			};
+			Team.JobManager.PublishJob(job);
+		}
 
 		followPoint.transform.position = doLocationController ? targeter.position : transform.position - transform.forward;
 
