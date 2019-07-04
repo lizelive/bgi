@@ -1,0 +1,89 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 12.03.2016 17:06:02
+
+newmtl tumpSuit_darkblue
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka F:\_px\3dWork\ForTS\characters\ToonMen\Toon Trump\images\trump_suit_d.png
+	map_Kd F:\_px\3dWork\ForTS\characters\ToonMen\Toon Trump\images\trump_suit_d.png
+
+newmtl trump_tie1
+	Ns 19.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.2880 0.2880 0.2880
+	Ke 0.0000 0.0000 0.0000
+	map_Ka F:\_px\3dWork\ForTS\characters\ToonMen\Toon Trump\images\trump_tie_d_red.png
+	map_Kd F:\_px\3dWork\ForTS\characters\ToonMen\Toon Trump\images\trump_tie_d_red.png
+
+newmtl trumpShoes
+	Ns 28.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0314 0.0314 0.0314
+	Kd 0.0314 0.0314 0.0314
+	Ks 0.7200 0.7200 0.7200
+	Ke 0.0000 0.0000 0.0000
+	map_Ka F:\_px\3dWork\ForTS\characters\ToonMen\Toon Trump\images\trump_shoes_d.png
+	map_Kd F:\_px\3dWork\ForTS\characters\ToonMen\Toon Trump\images\trump_shoes_d.png
+
+newmtl trumpHead
+	Ns 14.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.9804 0.5647 0.4039
+	Kd 0.9804 0.5647 0.4039
+	Ks 0.3510 0.3510 0.3510
+	Ke 0.0000 0.0000 0.0000
+	map_Ka F:\_px\3dWork\ForTS\characters\ToonMen\Toon Trump\images\trump_head_d.png
+	map_Kd F:\_px\3dWork\ForTS\characters\ToonMen\Toon Trump\images\trump_head_d.png
+	map_d F:\_px\3dWork\ForTS\characters\ToonMen\Toon Trump\images\trump_head_d.png
+
+newmtl trumpeyes
+	Ns 42.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.8667 0.8667 0.8667
+	Kd 0.8667 0.8667 0.8667
+	Ks 0.3330 0.3330 0.3330
+	Ke 0.0000 0.0000 0.0000
+	map_Ka F:\_px\3dWork\ForTS\characters\ToonMen\Toon Trump\images\trump_eyes_d.png
+	map_Kd F:\_px\3dWork\ForTS\characters\ToonMen\Toon Trump\images\trump_eyes_d.png
+	map_refl F:\_px\3dWork\ForTS\characters\ToonMen\Toon Trump\images\trump_eyes_r.png
+
+newmtl hairTemp
+	Ns 16.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.9176 0.5137 0.1569
+	Kd 0.9176 0.5137 0.1569
+	Ks 0.3690 0.3690 0.3690
+	Ke 0.2569 0.1438 0.0439
+	map_Ka F:\_px\3dWork\ForTS\characters\ToonMen\Toon Trump\images\trump_hair_d.png
+	map_Kd F:\_px\3dWork\ForTS\characters\ToonMen\Toon Trump\images\trump_hair_d.png
+	map_d F:\_px\3dWork\ForTS\characters\ToonMen\Toon Trump\images\trump_hair_a.png
