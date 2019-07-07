@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Storeroom : MonoBehaviour
 {
-	public Timer timer = new Timer(10);
+	public CooldownTimer timer = new CooldownTimer(10);
 
 	public float maxBalance = 50;
 	public Team team;

@@ -7,8 +7,9 @@ public class InteractionToast : MonoBehaviour
 {
 	public Player player;
 	public Text text;
-    // Start is called before the first frame update
-    void Start()
+	public Text inputButton;
+	// Start is called before the first frame update
+	void Start()
     {
 		if (!player)
 			player = FindObjectOfType<Player>();
@@ -18,14 +19,16 @@ public class InteractionToast : MonoBehaviour
     void Update()
     {
 		var thingYouCanInteractWith = player.gameObject.Find<Interactable>(player.interactionRange).Closest(player.gameObject);
-		
+
 		//gameObject.SetActive(thingYouCanInteractWith);
 
+
+		text.gameObject.SetActive(thingYouCanInteractWith);
 		if (thingYouCanInteractWith)
 		{
-			text.text = thingYouCanInteractWith.message;
+			text.text = Default.I.controls.Interact + thingYouCanInteractWith.message;
 			var castFrom = Camera.main.pos();
-			var dir = thingYouCanInteractWith.pos()- castFrom;
+			var dir = thingYouCanInteractWith.pos() - castFrom;
 
 			transform.LookAt(castFrom);
 

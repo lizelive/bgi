@@ -5,9 +5,14 @@ using UnityEngine;
 
 public static class VecU
 {
-    public static Vector2Int Div(this Vector2Int pos, int by)
+	public static Vector2Int Div(this Vector2Int pos, int by)
 	{
 		return new Vector2Int(pos.x / by, pos.y / by);
+	}
+
+	public static Vector3Int Div(this Vector3Int pos, int by)
+	{
+		return new Vector3Int(pos.x / by, pos.y / by, pos.z / by);
 	}
 
 	public static Vector2Int xz(this Vector3Int self)
@@ -21,6 +26,16 @@ public static class VecU
 		Mathf.FloorToInt(pos.x),
 		Mathf.FloorToInt(pos.y),
 		Mathf.FloorToInt(pos.z)
+		);
+	}
+
+
+	public static Vector3Int RoundToInt(this Vector3 pos)
+	{
+		return new Vector3Int(
+		Mathf.RoundToInt(pos.x),
+		Mathf.RoundToInt(pos.y),
+		Mathf.RoundToInt(pos.z)
 		);
 	}
 
@@ -49,5 +64,16 @@ public static class VecU
 	public static T Index<T>(this T[,] array, Vector2Int pos, T set)
 	{
 		return array[pos.x, pos.y] = set;
+	}
+
+
+	public static T Index<T>(this T[,,] array, Vector3Int pos)
+	{
+		return array[pos.x, pos.y, pos.z];
+	}
+
+	public static T Index<T>(this T[,,] array, Vector3Int pos, T set)
+	{
+		return array[pos.x, pos.y, pos.z] = set;
 	}
 }

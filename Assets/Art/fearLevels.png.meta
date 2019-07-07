@@ -1,0 +1,1120 @@
+fileFormatVersion: 2
+guid: 5212acf6e2e2e114e90657642db5dfda
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4132594748198642969
+    second: fearLevels_0
+  - first:
+      213: 8133528474413514733
+    second: fearLevels_1
+  - first:
+      213: 3003663585485384651
+    second: fearLevels_2
+  - first:
+      213: -3498639116720090885
+    second: fearLevels_3
+  - first:
+      213: 6505211487654645727
+    second: fearLevels_4
+  - first:
+      213: -3373532262600859627
+    second: fearLevels_5
+  - first:
+      213: 3362050643828721978
+    second: fearLevels_6
+  - first:
+      213: -8853525606344773461
+    second: fearLevels_7
+  - first:
+      213: -4702712565821985344
+    second: fearLevels_8
+  - first:
+      213: 6940429538756512907
+    second: fearLevels_9
+  - first:
+      213: 3784178799556163038
+    second: fearLevels_10
+  - first:
+      213: 8774315661760199328
+    second: fearLevels_11
+  - first:
+      213: 735665621636981906
+    second: fearLevels_12
+  - first:
+      213: -542690682674950583
+    second: fearLevels_13
+  - first:
+      213: 1315015698473841515
+    second: fearLevels_14
+  - first:
+      213: 5514506566056207667
+    second: fearLevels_15
+  - first:
+      213: -1974852877280642513
+    second: fearLevels_16
+  - first:
+      213: 907755134622727145
+    second: fearLevels_17
+  - first:
+      213: -6325434583039449476
+    second: fearLevels_18
+  - first:
+      213: -6484303921807426172
+    second: fearLevels_19
+  - first:
+      213: -3268962548500058302
+    second: fearLevels_20
+  - first:
+      213: 2584608950008508292
+    second: fearLevels_21
+  - first:
+      213: 6432002997867518794
+    second: fearLevels_22
+  - first:
+      213: -1331097820106377586
+    second: fearLevels_23
+  - first:
+      213: 1804373429325814290
+    second: fearLevels_24
+  - first:
+      213: -6796167108420910069
+    second: fearLevels_25
+  - first:
+      213: -8436416299063140358
+    second: fearLevels_26
+  - first:
+      213: -4740536224517280048
+    second: fearLevels_27
+  - first:
+      213: 1067481000699982079
+    second: fearLevels_28
+  - first:
+      213: -7727919261089371245
+    second: fearLevels_29
+  - first:
+      213: -783275432567840568
+    second: fearLevels_30
+  - first:
+      213: 7011667013538893721
+    second: fearLevels_31
+  - first:
+      213: 1525961468853468215
+    second: fearLevels_32
+  - first:
+      213: -7631514417977290657
+    second: fearLevels_33
+  - first:
+      213: -3235491104993447739
+    second: fearLevels_34
+  - first:
+      213: -6707405760899089917
+    second: fearLevels_35
+  - first:
+      213: 5315818736651543020
+    second: fearLevels_36
+  - first:
+      213: -9070466384095373342
+    second: fearLevels_37
+  - first:
+      213: -8888902388634229426
+    second: fearLevels_38
+  - first:
+      213: -8721859927100921006
+    second: fearLevels_39
+  - first:
+      213: -5907586805156465125
+    second: fearLevels_40
+  - first:
+      213: -1149262852484361286
+    second: fearLevels_41
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: fearLevels_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 331
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae6407070e0dcfa4e85a35f1a0e8ee7c
+      internalID: 4132594748198642969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_1
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 331
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3cb8094cbfe04e42bd684a9cb6507ae
+      internalID: 8133528474413514733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_2
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 330
+        width: 48
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bdc9a7e8dc50a242abb7bcdde99c7fa
+      internalID: 3003663585485384651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_3
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 332
+        width: 48
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b3c417bf748a5d4c9e2852c2e9e8627
+      internalID: -3498639116720090885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_4
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 332
+        width: 48
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 827ec9d568fd3f74c83780598fd7777f
+      internalID: 6505211487654645727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_5
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 332
+        width: 48
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2dcfb2e72e274e6489e91fa1d171b4f0
+      internalID: -3373532262600859627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_6
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 331
+        width: 61
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55b52741ecb38cc43af47f9317d07172
+      internalID: 3362050643828721978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_7
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 331
+        width: 61
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18c54ea3ee9d6de42a9961ac3e6421fd
+      internalID: -8853525606344773461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 265
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 580f0a5fc92b3fc4481d922fda4af2d9
+      internalID: -4702712565821985344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_9
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 265
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 878b245758fde93459d78d47076656e6
+      internalID: 6940429538756512907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_10
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 264
+        width: 48
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c90d489465e3f2d46a0eaa3840e59fcb
+      internalID: 3784178799556163038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_11
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 266
+        width: 48
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d28dec99d37fb5f449557895fdc0279d
+      internalID: 8774315661760199328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_12
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 266
+        width: 48
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b3fb0e3474882940ab376340a838f65
+      internalID: 735665621636981906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_13
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 266
+        width: 48
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cd3e8bd9ceb49e4585c04f481a33e57
+      internalID: -542690682674950583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_14
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 264
+        width: 61
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48548571f00a0514ca776da76a0a7e69
+      internalID: 1315015698473841515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_15
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 264
+        width: 61
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80225cc4861faf249933ace036929988
+      internalID: 5514506566056207667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 199
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dce5ed80a20a374fb22a279f6b4e839
+      internalID: -1974852877280642513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_17
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 199
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87702a0832e63fd479c42001b8dd2151
+      internalID: 907755134622727145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_18
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 198
+        width: 48
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e27d520d6cce50744b1d34d4a3d39a8d
+      internalID: -6325434583039449476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_19
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 199
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5028e18c0ef454b47b3d782a08a3f20b
+      internalID: -6484303921807426172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_20
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 199
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 459ed71768b87314e89baf3e1f973861
+      internalID: -3268962548500058302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_21
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 199
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bb6b05a537801a43ba10e3303f09bc8
+      internalID: 2584608950008508292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_22
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 199
+        width: 63
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb54659445201b24b9b54aa4a738c93a
+      internalID: 6432002997867518794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_23
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 199
+        width: 63
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ba62002d174f77458b35021e27eadcd
+      internalID: -1331097820106377586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 133
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9c5a712de0fc7f45ad545ae672c998b
+      internalID: 1804373429325814290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_25
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 133
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63deb5f11e30a834daa6f6e5bd04bc0b
+      internalID: -6796167108420910069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_26
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 132
+        width: 48
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8724f14d3c96e2843a50919ecd1420fd
+      internalID: -8436416299063140358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_27
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 132
+        width: 48
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09a1a008f76421444b9f72889f77413d
+      internalID: -4740536224517280048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_28
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 132
+        width: 48
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c1f98c6dc617c248a27a22ef1fb6d84
+      internalID: 1067481000699982079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_29
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 132
+        width: 48
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0834cd982053414da38beadbb6504fb
+      internalID: -7727919261089371245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_30
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 132
+        width: 67
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: baddb96c9da4c0a4e8c0b9cb7b568897
+      internalID: -783275432567840568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_31
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 132
+        width: 66
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5e75d1a5f6bd0643b58ac4194c8f545
+      internalID: 7011667013538893721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_32
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 67
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ffa7afc287e62840b98c58b7681ee2f
+      internalID: 1525961468853468215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_33
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 67
+        width: 48
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 198997b2845c6d74eb29ab498e3be3af
+      internalID: -7631514417977290657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_34
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 66
+        width: 48
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bcc7c2ab2811454cbdcf6db375816e3
+      internalID: -3235491104993447739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_35
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 66
+        width: 48
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 547716c42a707d24db8ebadb6a81f718
+      internalID: -6707405760899089917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_36
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 66
+        width: 48
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e805ea50d9bfca049862e392b866149e
+      internalID: 5315818736651543020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_37
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 66
+        width: 48
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db283a61f9a7fb54aaad602fa90a68ec
+      internalID: -9070466384095373342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_38
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 66
+        width: 69
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38e4b9a423f671442906be0a827abeb2
+      internalID: -8888902388634229426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_39
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 66
+        width: 63
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 075f6bf2867f31d439b5551e95704c24
+      internalID: -8721859927100921006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 48
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5ada4c60ffaff34491533766d27cd6a
+      internalID: -5907586805156465125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fearLevels_41
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 2
+        width: 48
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 109a7a02fa2c7164b93acb38224f7da0
+      internalID: -1149262852484361286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 9f009342be7604f49bb1f06ae9e06d45
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

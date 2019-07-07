@@ -10,6 +10,7 @@ public class Piechart : MonoBehaviour
 	public struct Datum
 	{
 		public string name;
+		
 		public float value;
 		public Color color;
 	}

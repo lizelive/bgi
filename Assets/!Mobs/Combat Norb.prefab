@@ -219,6 +219,7 @@ MonoBehaviour:
   startTime: 0
   following: {fileID: 0}
   maxFolowRange: 10
+  maxStartFolowRange: 2
 --- !u!114 &3721453182812340720
 MonoBehaviour:
   m_ObjectHideFlags: 0

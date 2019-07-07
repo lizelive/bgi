@@ -5,7 +5,7 @@ using System.Linq;
 
 public class FleeBehavior : AiBehavior
 {
-	private Timer checkTimer = new Timer(1);
+	private CooldownTimer checkTimer = new CooldownTimer(1);
 	Transform[] scaryThings = { };
     public float MaxStepHight = 1;
     public float FleeRange = 5;

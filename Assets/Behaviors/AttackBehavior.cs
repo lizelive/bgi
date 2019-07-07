@@ -15,8 +15,9 @@ public class AttackBehavior : AiBehavior
         if (!target)
         {
             target = Me.NearbyEnemies
-                .Where(Me.CanSee)
-                .MinBy(Me.Distance)?.Health;
+				.OrderBy(Me.Distance)
+                .FirstOrDefault(Me.CanSee)
+				?.Health;
         }
         
         if (!target)

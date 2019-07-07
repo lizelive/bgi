@@ -20,7 +20,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8946568805673298210}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da9ea7d5ffa4da84584b0e28b599d0f5, type: 3}
   m_Name: 
@@ -102,6 +102,44 @@ MonoBehaviour:
   startTime: 0
   target: {fileID: 0}
   Smells: 0
+--- !u!114 &4614191745461265016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8946568805673298210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69fdf006148269a4f855ab87f5507308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Running: 0
+  BasePriority: 0
+  startTime: 0
+  target: {fileID: 0}
+  MidAttackPriority: 1000
+--- !u!114 &5482685376876238677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8946568805673298210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 015a217d44d08404a997e8a75344da4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 1
+  damage: 1
+  attackRange: 2
+  launchForce: 1
+  pierce: 0
+  sfx: {fileID: 0}
+  stickStrength: 0
+  dropAttackTreshold: 3
+  dropAttackBonus: 3
 --- !u!114 &8205747213924591234
 MonoBehaviour:
   m_ObjectHideFlags: 0

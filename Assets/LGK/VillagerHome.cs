@@ -6,7 +6,10 @@ using UnityEngine;
 
 public class VillagerHome : MonoBehaviour, IBurnable
 {
+
+	public Team Team => GetComponent<Health>().team;
 	public Transform spawnPoint;
+	public float costToSpawn;
 
     public enum Status
     {
@@ -33,15 +36,21 @@ public class VillagerHome : MonoBehaviour, IBurnable
 
     public float fireBurnTime = 300;
 
+	public float spawnCost = 10;
+
 	public Mob villagerPrefab;
 	public Mob villager;
+
 	public Team Village => GetComponent<Health>().team;
+
+	CooldownTimer spawnTimer = new CooldownTimer(60);
 	// Update is called once per frame
 	void Update()
     {
 
-		if (!villager)
+		if (!villager && spawnTimer.Check && Team.NumMobs >= 2 && Team.balance >= costToSpawn)
 		{
+			Team.balance -= costToSpawn;
 			villager = null;
 			villager = Instantiate(villagerPrefab, spawnPoint.pos(), Quaternion.identity);
 			villager.Team = Village;

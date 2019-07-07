@@ -13,11 +13,26 @@ public class Room : MonoBehaviour
     // Start is called before the first frame update
     public static bool IsValid(TileGrid grid, Region2D region)
 	{
-		return region.Select(grid.Get).All(U.Is);
+		return region.Select(U.x0y).Select(grid.Get).All(U.Is);
 	}
 }
 
 
+
+
+public struct Region3D
+{
+	public void MinMax(ref int minout, ref int maxout)
+	{
+		if (minout > maxout)
+		{
+			var t = minout;
+			minout = maxout;
+			maxout = t;
+		}
+	}
+	public Vector3Int max, min;
+}
 public struct Region2D : IEnumerable<Vector2Int>{
 
 	/// <summary>

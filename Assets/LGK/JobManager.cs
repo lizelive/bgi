@@ -93,6 +93,20 @@ public abstract class BaseJob : IJob
 			throw new Exception("Wtf?");
 		return Currentpriority.CompareTo(job.Currentpriority);
 	}
+
+	public virtual void Start()
+	{
+
+	}
+
+	public virtual void Finish()
+	{
+		foreach (var mob in Workers)
+		{
+			mob.job = null;
+			mob.SwitchBehavior<IdleBehavior>();
+		}
+	}
 }
 
 public class MurderJob : BaseJob
@@ -105,7 +119,7 @@ public class MurderJob : BaseJob
 	public override int MaxNumWorkers => 100;
 
 
-	public  override bool IsValidMob(Mob mob) => mob.Behaviors.Any(x => x is AttackBehavior);
+	public override bool IsValidMob(Mob mob) => mob.Behaviors.Any(x => x is AttackBehavior);
 
 	public override bool IsComplete => !target;
 
@@ -114,6 +128,44 @@ public class MurderJob : BaseJob
 		var jfk = target;
 		me.GetComponent<AttackBehavior>().target = jfk;
 		var behavior = me.SwitchBehavior<AttackBehavior>();
+	}
+
+	public override bool Equals(object obj)
+	{
+		var job = obj as MurderJob;
+		return job != null &&
+			   EqualityComparer<Health>.Default.Equals(target, job.target);
+	}
+
+
+
+	private GameObject targetIcon;
+
+	public MurderJob(Health target)
+	{
+		this.target = target;
+	}
+
+	public override void Finish()
+	{
+		base.Finish();
+		GameObject.Destroy(targetIcon);
+	}
+
+	public override void Start()
+	{
+
+		targetIcon = GameObject.Instantiate(
+			Default.I.TargetIcon,
+			target.transform);
+
+		targetIcon.transform.localPosition = Vector3.up * 3;
+		base.Start();
+	}
+
+	public override int GetHashCode()
+	{
+		return -962741368 + EqualityComparer<Health>.Default.GetHashCode(target);
 	}
 }
 
@@ -134,6 +186,9 @@ public interface IJob : IComparable
 	IEnumerable<Mob> Workers { get; }
 	bool IsComplete { get; }
 	float Currentpriority { get; }
+
+	void Finish();
+	void Start();
 }
 
 public class JobManager : MonoBehaviour
@@ -149,18 +204,44 @@ public class JobManager : MonoBehaviour
 		team.JobManager = this;
 	}
 
+	public bool UnpublishJob(IJob job)
+	{
+		var remove = openJobs.Find(job.Equals);
+
+		if (remove == null)
+			return false;
+
+		openJobs.Remove(remove);
+		remove.Finish();
+		return true;
+	}
+
+	public void ClearAllJobs()
+	{
+		openJobs.Select(UnpublishJob);
+	}
+
 	public void PublishJob(IJob job)
 	{
-		openJobs.Add(job);
+		if (!openJobs.Contains(job))
+		{
+			openJobs.Add(job);
+			job.Start();
+		}
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		openJobs.RemoveAll(x => x.IsComplete);
+		foreach (var job in openJobs.Where(x => x.IsComplete).ToArray())
+		{
+			UnpublishJob(job);
+		}
+
+
 		//var sortedJobs = openJobs.OrderBy(x => x.Currentpriority).ToList();
 
-		var sortedJobs = new SortedSet<IJob>(openJobs);
+		var sortedJobs = new SortedSet<IJob>(openJobs.Where(j => j.IsHiring));
 
 		var idleMobs = IdleMob.ToArray();
 

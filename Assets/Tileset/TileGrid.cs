@@ -12,16 +12,16 @@ public class TileGrid : MonoBehaviour
 		I = this;
 	}
 
-	public Tile Get(Vector2Int pos) => storage[pos];
+	public Tile Get(Vector3Int pos) => storage[pos];
 
-	public Tile this[Vector2Int index]
+	public Tile this[Vector3Int index]
 	{
 		get => storage[index];
 
 		set => storage[index] = value;
 	}
 
-	UnboundArray2D<Tile> storage = new UnboundArray2D<Tile>();
+	UnboundArray3D<Tile> storage = new UnboundArray3D<Tile>();
 
 	public Tile prefab;
 
@@ -74,26 +74,21 @@ public class TileGrid : MonoBehaviour
 	public bool showPreview = false;
 
 
-	Vector2Int lastSelect, cell2d;
+	Vector3Int lastSelect, cell2d;
 
 
 	void Build(Vector3Int pos)
 	{
-		Vector2Int cell2d = pos.xz();
-		var has = storage[cell2d];
-		if (has)
-		{
-			print($"{cell2d} has {has}");
-		}
-		else
+		var has = storage[pos];
+		if (!has)
 		{
 			var yum = Instantiate(prefab, gridSize * (Vector3)pos, Quaternion.identity);
 			yum.transform.localScale = Vector3.one * gridSize;
-			storage[cell2d] = yum;
+			storage[pos] = yum;
 		}
 	}
 
-	void Break(Vector2Int cell)
+	void Break(Vector3Int cell)
 	{
 		var boi = this[cell];
 		print($"Break {cell} {boi}");
@@ -120,27 +115,28 @@ public class TileGrid : MonoBehaviour
 
 		buildPreview.gameObject.SetActive(showPreview);
 
-		var pos = targeter.pos();
-		pos += gridSize / 2 * targeter.up;
+		var pos = targeter.position;
+		var selectedCell = (pos / gridSize).FloorToInt();
+		pos += gridSize * targeter.up;
 		var cell = (pos / gridSize).FloorToInt();
-
+		
 
 		pos = gridSize * (Vector3)cell;
 		buildPreview.localScale = Vector3.one * gridSize;
-		buildPreview.position = pos;
-		cell2d = cell.xz();
+		buildPreview.position = gridSize * (Vector3)selectedCell;
+		cell2d = cell;
 
 
 		// slect logic
 
 
-		if (doSelect)
-		{
-			var selected = new Region2D(lastSelect, cell2d);
-			var validSelect = Room.IsValid(this, selected);
-			print($"select was {validSelect}, {selected}");
-			lastSelect = cell2d;
-		}
+		//if (doSelect)
+		//{
+		//	var selected = new Region2D(lastSelect, cell2d);
+		//	var validSelect = Room.IsValid(this, selected);
+		//	print($"select was {validSelect}, {selected}");
+		//	lastSelect = cell2d;
+		//}
 
 		//delete logic
 		if (deleteBlock)

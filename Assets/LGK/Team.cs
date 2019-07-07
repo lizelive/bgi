@@ -15,14 +15,16 @@ public class Team : ScriptableObject
 	public Color color;
 
 
+	public int NumMobs => mobs.Count;
+
 	public bool autoAlly;
 	public float fightThreshold = -3;
 
-	public HashSet<Mob> mobs = new HashSet<Mob>();
-	public HashSet<Health> members = new HashSet<Health>();
+	public List<Mob> mobs = new List<Mob>();
+	public List<Health> members = new List<Health>();
 
 	public Dictionary<Team, float> reputations = new Dictionary<Team, float>();
-
+	public Dictionary<Team, float> loyaly = new Dictionary<Team, float>();
 
 	public IEnumerable<T> GetMembers<T>()
 	{
@@ -69,12 +71,14 @@ public class Team : ScriptableObject
 
 
 	public List<Team> Allies;
-	internal JobManager JobManager;
+	public JobManager JobManager;
 
-	// Start is called before the first frame update
-	void Start()
+	public float TotalHp => mobs.Sum(m => m.Health.CurrentHealth);
+
+	public void ReportMurder(Team by, float damage)
 	{
-
+		AddRep(by, -damage/TotalHp);
+		recentBloodshed += damage;
 	}
 
 	public bool Fighting(Mob other)
@@ -90,6 +94,25 @@ public class Team : ScriptableObject
 	public bool Fighting(Health other)
 	{
 		return Fighting(this, other.team);
+	}
+
+	public float recentBloodshed = 0;
+	public float bloodForgetRate = 1 / 360;
+	public float lastTime;
+
+	public float Fear
+	{
+		get
+		{
+			var now = Time.time;
+			var deltat = now - lastTime;
+			var numMobs = mobs.Count;
+			var totalHp = TotalHp;
+			recentBloodshed *= Mathf.Clamp01(1 - bloodForgetRate * deltat);
+			lastTime = now;
+
+			return recentBloodshed / numMobs;
+		}
 	}
 
 	public static bool Fighting(Team a, Team b)
@@ -124,4 +147,74 @@ public class Team : ScriptableObject
 		if (mob)
 			mobs.Add(mob);
 	}
+
+
+	public float lowFearThreshod = .2f;
+	public float highFearThreshod = .8f;
+	public float highRepThreshold = 0.5f;
+
+	public enum Behavior
+	{
+		Normal,
+		Curse,
+		Fight,
+		Summon,
+		Praise,
+		Pleed,
+		Join
+	}
+
+	public Behavior WhatBehavior(Team to)
+	{
+		var rep = GetRep(to);
+		var fear = Fear;
+
+
+
+		var highFear = fear > highRepThreshold;
+		var lowFear = fear < lowFearThreshod;
+		var medFear = !(highFear || lowFear);
+
+
+		var hasGoodRep = rep > highRepThreshold;
+		var hasBadRep = rep < -highRepThreshold;
+		var hasNutralRep = !(hasGoodRep || hasBadRep);
+
+
+		if (hasBadRep)
+		{
+			if (highFear)
+				return Behavior.Summon;
+			if (medFear)
+				return Behavior.Fight;
+			if (lowFear)
+				return Behavior.Curse;
+
+		}
+
+		if (hasNutralRep)
+		{
+			if (highFear)
+				return Behavior.Pleed;
+			if (medFear)
+				return Behavior.Normal;
+			if (lowFear)
+				return Behavior.Normal;
+		}
+
+		if (hasGoodRep)
+		{
+			if (highFear)
+				return Behavior.Join;
+			if (medFear)
+				return Behavior.Praise;
+			if (lowFear)
+				return Behavior.Praise;
+		}
+
+		throw new Exception("Invalid behavior state i guess. this should be imposible.");
+		//return BehaviorStates.Ignore;
+	}
+
+
 }

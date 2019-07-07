@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Default : MonoBehaviour
 {
     public static ShitsOnFireYo YoOnFire => I.yoOnFire;
 
+	public GameObject TargetIcon;
     public ShitsOnFireYo yoOnFire;
+	public Controls controls;
 
-    static Default I;
+	public string playerName;
+
+    public static Default I;
 
     public Default()
     {

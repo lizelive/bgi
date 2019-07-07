@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using UnityEngine;
-
+using static UnityEngine.Mathf;
 
 public class VillageController : MonoBehaviour
 {
@@ -40,9 +40,8 @@ public class VillageController : MonoBehaviour
 
 	public void KilledAVillager(Health murder)
 	{
-		print($"Murder. {murder} {murder?.team}");
-		if (murder?.team)
-			team.AddRep(murder.team, -FearPerVillagerKiled);
+		//print($"Murder. {murder} {murder?.team}");
+		//if (murder?.team) team.AddRep(murder.team, -FearPerVillagerKiled);
 		//Fear += FearPerVillagerKiled;
 	}
 
@@ -53,7 +52,7 @@ public class VillageController : MonoBehaviour
 		team.AddRep(by, thing.buildRep);
 	}
 
-	public Double Balance
+	public double Balance
 	{
 		get
 		{
@@ -74,7 +73,7 @@ public class VillageController : MonoBehaviour
 
 		//var fearp = 1 - team.GetRep(team) / team.TotalRep;
 
-		var fear = 1-team.Confidance;// fearCurve.Evaluate(fearp);
+		var fear = 1 - team.Confidance;// fearCurve.Evaluate(fearp);
 		if (float.IsNaN(fear))
 		{
 			fear = 0;
@@ -93,36 +92,75 @@ public class VillageController : MonoBehaviour
 	public float heroCost = 40;
 	public float heroRep = -10;
 
-
+	public float villageRadius = 32;
 	public Transform spawnPoint;
-
+	public CooldownTimer heroCooldown = new CooldownTimer(60);
 	// Update is called once per frame
 	void Update()
 	{
-		team.mobs = new HashSet<Mob>(Villagers.Select(x => x.GetComponent<Mob>()));
 		team.SetRep(team, Villagers.Count());
 		var timeCorrectedDecay = FearDecay * CurrentlyAliveVillager;
 		timeCorrectedDecay *= Time.deltaTime;
 
 
-		//Fear = 1 - team.Confidance;
+		var faction = team.reputations.Keys.FirstOrDefault(x => x != team);
 
-		if (!myHero)
+
+		Team.Behavior behaviour = Team.Behavior.Normal;
+		if(faction)
 		{
-			myHero = null;
-			var worstTeam = team.reputations.MinBy(x => x.Value);
-			if (worstTeam.Value < heroRep && heroPrefab && Balance >= heroCost)
+			behaviour = team.WhatBehavior(faction);
+
+
+			if (behaviour == Team.Behavior.Summon)
 			{
-				Balance -= heroCost;
-				var spawnPos = spawnPoint.pos();
-				myHero = Instantiate(heroPrefab, spawnPos, Quaternion.identity);
-				myHero.transform.position = spawnPos;
-				myHero.Team = team;
+				if (!myHero)
+				{
+					myHero = null;
+					var worstTeam = team.reputations.MinBy(x => x.Value);
+					if (worstTeam.Value < heroRep && heroPrefab && Balance >= heroCost && heroCooldown.Check)
+					{
+						Balance -= heroCost;
+						var spawnPos = spawnPoint.pos();
+						myHero = Instantiate(heroPrefab, spawnPos, Quaternion.identity);
+						myHero.transform.position = spawnPos;
+						myHero.Team = team;
+					}
+				}
+
+			}
+
+			if(behaviour == Team.Behavior.Summon || behaviour == Team.Behavior.Fight)
+			{
+				var jobs = faction.mobs
+					.Where(mob => gameObject.Distance(mob) <= villageRadius)
+					.Select(mob => new MurderJob(mob.Health)).ToArray();
+
+
+
+				foreach (var job in jobs)
+				{
+					team.JobManager.PublishJob(job);
+				}
+				//try
+				//{
+				//	jobs.Foreach();
+				//}
+				//catch(ArgumentException how)
+				//{
+				//	how.ToString();
+				//}
+				// probly make when they enter / leave?
 			}
 		}
 
+		print($"{team.name} in {behaviour} mode to {faction}");
 
-		if (Balance > HouseRepairCost)
+
+
+
+
+		if (behaviour == Team.Behavior.Normal && Balance > HouseRepairCost)
 		{
 			var houseToFix = Houses.FirstOrDefault(x => x.state == VillagerHome.Status.Burnt);
 			if (houseToFix)

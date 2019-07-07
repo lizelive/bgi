@@ -8,20 +8,15 @@ public class VillagerUI : MonoBehaviour
 {
 	public Team village;
 
-	public Text nameText, repText, popText, worthText, relationsText;
+	public Text nameText, repText, popText, worthText, relationsText, fearText;
 
+	public float maxFear = 1;
 
-	public Image wheelImage;
+	public Sprite[] fearImages;
+
+	public Image wheelImage, statusImage;
 	public Transform wheelParent;
 	Dictionary<Team, Image> teamWheels;
-	// Start is called before the first frame update
-	void Start()
-	{
-
-
-
-		//var images = wheelParent.GetComponentInChildren<Image>();
-	}
 
 
 	// Update is called once per frame
@@ -36,6 +31,7 @@ public class VillagerUI : MonoBehaviour
 			popText.text = $"Population {village.mobs.Count} / {village.maxNumMobs}";
 
 
+
 		if (worthText)
 			worthText.text = $"${village.Balance:f2}";
 
@@ -44,7 +40,21 @@ public class VillagerUI : MonoBehaviour
 			wheelImage.color = village.color;
 			wheelImage.fillAmount = village.Confidance;
 		}
+
+
+		if (fearText)
+		{
+			fearText.text = $"Fear {village.Fear:f2}";
+		}
+		if (statusImage)
+		{
+			var imageNumber = Mathf.FloorToInt(fearImages.Length * Mathf.Clamp01(village.Fear / maxFear));
+			imageNumber = System.Math.Min(imageNumber, fearImages.Length - 1);
+			statusImage.sprite = fearImages[imageNumber];
+
+		}
+
 		if (relationsText)
-			relationsText.text = $"Rep {village.Confidance}\n" + string.Join("\n", village.reputations.Select(x => $"{x.Key} :\t {x.Value}"));
+			relationsText.text = $"Rep {village.Confidance}\n" + string.Join("\n", village.reputations.Select(x => $"{x.Key.name} : {x.Value} : {village.WhatBehavior(x.Key)}"));
 	}
 }

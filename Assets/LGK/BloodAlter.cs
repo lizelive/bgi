@@ -47,9 +47,12 @@ public class BloodAlter : MonoBehaviour
     {
         var noob = Instantiate(spawns, by.pos()+ by.transform.forward * 1, Quaternion.identity);
         noob.Health.team = team;
+		noob.name = $"{English.RandomName()} {spawns.name} of {team.name}";
+
         var norb = noob.GetComponent<Norb>();
         if (norb) {
             norb.owner = by;
+			
         }
     }
 

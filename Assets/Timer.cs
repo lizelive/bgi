@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Timer
+public class CooldownTimer
 {
 	public float spacing;
-	public float last;
+	public float last = float.NegativeInfinity;
 
-	public Timer(float spacing = 0)
+	public CooldownTimer(float spacing = 0)
 	{
 		this.spacing = spacing;
 	}

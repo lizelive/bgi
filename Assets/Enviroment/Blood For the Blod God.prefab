@@ -5126,7 +5126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4ab3eb19a6e5044bad988a686bdd852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  message: Y to summon demons
+  message: summon demons
   offset: {fileID: 0}
 --- !u!1 &8004031245822636491
 GameObject:

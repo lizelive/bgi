@@ -50,7 +50,9 @@ public class Health : MonoBehaviour
 			Debug.LogWarning("That's not very effective.");
 			return false;
 		}
-		if (by == this || (!Team.Fighting(by?.team, team) && !allowFriendlyFire) || immunities == kind)
+
+		var byTeam = by?.team;
+		if (by == this || (!Team.Fighting(byTeam, team) && !allowFriendlyFire) || immunities == kind)
 			return false;
 
 
@@ -64,7 +66,12 @@ public class Health : MonoBehaviour
 
 		lastHurt = Time.time;
 
-		CurrentHealth -= value;
+
+		var pain = Mathf.Min(CurrentHealth, value);
+
+
+		CurrentHealth -= pain;
+		team?.ReportMurder(byTeam, pain);
 		if (CurrentHealth <= 0)
 		{
 			//if (by)
@@ -103,9 +110,13 @@ public class Health : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		if (!(team?.Unregister(this) ?? true))
+
+		if (!team)
+			return;
+
+		if (!team.Unregister(this))
 		{
-			Debug.LogWarning("How did I die?");
+			Debug.LogWarning($"{name} on {team} died without registing?");
 		}
 	}
 

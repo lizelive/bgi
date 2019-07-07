@@ -118,7 +118,15 @@ public static class U
         return new Vector3(s.x * o.x, s.y * o.y, s.z * o.z);
     }
 
-    public static T[] Find<T>(Vector3 pos, float range) where T:UnityEngine.Component
+	public static void Foreach<T>(this IEnumerable<T> collection, Action<T> f)
+	{
+		foreach (var item in collection)
+		{
+			f(item);
+		}
+	}
+
+	public static T[] Find<T>(Vector3 pos, float range) where T:UnityEngine.Component
     {
         return GameObject.FindObjectsOfType<T>().Where(x => x.Distance(pos) <= range).ToArray();
 

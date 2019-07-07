@@ -4888,6 +4888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e57f75df7baf1f4ab280093235e9d1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Controls: {fileID: 0}
   foodBar: {fileID: 0}
   squad: {fileID: 0}
   weapon: {fileID: 0}
@@ -4902,10 +4903,13 @@ MonoBehaviour:
   followPoint: {fileID: 9134670993336822536}
   fireballPrefab: {fileID: 4601835141322903977, guid: 023037e3ce088094f9a03a1e31308286,
     type: 3}
+  trajectory: {fileID: 0}
   interactionRange: 3
   currentBuild: {fileID: 0}
   buildMenu: {fileID: 5755259578076504980, guid: edb1f3151dff42f4090102d67993a8f6,
     type: 3}
+  lockCamera: 0
+  cmAngles: {x: 0, y: 0}
 --- !u!114 &411794623736036373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4918,13 +4922,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63ccea295841457449a25200931d930c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 100
-  CurrentHealth: 100
+  MaxHealth: 20
+  CurrentHealth: 20
   HitCooldown: 1
   RegenCooldown: Infinity
   RegenSpeed: 0
   ragdoll: {fileID: 0}
-  deathParticle: {fileID: 0}
+  deathParticle: {fileID: 7925395990273270106, guid: 65989700e59eec8438baaab0aad029cb,
+    type: 3}
   immunities: 0
   killHealthBonus: 0.15
   team: {fileID: 11400000, guid: bc38b09bd345fee4b92615d8456fc2b3, type: 2}
@@ -4976,6 +4981,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 631db0f464d615a43aac3095e062958e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 1
+  physicsMovement: 0
   Behaviors: []
   ActiveBehavior: {fileID: 0}
   ViewRange: 10

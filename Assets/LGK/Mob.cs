@@ -68,17 +68,25 @@ public class Mob : MonoBehaviour
     }
 
 
-    public T SwitchBehavior<T>() where T : AiBehavior
+	
+	public T SwitchBehavior<T>(Action<T> predo) where T : AiBehavior
+	{
+		var next = GetComponent<T>();
+		if (!next)
+		{
+			Debug.LogError($"Missing behavior {typeof(T).Name}");
+		}
+		predo(next);
+		return SwitchBehavior(next) as T;
+
+	}
+
+
+	public T SwitchBehavior<T>() where T : AiBehavior
     {
-        var next = GetComponent<T>();
-        if (!next)
-        {
-            Debug.LogError($"Missing behavior {typeof(T).Name}");
-        }
+		return SwitchBehavior<T>(x => { });
 
-        return SwitchBehavior(next) as T;
-
-    }
+	}
 
 #if UNITY_EDITOR
 	void OnDrawGizmos()
@@ -421,6 +429,7 @@ public class Mob : MonoBehaviour
 
         target = null;
 		navigationActive = false;
+		Move(Vector3.zero);
 		//if (!agent || !agent.isOnNavMesh) return;
 		//agent.isStopped = true;
 	}

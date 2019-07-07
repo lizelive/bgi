@@ -9,12 +9,13 @@ public class FollowBehavior : AiBehavior
     public override bool SwitchToAny => true;
     public Player following;
 	public float maxFolowRange = 10;
-		
-    public override bool OnBegin()
+	public float maxStartFolowRange = 10;
+
+	public override bool OnBegin()
     {
         if(!following)
-			following = FindObjectOfType<Player>();
-        if (following && Me.Distance(following) < maxFolowRange)
+			following = gameObject.Find<Player>(maxStartFolowRange).FirstOrDefault();
+        if (following)
         {
             Me.SetTarget(following.followPoint.transform);
             following.Followers.Add(Me);
@@ -28,8 +29,9 @@ public class FollowBehavior : AiBehavior
     {
         if(following)
         following.Followers.Remove(Me);
+		following = null;
 
-        Me.TargetClear();
+		Me.TargetClear();
         return base.OnEnd();
     }
 
