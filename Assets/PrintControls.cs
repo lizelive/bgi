@@ -36,8 +36,8 @@ public class PrintControls : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		var toggle = unusedKeycodes.Any(Input.GetKeyDown);
-		showHelp ^= toggle;
+		var showHelp = unusedKeycodes.Any(Input.GetKey);
+		//showHelp ^= toggle;
 		text.enabled = showHelp;
 	}
 }

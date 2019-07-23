@@ -8,7 +8,9 @@ using System;
 public class Team : ScriptableObject
 {
 	public int maxNumMobs = 100;
-	public double balance = 0;
+
+	[SerializeField]
+	double balance = 0;
 
 	public readonly Team Gia = null;
 
@@ -207,7 +209,7 @@ public class Team : ScriptableObject
 			if (highFear)
 				return Behavior.Join;
 			if (medFear)
-				return Behavior.Praise;
+				return Behavior.Pleed;
 			if (lowFear)
 				return Behavior.Praise;
 		}

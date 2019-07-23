@@ -62,6 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\CustomEditors\Editor\CreateParrent.cs" />
     <Compile Include="Assets\CustomEditors\Editor\EnumFlagDrawer.cs" />
     <Compile Include="Assets\CustomEditors\Editor\SelectParent.cs" />
     <Compile Include="Assets\DecalSystem\Plugins\DecalSystem\Editor\DecalEditor.cs" />

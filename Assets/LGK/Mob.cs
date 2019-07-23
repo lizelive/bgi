@@ -171,7 +171,7 @@ public class Mob : MonoBehaviour
         }
         rigidbody = GetComponent<Rigidbody>();
 
-		rigidbody.isKinematic = !physicsMovement;
+		rigidbody.isKinematic = IsGrounded && !physicsMovement;
         rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         SwitchBehavior();
     }
@@ -406,10 +406,12 @@ public class Mob : MonoBehaviour
 
         lookDir += 0.1f * (targetpos - this.pos()).normalized;
         lookDir = lookDir.x0z();
-        var rotation = Quaternion.LookRotation(lookDir);
-        //transform.rotation = rotation;
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
-
+		if (lookDir.magnitude > float.Epsilon)
+		{
+			var rotation = Quaternion.LookRotation(lookDir);
+			//transform.rotation = rotation;
+			transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+		}
         //if (agent.remainingDistance > agent.stoppingDistance)
         Move(realVel);
         //else mob.Move(Vector3.zero);

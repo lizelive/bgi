@@ -48,9 +48,9 @@ public class VillagerHome : MonoBehaviour, IBurnable
 	void Update()
     {
 
-		if (!villager && spawnTimer.Check && Team.NumMobs >= 2 && Team.balance >= costToSpawn)
+		if (!villager && spawnTimer.Check && Team.NumMobs >= 2 && Team.Balance >= costToSpawn)
 		{
-			Team.balance -= costToSpawn;
+			Team.Balance -= costToSpawn;
 			villager = null;
 			villager = Instantiate(villagerPrefab, spawnPoint.pos(), Quaternion.identity);
 			villager.Team = Village;

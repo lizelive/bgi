@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5755259578076504983
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5755259578076504981}
+  - component: {fileID: 5755259578076504980}
+  m_Layer: 0
+  m_Name: Build Menu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5755259578076504981
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5755259578076504983}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -47.339577, y: -3.9876366, z: -144.73149}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5755259578076504980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5755259578076504983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a35f4665578f4aaf6283f6f0aa542, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: {fileID: 4472536848245835836, guid: 20c57ad1c5b9ed144a536fc29e5fcd73, type: 3}
+  buildings:
+  - {fileID: 4851916089112598941, guid: 88a663dc737c3ba4d85b5819f3d2ab4b, type: 3}
+  - {fileID: 5927782599813881716, guid: a06b204ae32712143878b8985c1f9d7d, type: 3}
+  - {fileID: 239263671664644800, guid: e9acc74e7ae9c7e4d98720211ac4597d, type: 3}
+  - {fileID: 1703464011648928711, guid: 6189a58126b4a1d4b93f4deafd97dbef, type: 3}
+  - {fileID: -6647890466116784888, guid: 8e79fec09d0637c4ebf87f8af0971be4, type: 3}
+  - {fileID: 2510240249301326233, guid: 6f85b313b1588a94d945c0af7598a871, type: 3}
+  - {fileID: 3630548687081810856, guid: 850cebe6709e9ec42bc5afe499852baf, type: 3}
+  dropdown: {fileID: 0}
+  index: 0

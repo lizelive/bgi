@@ -149,25 +149,28 @@ public class Player : MonoBehaviour
 		caller.gameObject.SetActive(Whistle);
 
 
-		if (Input.GetKeyDown(KeyCode.N))
-		{
-			buildMenu.Next();
-		}
 
 		if (Build)
 		{
 			var tobuild = buildMenu.Current;
-			if (balance >= tobuild.cost)
+			if (tobuild && balance >= tobuild.cost)
 			{
 				var spawnLocation = targeter.pos();
 
 				var noob = Instantiate(tobuild, spawnLocation, targeter.rotation);
 				//start
 				balance -= noob.cost;
-				noob.Team = Team;
+				
 
-				var village = gameObject.Find<VillageController>(100).Closest(gameObject);
-				village.IBuilt(Team, noob);
+				if (noob.buildForSelf)
+				{
+					noob.Team = Team;
+				}
+				else
+				{
+					var village = gameObject.Find<VillageController>(100).Closest(gameObject);
+					village?.IBuilt(Team, noob);
+				}
 				noob.Place(this);
 			}
 

@@ -31,7 +31,8 @@ public class BloodAlter : MonoBehaviour
 
 	public void Spawn(Player by)
     {
-		if (team.mobs.Count > team.maxNumMobs)
+
+		if (!team || team.mobs.Count > team.maxNumMobs)
 			return;
 
 		if (by.balance >= spawns.cost)
@@ -58,7 +59,7 @@ public class BloodAlter : MonoBehaviour
 
     public void Despawn(Mob mob)
     {
-		team.balance += mob.cost;
+		team.Balance += mob.cost;
 		Destroy(mob.gameObject);
     }
    

@@ -26,10 +26,24 @@ public class Controls : ScriptableObject
 	public KeyCode MoveLeft = KeyCode.A;
 	public KeyCode MoveRight = KeyCode.D;
 	public KeyCode Jump = KeyCode.Space;
-	//public KeyCode MoveUp = KeyCode.UpArrow;
-	//public KeyCode MoveDown = KeyCode.DownArrow;
-	//public KeyCode MoveLeft = KeyCode.LeftArrow;
-	//public KeyCode MoveRight = KeyCode.RightArrow;
+
+	
+	public KeyCode MoveUpAlt = KeyCode.UpArrow;
+	public KeyCode MoveDownAlt = KeyCode.DownArrow;
+	public KeyCode MoveLeftAlt = KeyCode.LeftArrow;
+	public KeyCode MoveRightAlt = KeyCode.RightArrow;
+
+
+	public KeyCode BuildMC= KeyCode.U;
+
+
+	public KeyCode BreakMC = KeyCode.K;
+
+	public KeyCode BuildmodeMC = KeyCode.J;
+
+	public KeyCode TransRights = KeyCode.F13;
+
+
 }
 
 
@@ -41,7 +55,14 @@ public static class InMan
 	public static bool Summon => Input.GetKeyDown(Controls.Interact);
 	public static bool Fireball => Input.GetKeyDown(Controls.Attack);
 	public static bool Harvest => Input.GetKeyDown(Controls.Interact);
-	public static bool Melee => false;
+	public static bool Melee => false; // ha you want rights.
+
+
+
+	public static bool BreakMC => Input.GetKeyDown(Controls.BreakMC);
+	public static bool BuildMC => Input.GetKeyDown(Controls.BuildMC);
+	public static bool BuildmodeMC => Input.GetKeyDown(Controls.BuildmodeMC);
+
 	public static bool Build => Input.GetKeyDown(Controls.Build);
 	public static bool Break => Input.GetKeyDown(Controls.Break);
 	public static bool Kill => Input.GetKeyDown(Controls.Mark);

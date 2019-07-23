@@ -13,16 +13,17 @@ MonoBehaviour:
   m_Name: Dorkville
   m_EditorClassIdentifier: 
   maxNumMobs: 100
-  balance: 988.2354882703637
+  balance: 963.760179574529
   color: {r: 0.0073928833, g: 0, b: 1, a: 1}
   autoAlly: 1
   fightThreshold: -3
   mobs: []
   members: []
   Allies: []
-  recentBloodshed: -4.22087
+  JobManager: {fileID: 0}
+  recentBloodshed: 15.888239
   bloodForgetRate: 0.01
-  lastTime: 490.37677
+  lastTime: 41.315586
   lowFearThreshod: 0.2
   highFearThreshod: 0.8
   highRepThreshold: 0.5

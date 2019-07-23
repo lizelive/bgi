@@ -117,8 +117,7 @@ public class VillageController : MonoBehaviour
 				if (!myHero)
 				{
 					myHero = null;
-					var worstTeam = team.reputations.MinBy(x => x.Value);
-					if (worstTeam.Value < heroRep && heroPrefab && Balance >= heroCost && heroCooldown.Check)
+					if (heroPrefab && Balance >= heroCost && heroCooldown.Check)
 					{
 						Balance -= heroCost;
 						var spawnPos = spawnPoint.pos();
@@ -154,7 +153,7 @@ public class VillageController : MonoBehaviour
 			}
 		}
 
-		print($"{team.name} in {behaviour} mode to {faction}");
+		//print($"{team.name} in {behaviour} mode to {faction}");
 
 
 

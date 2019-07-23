@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -21,7 +20,8 @@ public class TileGrid : MonoBehaviour
 		set => storage[index] = value;
 	}
 
-	UnboundArray3D<Tile> storage = new UnboundArray3D<Tile>();
+	//[SerializeField]
+	TileUnboundArray3D storage = new TileUnboundArray3D();
 
 	public Tile prefab;
 
@@ -79,12 +79,12 @@ public class TileGrid : MonoBehaviour
 
 	void Build(Vector3Int pos)
 	{
-		var has = storage[pos];
+		var has = this[pos];
 		if (!has)
 		{
 			var yum = Instantiate(prefab, gridSize * (Vector3)pos, Quaternion.identity);
 			yum.transform.localScale = Vector3.one * gridSize;
-			storage[pos] = yum;
+			this[pos] = yum;
 		}
 	}
 
@@ -107,18 +107,18 @@ public class TileGrid : MonoBehaviour
 		//	Debug.DrawLine(move.Item1.x0y(), move.Item2.x0y());
 		//}
 
-		var doSelect = Input.GetKeyDown(KeyCode.K);
-		var toggleView = Input.GetKeyDown(KeyCode.J);
-		var deleteBlock = Input.GetKeyDown(KeyCode.L);
+		var doSelect = InMan.Melee;
+		var toggleView = InMan.BuildmodeMC;
+		var deleteBlock = InMan.BreakMC;
 
 		showPreview ^= toggleView;
 
 		buildPreview.gameObject.SetActive(showPreview);
 
 		var pos = targeter.position;
-		var selectedCell = (pos / gridSize).FloorToInt();
-		pos += gridSize * targeter.up;
-		var cell = (pos / gridSize).FloorToInt();
+		var selectedCell = (pos / gridSize - 0.1f*targeter.up).RoundToInt();
+		pos += gridSize/2 * targeter.up;
+		var cell = (pos / gridSize).RoundToInt();
 		
 
 		pos = gridSize * (Vector3)cell;
@@ -141,101 +141,18 @@ public class TileGrid : MonoBehaviour
 		//delete logic
 		if (deleteBlock)
 		{
-			Break(cell2d);
+			Break(selectedCell);
 		}
 
 
 		// build logic
-		if (Input.GetKeyDown(KeyCode.U))
+		if (InMan.BuildMC)
 		{
 			Build(cell);
 		}
 
 	}
 
+
 	public bool abort;
-}
-
-
-public class MazeGenerator
-{
-	public int Size = 10;
-
-
-	struct OpenData
-	{
-		public Vector2Int from;
-		public float cost;
-	}
-	public IEnumerable<Tuple<Vector2Int, Vector2Int>> Generate()
-	{
-		var rng = new System.Random();
-
-		var d = new int[Size, Size];
-
-		var weights = new float[Size, Size];
-
-		{
-			var noise = new byte[(Size) * (Size)];
-
-			rng.NextBytes(noise);
-
-
-			int i = 0;
-			for (int k = 0; k < Size; k++)
-			{
-				for (int j = 0; j < Size; j++)
-				{
-
-					weights[k, j] = noise[i] / 255f;
-
-					i++;
-				}
-			}
-		}
-
-
-		var trom =
-			new Vector2Int(
-			rng.Next(Size),
-			rng.Next(Size)
-			);
-
-		var closed = new HashSet<Vector2Int>();
-		var open = new Dictionary<Vector2Int, OpenData>();
-		open.Add(trom, new OpenData { from = trom, cost = 0 });
-		while (!TileGrid.I.abort && open.Any())
-		{
-			var curent = open.MinBy(x => x.Value.cost);
-			open.Remove(curent.Key);
-			var pos = curent.Key;
-			//Debug.Log($"{curent.Value.from}->{pos}:{curent.Value.cost}");
-
-			yield return Tuple.Create(curent.Value.from, pos);
-
-			closed.Add(pos);
-
-			var dirs = new[] { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
-
-
-			foreach (var dir in dirs)
-			{
-				var newPos = pos + dir;
-				if (!d.InBounds(newPos) || closed.Contains(newPos)) continue;
-				var weight = weights.Index(newPos);
-				var od = new OpenData
-				{
-					cost = weight,
-					from = pos
-				};
-
-				if (open.TryGetValue(newPos, out OpenData oldWeight))
-					od = new[] { od, oldWeight }.MinBy(x => x.cost);
-
-				open[newPos] = od;
-			}
-		}
-	}
-
-
 }

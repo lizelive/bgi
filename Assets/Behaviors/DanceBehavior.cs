@@ -22,7 +22,7 @@ public class DanceBehavior : AiBehavior
     {
         if(Time.time - startTime > danceDuration)
         {
-            Me.SwitchBehavior();
+			End();
         }
         base.Run();
     }

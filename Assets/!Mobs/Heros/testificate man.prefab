@@ -323,7 +323,7 @@ MonoBehaviour:
     type: 3}
   immunities: 8
   killHealthBonus: 0
-  team: {fileID: 4112666007579921107, guid: 66d8be1971c465045a65fd795223c40d, type: 3}
+  team: {fileID: 11400000, guid: 9507aea42a064484094933db73196357, type: 2}
   centerOffset: {x: 0, y: 0, z: 0}
   radius: 0
 --- !u!114 &9037826347318971640
@@ -359,6 +359,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 631db0f464d615a43aac3095e062958e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 1
+  physicsMovement: 0
   Behaviors: []
   ActiveBehavior: {fileID: 0}
   ViewRange: 10

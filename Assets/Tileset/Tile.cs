@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
+	[SerializeField]
+	private Mesh mesh;
+	public Mesh Mesh => mesh;
+
     // Update is called once per frame
     void Tick()
     {

@@ -125,7 +125,6 @@
     <Compile Include="Assets\LGK\PropTest.cs" />
     <Compile Include="Assets\LGK\ShitsOnFireYo.cs" />
     <Compile Include="Assets\LGK\ShowHealth.cs" />
-    <Compile Include="Assets\LGK\Spawner.cs" />
     <Compile Include="Assets\LGK\SpawnInfo.cs" />
     <Compile Include="Assets\LGK\Storeroom.cs" />
     <Compile Include="Assets\LGK\Swarm.cs" />
@@ -140,6 +139,10 @@
     <Compile Include="Assets\LGK\VillagerHome.cs" />
     <Compile Include="Assets\ParticlePack\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
     <Compile Include="Assets\PrintControls.cs" />
+    <Compile Include="Assets\Spawner.cs" />
+    <Compile Include="Assets\Tileset\Chunk.cs" />
+    <Compile Include="Assets\Tileset\ChunkRender.cs" />
+    <Compile Include="Assets\Tileset\MazeGenerator.cs" />
     <Compile Include="Assets\Tileset\Room.cs" />
     <Compile Include="Assets\Tileset\Tile.cs" />
     <Compile Include="Assets\Tileset\TileGrid.cs" />

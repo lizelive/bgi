@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnboundArray3D<T>
+
+
+[System.Serializable]
+public sealed class TileUnboundArray3D : UnboundArray3D<Tile> { }
+
+[System.Serializable]
+public partial class UnboundArray3D<T>
 {
 	public const int ChunkSize = 16;
-	public class Chunk
-	{
-		public Vector3Int chunkCords;
-		private T[,,] Data = new T[ChunkSize, ChunkSize, ChunkSize];
-		public T this[Vector3Int index]
-		{
-			get { return Data.Index(index); }
-			set { Data.Index(index, value); }
-		}
-	}
 
 	Dictionary<Vector3Int, Chunk> chunkdict = new Dictionary<Vector3Int, Chunk>();
 	public Chunk GetChunk(Vector3Int chunkCord)

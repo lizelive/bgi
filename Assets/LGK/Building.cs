@@ -11,6 +11,8 @@ public class Building : MonoBehaviour
 	public float buildSpawnHeight = 10;
 	public float buildRep = 3;
 
+	public bool buildForSelf = false;
+
 	public void Place(Player by)
 	{
 		builder = by;

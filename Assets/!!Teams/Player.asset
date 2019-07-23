@@ -13,8 +13,17 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   maxNumMobs: 100
-  balance: 23
+  balance: 9539
   color: {r: 1, g: 0.0670706, b: 0, a: 1}
   autoAlly: 0
   fightThreshold: -3
+  mobs: []
+  members: []
   Allies: []
+  JobManager: {fileID: 0}
+  recentBloodshed: 33
+  bloodForgetRate: 0
+  lastTime: 0
+  lowFearThreshod: 0.2
+  highFearThreshod: 0.8
+  highRepThreshold: 0.5
