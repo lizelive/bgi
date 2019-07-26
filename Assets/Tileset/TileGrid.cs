@@ -23,7 +23,7 @@ public class TileGrid : MonoBehaviour
 	//[SerializeField]
 	public VoxelWorld world;
 
-	public Tile prefab;
+	public Tile build = new Tile { blocktype = 1 };
 
 	public Transform targeter, buildPreview;
 
@@ -80,21 +80,21 @@ public class TileGrid : MonoBehaviour
 	void Build(Vector3Int pos)
 	{
 		var has = this[pos];
-		if (!has)
+		if (has.IsAir)
 		{
-			var yum = Instantiate(prefab, gridSize * (Vector3)pos, Quaternion.identity);
-			yum.transform.localScale = Vector3.one * gridSize;
-			this[pos] = yum;
+            print($"Build {pos} {build}");
+            this[pos] = build;
 		}
 	}
 
 	void Break(Vector3Int cell)
 	{
 		var boi = this[cell];
-		print($"Break {cell} {boi}");
-		if (boi)
+        print($"Break {cell} {boi}");
+        if (!boi.IsAir)
 		{
-			this[cell] = Tile.Air;
+            
+            this[cell] = Tile.Air;
 		}
 	}
 
@@ -108,7 +108,6 @@ public class TileGrid : MonoBehaviour
 
 		var doSelect = InMan.Melee;
 		var toggleView = InMan.BuildmodeMC;
-		var deleteBlock = InMan.BreakMC;
 
 		showPreview ^= toggleView;
 
@@ -138,7 +137,7 @@ public class TileGrid : MonoBehaviour
 		//}
 
 		//delete logic
-		if (deleteBlock)
+		if (InMan.BreakMC)
 		{
 			Break(selectedCell);
 		}

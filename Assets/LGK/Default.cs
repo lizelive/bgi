@@ -15,6 +15,9 @@ public class Default : MonoBehaviour
 	public Mesh buildingBlockMesh;
 	public string playerName;
 
+
+    public Material worldAtlas;
+
     public static Default I;
 
     public Default()

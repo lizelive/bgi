@@ -5,6 +5,12 @@ using UnityEngine;
 
 public static class VecU
 {
+    public static readonly Vector3Int[] CardnalVec3I =
+    {
+        Vector3Int.up, Vector3Int.down,
+        Vector3Int.left, Vector3Int.right
+    };
+
 	public static Vector2Int Div(this Vector2Int pos, int by)
 	{
 		return new Vector2Int(pos.x / by, pos.y / by);

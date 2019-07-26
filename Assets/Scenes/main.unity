@@ -958,7 +958,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 131574285}
-  m_LocalRotation: {x: 0.016583558, y: -0.9833232, z: 0.12105264, w: 0.13471006}
+  m_LocalRotation: {x: 0.016583556, y: -0.9833232, z: 0.121052645, w: 0.13471004}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3515,7 +3515,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 620779829}
-  m_LocalRotation: {x: 0.011679291, y: -0.98707145, z: 0.08525358, w: 0.13522354}
+  m_LocalRotation: {x: 0.01167929, y: -0.98707145, z: 0.08525358, w: 0.13522352}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5047,10 +5047,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   world: {fileID: 889892179}
-  prefab: {fileID: -7506003971758469556, guid: d50ed694cb64cf74cb1e5d1154945d30, type: 3}
+  build:
+    blocktype: 1
   targeter: {fileID: 352325153}
   buildPreview: {fileID: 441296929}
-  gridSize: 2
   showPreview: 0
   abort: 0
 --- !u!114 &889892179
@@ -5067,7 +5067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doRender: 1
   viewDistance: 100
-  blockSize: 2
+  blockSize: 1
 --- !u!4 &918903192 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 411794624021412776, guid: c20518b547f81a7409af869be93fb6e0,
@@ -6010,7 +6010,10 @@ MonoBehaviour:
     type: 3}
   yoOnFire: {fileID: 581994604691267121, guid: 6ab7a18230d11bc49938113b66c7c745, type: 3}
   controls: {fileID: 11400000, guid: e52573200b93a4640b3cb73abc7036fa, type: 2}
-  playerName: 
+  buildingBlockMesh: {fileID: -6281424698479989189, guid: 128592788b0366c48b64013f580adee7,
+    type: 3}
+  playerName: Not Evil
+  worldAtlas: {fileID: 2100000, guid: 1d17fa157702bfd479d68c3f65511c2d, type: 2}
 --- !u!4 &1088908897
 Transform:
   m_ObjectHideFlags: 0

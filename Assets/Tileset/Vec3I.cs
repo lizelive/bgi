@@ -8,7 +8,12 @@ public struct Vec3I
 {
 	public int x, y, z;
 
-	public Vec3I(int x=0, int y=0, int z=0)
+    public override string ToString()
+    {
+        return ((Vector3Int)this).ToString();
+    }
+
+    public Vec3I(int x=0, int y=0, int z=0)
 	{
 		this.x = x;
 		this.y = y;

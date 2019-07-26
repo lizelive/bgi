@@ -9,7 +9,7 @@ using System;
 public partial class UnboundArray3D<T>
 {
 	Dictionary<Vector3Int, Chunk> chunkdict = new Dictionary<Vector3Int, Chunk>();
-	public Func<Vector3Int, Chunk> ChunkMissing;
+	public Func<Vector3Int, Chunk> GetMissingChunk;
 
 	public IEnumerable<Chunk> Chunks => chunkdict.Values;
 
@@ -19,7 +19,7 @@ public partial class UnboundArray3D<T>
 		if (chunkdict.TryGetValue(chunkCord, out o))
 			return o;
 		
-		o = ChunkMissing?.Invoke(chunkCord) ?? new Chunk();
+		o = GetMissingChunk?.Invoke(chunkCord) ?? new Chunk();
 		chunkdict[chunkCord] = o;
 		return o;
 	}
