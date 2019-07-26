@@ -3,35 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
-[System.Serializable]
-public sealed class TileUnboundArray3D : UnboundArray3D<Tile> { }
+using System;
 
 [System.Serializable]
 public partial class UnboundArray3D<T>
 {
-	public const int ChunkSize = 16;
-
 	Dictionary<Vector3Int, Chunk> chunkdict = new Dictionary<Vector3Int, Chunk>();
+	public Func<Vector3Int, Chunk> ChunkMissing;
+
+	public IEnumerable<Chunk> Chunks => chunkdict.Values;
+
 	public Chunk GetChunk(Vector3Int chunkCord)
 	{
 		Chunk o;
 		if (chunkdict.TryGetValue(chunkCord, out o))
 			return o;
-
-		o = new Chunk();
+		
+		o = ChunkMissing?.Invoke(chunkCord) ?? new Chunk();
 		chunkdict[chunkCord] = o;
 		return o;
 	}
 
 	public Vector3Int GetChunkCords(Vector3Int pos)
 	{
-		return pos.Div(ChunkSize);
+		return pos.Div(Chunk.Size);
 	}
 
 	public Vector3Int GetInChunkCords(Vector3Int pos)
 	{
-		return new Vector3Int(pos.x.ModPostive(ChunkSize), pos.y.ModPostive(ChunkSize), pos.z.ModPostive(ChunkSize));
+		return new Vector3Int(pos.x.ModPostive(Chunk.Size), pos.y.ModPostive(Chunk.Size), pos.z.ModPostive(Chunk.Size));
 	}
 
 	public T this[Vector3Int pos]

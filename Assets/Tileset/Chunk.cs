@@ -9,13 +9,17 @@ public partial class UnboundArray3D<T>
 	[System.Serializable]
 	public class Chunk : IEnumerable<T>
 	{
-		public Vector3Int chunkCords;
-		private T[,,] Data = new T[ChunkSize, ChunkSize, ChunkSize];
+
+		public const int Size = 16;
+		public Vec3I cord;
+		private T[,,] Data = new T[Size, Size, Size];
 		public T this[Vector3Int index]
 		{
 			get { return Data.Index(index); }
 			set { Data.Index(index, value); }
 		}
+
+		public bool IsDirty { get; internal set; }
 
 		public IEnumerator<T> GetEnumerator()
 		{

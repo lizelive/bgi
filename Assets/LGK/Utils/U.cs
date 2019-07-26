@@ -23,6 +23,7 @@ public static class U
 
 	public static bool Not(this GameObject obj) => !obj;
 	public static bool Is(this GameObject obj) => obj;
+	public static bool Is(this object obj) => obj != null;
 
 	public static bool Not(this bool obj) => !obj;
 	public static bool Not(this Component obj) => !obj;

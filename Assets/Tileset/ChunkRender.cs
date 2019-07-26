@@ -4,10 +4,16 @@ using UnityEngine;
 using System.Linq;
 
 
+struct BlockInstance
+{
+	Vector3Int pos;
+
+}
+
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider))]
 public class ChunkRender : MonoBehaviour
 {
-	public TileUnboundArray3D.Chunk chunk;
+	public UnboundArray3D<Tile>.Chunk chunk;
 	private MeshFilter meshfilter;
 
 
@@ -17,7 +23,7 @@ public class ChunkRender : MonoBehaviour
 		meshfilter = GetComponent<MeshFilter>();
 		Remesh();
 	}
-	static ChunkRender Make(TileUnboundArray3D.Chunk chunk)
+	static ChunkRender Make(UnboundArray3D<Tile>.Chunk chunk)
 	{
 		var go = new GameObject();
 		go.AddComponent<MeshFilter>();
@@ -46,8 +52,13 @@ public class ChunkRender : MonoBehaviour
 				transform = x.transform.worldToLocalMatrix,
 
 			}).ToArray();
+		var mesh = new Mesh();
+		mesh.CombineMeshes(combine: meshes);
 
-		Mesh.CombineMeshes(combine: meshes);
+		
+		meshfilter.mesh = mesh;
+
+
 
 		chunk.IsDirty = false;
 	}

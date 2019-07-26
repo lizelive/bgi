@@ -4993,6 +4993,7 @@ GameObject:
   - component: {fileID: 889892176}
   - component: {fileID: 889892177}
   - component: {fileID: 889892178}
+  - component: {fileID: 889892179}
   m_Layer: 0
   m_Name: fencebuilder
   m_TagString: Untagged
@@ -5045,12 +5046,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc698d10499dfaa48875d0ad8ad242d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  world: {fileID: 889892179}
   prefab: {fileID: -7506003971758469556, guid: d50ed694cb64cf74cb1e5d1154945d30, type: 3}
   targeter: {fileID: 352325153}
   buildPreview: {fileID: 441296929}
   gridSize: 2
   showPreview: 0
   abort: 0
+--- !u!114 &889892179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889892175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8740f13394a2e234c8b8892e3de4bf16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doRender: 1
+  viewDistance: 100
+  blockSize: 2
 --- !u!4 &918903192 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 411794624021412776, guid: c20518b547f81a7409af869be93fb6e0,
@@ -6494,6 +6511,47 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8946568805673298114, guid: b33ab3ff496ebc6418972bc63f1b7fb8,
+        type: 3}
+      propertyPath: MaxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946568805673298114, guid: b33ab3ff496ebc6418972bc63f1b7fb8,
+        type: 3}
+      propertyPath: CurrentHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946568805673298114, guid: b33ab3ff496ebc6418972bc63f1b7fb8,
+        type: 3}
+      propertyPath: RegenCooldown
+      value: Infinity
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946568805673298114, guid: b33ab3ff496ebc6418972bc63f1b7fb8,
+        type: 3}
+      propertyPath: RegenSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946568805673298114, guid: b33ab3ff496ebc6418972bc63f1b7fb8,
+        type: 3}
+      propertyPath: ragdoll
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946568805673298114, guid: b33ab3ff496ebc6418972bc63f1b7fb8,
+        type: 3}
+      propertyPath: deathParticle
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946568805673298114, guid: b33ab3ff496ebc6418972bc63f1b7fb8,
+        type: 3}
+      propertyPath: killHealthBonus
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946568805673298114, guid: b33ab3ff496ebc6418972bc63f1b7fb8,
+        type: 3}
+      propertyPath: team
+      value: 
+      objectReference: {fileID: 11400000, guid: 9507aea42a064484094933db73196357,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b33ab3ff496ebc6418972bc63f1b7fb8, type: 3}
 --- !u!1001 &1361132843
@@ -6918,6 +6976,47 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8946568805673298114, guid: b33ab3ff496ebc6418972bc63f1b7fb8,
+        type: 3}
+      propertyPath: MaxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946568805673298114, guid: b33ab3ff496ebc6418972bc63f1b7fb8,
+        type: 3}
+      propertyPath: CurrentHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946568805673298114, guid: b33ab3ff496ebc6418972bc63f1b7fb8,
+        type: 3}
+      propertyPath: RegenCooldown
+      value: Infinity
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946568805673298114, guid: b33ab3ff496ebc6418972bc63f1b7fb8,
+        type: 3}
+      propertyPath: RegenSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946568805673298114, guid: b33ab3ff496ebc6418972bc63f1b7fb8,
+        type: 3}
+      propertyPath: ragdoll
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946568805673298114, guid: b33ab3ff496ebc6418972bc63f1b7fb8,
+        type: 3}
+      propertyPath: deathParticle
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946568805673298114, guid: b33ab3ff496ebc6418972bc63f1b7fb8,
+        type: 3}
+      propertyPath: killHealthBonus
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946568805673298114, guid: b33ab3ff496ebc6418972bc63f1b7fb8,
+        type: 3}
+      propertyPath: team
+      value: 
+      objectReference: {fileID: 11400000, guid: 9507aea42a064484094933db73196357,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b33ab3ff496ebc6418972bc63f1b7fb8, type: 3}
 --- !u!4 &1432098377 stripped
@@ -7082,6 +7181,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 411794623736036373, guid: c20518b547f81a7409af869be93fb6e0,
+        type: 3}
+      propertyPath: MaxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 411794623736036373, guid: c20518b547f81a7409af869be93fb6e0,
+        type: 3}
+      propertyPath: CurrentHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 411794623736036373, guid: c20518b547f81a7409af869be93fb6e0,
+        type: 3}
+      propertyPath: deathParticle
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 411794623736036372, guid: c20518b547f81a7409af869be93fb6e0,
         type: 3}

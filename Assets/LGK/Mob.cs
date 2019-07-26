@@ -92,9 +92,12 @@ public class Mob : MonoBehaviour
 	void OnDrawGizmos()
 	{
 		// Draw a yellow sphere at the transform's position
-		Gizmos.color = Team.color;
-		UnityEditor.Handles.color = Team.color;
-		if (!head)
+		if (Team)
+		{
+			Gizmos.color = Team.color;
+			UnityEditor.Handles.color = Team.color;
+		}
+			if (!head)
 			print(name);
 		else
 		UnityEditor.Handles.Label(head.position, ActiveBehavior?.GetType()?.Name);

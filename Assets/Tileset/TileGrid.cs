@@ -11,23 +11,23 @@ public class TileGrid : MonoBehaviour
 		I = this;
 	}
 
-	public Tile Get(Vector3Int pos) => storage[pos];
+	public Tile Get(Vector3Int pos) => world[pos];
 
 	public Tile this[Vector3Int index]
 	{
-		get => storage[index];
+		get => world[index];
 
-		set => storage[index] = value;
+		set => world[index] = value;
 	}
 
 	//[SerializeField]
-	TileUnboundArray3D storage = new TileUnboundArray3D();
+	public VoxelWorld world;
 
 	public Tile prefab;
 
 	public Transform targeter, buildPreview;
 
-	public float gridSize = 4f;
+	public float gridSize => world.blockSize;
 
 	public Tuple<Vector2Int, Vector2Int>[] maze;
 	// Start is called before the first frame update
@@ -94,8 +94,7 @@ public class TileGrid : MonoBehaviour
 		print($"Break {cell} {boi}");
 		if (boi)
 		{
-			Destroy(this[cell].gameObject);
-			this[cell] = null;
+			this[cell] = Tile.Air;
 		}
 	}
 

@@ -148,7 +148,9 @@
     <Compile Include="Assets\Tileset\TileGrid.cs" />
     <Compile Include="Assets\Tileset\UnboundArray2D.cs" />
     <Compile Include="Assets\Tileset\UnboundArray3D.cs" />
+    <Compile Include="Assets\Tileset\Vec3I.cs" />
     <Compile Include="Assets\Tileset\VecU.cs" />
+    <Compile Include="Assets\Tileset\VoxelWorld.cs" />
     <Compile Include="Assets\Timer.cs" />
     <Compile Include="Assets\VillagerUI.cs" />
     <Compile Include="Assets\Worldgen\PRonii.cs" />

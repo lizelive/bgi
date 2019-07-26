@@ -11,6 +11,8 @@ public class Default : MonoBehaviour
     public ShitsOnFireYo yoOnFire;
 	public Controls controls;
 
+
+	public Mesh buildingBlockMesh;
 	public string playerName;
 
     public static Default I;
