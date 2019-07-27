@@ -13,6 +13,11 @@ public partial class UnboundArray3D<T>
 
 	public IEnumerable<Chunk> Chunks => chunkdict.Values;
 
+    public bool RemoveChunk(Vector3Int chunkCord)
+    {
+        return chunkdict.Remove(chunkCord);
+    }
+
 	public Chunk GetChunk(Vector3Int chunkCord)
 	{
 		Chunk o;
@@ -24,12 +29,12 @@ public partial class UnboundArray3D<T>
 		return o;
 	}
 
-	public Vector3Int GetChunkCords(Vector3Int pos)
+	public static Vector3Int GetChunkCords(Vector3Int pos)
 	{
 		return pos.Div(Chunk.Size);
 	}
 
-	public Vector3Int GetInChunkCords(Vector3Int pos)
+	public static Vector3Int GetInChunkCords(Vector3Int pos)
 	{
 		return new Vector3Int(pos.x.ModPostive(Chunk.Size), pos.y.ModPostive(Chunk.Size), pos.z.ModPostive(Chunk.Size));
 	}

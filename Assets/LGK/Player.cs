@@ -6,7 +6,7 @@ using UnityStandardAssets.Characters.ThirdPerson;
 using UnityEngine.UI;
 using static InMan;
 
-public class Player : MonoBehaviour
+public partial class Player : MonoBehaviour
 {
 
 	public Controls Controls;

@@ -9,6 +9,12 @@ struct BlockInstance
 
 }
 
+//struct Quad
+//{
+//    public Vector3 a, b, c, d;
+//    public Vector3 uv1, b, c, d;
+//}
+
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider))]
 public class ChunkRender : MonoBehaviour
 {
@@ -27,7 +33,7 @@ public class ChunkRender : MonoBehaviour
         var go = new GameObject();
         go.AddComponent<MeshFilter>();
         var render =go.AddComponent<MeshRenderer>();
-
+        var mc = go.AddComponent<MeshCollider>();
         render.sharedMaterial = Default.I.worldAtlas;
 
         
@@ -35,10 +41,12 @@ public class ChunkRender : MonoBehaviour
         go.name = $"ChunkRender {(Vector3Int)chunk.cord}";
         var cr = go.AddComponent<ChunkRender>();
         cr.chunk = chunk;
-        cr.collider = go.AddComponent<MeshCollider>();
+        cr.collider = mc;
 
 
-        go.transform.position = ((Vector3Int)chunk.cord) * UnboundArray3D<Tile>.Chunk.Size;
+
+        //Vector3.up / 2
+        go.transform.position = chunk.WorldPos;
 
         return cr;
     }
@@ -67,15 +75,17 @@ public class ChunkRender : MonoBehaviour
                 continue;
 
             var neighbors = VecU.CardnalVec3I.Select(o => o + innerPos).ToArray();
-
-            var edge = !neighbors.All(chunk.insideBounds.Contains);
-
-            var hasAirNeighbor = neighbors.Any(p => chunk[p].IsAir);
-
-            var shouldShow = !tile.IsAir && (edge || hasAirNeighbor);
+            
 
 
-            if (shouldShow || true)
+            var shouldShow = !tile.IsAir && (
+                !neighbors.All(chunk.insideBounds.Contains) || // is an edge
+                neighbors.Any(p => chunk[p].IsAir) // has an neighbor that is air
+                
+                );
+
+
+            if (shouldShow)
                 yield return new CombineInstance()
                 {
                     mesh = tile.Mesh,
@@ -85,10 +95,12 @@ public class ChunkRender : MonoBehaviour
         }
 
     }
-    // Start is called before the first frame update
+
+    
     void Remesh()
     {
         var mesh = new Mesh();
+        mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         mesh.name = $"Voxel {chunk.cord} {Time.frameCount}";
         var todraw = GetStuffToRender().ToArray();
         mesh.CombineMeshes(combine: todraw);

@@ -143,6 +143,7 @@
     <Compile Include="Assets\Tileset\Chunk.cs" />
     <Compile Include="Assets\Tileset\ChunkRender.cs" />
     <Compile Include="Assets\Tileset\MazeGenerator.cs" />
+    <Compile Include="Assets\Tileset\Noise.cs" />
     <Compile Include="Assets\Tileset\Room.cs" />
     <Compile Include="Assets\Tileset\Tile.cs" />
     <Compile Include="Assets\Tileset\TileGrid.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Assets\Tileset\Vec3I.cs" />
     <Compile Include="Assets\Tileset\VecU.cs" />
     <Compile Include="Assets\Tileset\VoxelWorld.cs" />
+    <Compile Include="Assets\Tileset\WorldGen.cs" />
     <Compile Include="Assets\Timer.cs" />
     <Compile Include="Assets\VillagerUI.cs" />
     <Compile Include="Assets\Worldgen\PRonii.cs" />

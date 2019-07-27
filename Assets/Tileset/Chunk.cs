@@ -9,6 +9,10 @@ public partial class UnboundArray3D<T>
 	[System.Serializable]
 	public class Chunk : IEnumerable<T>
 	{
+
+
+        public Vector3Int WorldPos => (Vector3Int)cord * Size;
+
         public override string ToString()
         {
             return $"Chunk {cord}";
@@ -39,5 +43,11 @@ public partial class UnboundArray3D<T>
 		{
 			return GetEnumerator();
 		}
+
+        void MakeNavGreatAgain()
+        {
+
+        }
+
 	}
 }
