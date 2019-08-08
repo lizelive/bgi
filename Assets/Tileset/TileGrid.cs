@@ -25,7 +25,6 @@ public class TileGrid : MonoBehaviour
     public BlockState build = new BlockState { blocktype = 1 };
 
 
-
     public float gridSize => world.blockSize;
 
     public Tuple<Vector2Int, Vector2Int>[] maze;
@@ -160,6 +159,15 @@ public partial class Player
 
 
         // build logic
+        if(InMan.ChangeBlockUp)
+        {
+            grid.build = new BlockState { blocktype = (short) ((grid.build.blocktype + 1) % Default.I.models.Count) };
+        }
+        else if(InMan.ChangeBlockDown)
+        {
+            grid.build = new BlockState { blocktype = (short) ((grid.build.blocktype - 1).ModPostive(Default.I.models.Count)) };
+        }
+
         if (InMan.BuildMC)
         {
             if (grid.Build(cell))

@@ -246,8 +246,9 @@ public static class McModelExtensions
 
     public static Quad GetQuad(this Mc.Element element, Mc.McModel model, McRespack pack, Direction face)
     {
-        var from = element.from.ToVec3()/16;
-        var to = element.to.ToVec3()/16;
+        var offset = -Vector3.one / 2;
+        var from = element.from.ToVec3()/16+offset;
+        var to = element.to.ToVec3()/16+offset;
 
         var mface = element.faces.GetFace(face);
 

@@ -91,7 +91,7 @@ public class ChunkRender : MonoBehaviour
     void Remesh()
     {
         var mesh = new Mesh();
-        //mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+        mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         mesh.name = $"Voxel {chunk.cord} {Time.frameCount}";
         var todraw = GetStuffToRender().ToArray();
         mesh.CombineMeshes(combine: todraw);

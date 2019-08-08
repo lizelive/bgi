@@ -1,57 +1,74 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using UnityEngine;
 
 
-    // might want to rethink this...
-    public class Block
+// might want to rethink this...
+public class Block
+{
+
+    public string name;
+    public Mesh mesh;
+    public bool isAir;
+    public bool isSolid;
+
+
+    public static Block[] Types => new[]
     {
-
-        public string name;
-        public Mesh mesh;
-        public bool isAir;
-        public bool isSolid;
-
-
-        public static Block[] Types => new[]
-        {
         new Block { name = "air", mesh = new Mesh() },
         new Block { name = "stone", mesh = Default.I.buildingBlockMesh}
     };
 
 
-    }
+}
 
-    public interface IBlockData
+public interface IBlockData
+{
+    string GetAsString();
+}
+
+[Serializable]
+public struct BlockState
+{
+    public IBlockData data;
+    public short blocktype;
+    private static readonly Mesh EmptyMesh = new Mesh();
+    //public object data;
+    public override string ToString()
     {
-        string GetAsString();
+        return $"Tile {blocktype}";
     }
-
-    [Serializable]
-    public struct BlockState
+    public Block Block => Block.Types[blocktype];
+    //public Mesh Mesh => Block.mesh;
+    public Mesh Mesh
     {
-        public IBlockData data;
-        public short blocktype;
-        //public object data;
-        public override string ToString()
+        get
         {
-            return $"Tile {blocktype}";
+            if (blocktype == 1)
+            {
+                return Default.I.buildingBlockMesh;
+            }
+            else if (blocktype > 0)
+            {
+                return Default.I.models[blocktype - 2];
+            }
+            else
+            {
+                return EmptyMesh;
+            }
         }
-        public Block Block => Block.Types[blocktype];
-        public Mesh Mesh => Block.mesh;
-        public bool IsAir => blocktype == 0;
 
-        public bool IsSolid => !IsAir;
-
-        public static BlockState Air => new BlockState();
-
-        public static implicit operator bool(BlockState d) => !d.IsAir;
-
-
-        bool BlockUpdate()
-        {
-            return false;
-        }
     }
+    public bool IsAir => blocktype == 0;
+
+    public bool IsSolid => !IsAir;
+
+    public static BlockState Air => new BlockState();
+
+    public static implicit operator bool(BlockState d) => !d.IsAir;
+
+
+    bool BlockUpdate()
+    {
+        return false;
+    }
+}
