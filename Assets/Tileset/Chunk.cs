@@ -3,6 +3,7 @@ using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 public partial class UnboundArray3D<T>
 {

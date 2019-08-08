@@ -17,7 +17,7 @@ public class FarmBehavior : AiBehavior
     {
         if(!plant)
         {
-            plant= FindObjectsOfType<Plant>().Where(p=>p.Ready).Random();
+            plant= gameObject.Find<Plant>(Me.ViewRange).Where(p=>p.Ready).Random();
         }
 
         if (plant==null || !plant)

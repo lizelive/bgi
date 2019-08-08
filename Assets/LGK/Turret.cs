@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-	public Transform barrel;
+	public UnityEngine.Transform barrel;
 	public float viewRange =100;
 	public float maxTurnSpeed = 6;
 	public bool aimAhead =true;

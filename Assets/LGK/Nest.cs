@@ -6,7 +6,7 @@ public class Nest : MonoBehaviour
 {
     public float growTime;
     public Egg thingToSpawn;
-    public Transform spawnPoint;
+    public UnityEngine.Transform spawnPoint;
     float last;
     public Team owner;
 

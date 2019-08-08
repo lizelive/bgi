@@ -12,7 +12,7 @@ public class Spawner : MonoBehaviour
 	public float spawnInterval = 1;
 	public float spawnCost = 0; 
 	public List<GameObject> spawned;
-	public Transform spawnPoint;
+	public UnityEngine.Transform spawnPoint;
 
 	//public event Func<Spawner,bool> ShouldSpawn;
 

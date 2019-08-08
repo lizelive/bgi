@@ -24,9 +24,12 @@ public class Team : ScriptableObject
 
 	public List<Mob> mobs = new List<Mob>();
 	public List<Health> members = new List<Health>();
-
-	public Dictionary<Team, float> reputations = new Dictionary<Team, float>();
-	public Dictionary<Team, float> loyaly = new Dictionary<Team, float>();
+    struct Relationship
+    {
+        public float fear, love;
+    }
+	public Dictionary<Team, float> fear = new Dictionary<Team, float>();
+	public Dictionary<Team, float> love = new Dictionary<Team, float>();
 
 	public IEnumerable<T> GetMembers<T>()
 	{
@@ -38,7 +41,7 @@ public class Team : ScriptableObject
 	}
 
 
-	public float TotalRep => reputations.Sum(u => u.Value);
+	public float TotalRep => fear.Sum(u => u.Value);
 
 	public float Confidance => Mathf.Max(0, TotalRep / GetRep(this));
 
@@ -54,7 +57,7 @@ public class Team : ScriptableObject
 
 	public float GetRep(Team team)
 	{
-		var val = reputations.TryGetValue(team, out var value) ? value : 0;
+		var val = fear.TryGetValue(team, out var value) ? value : 0;
 		if (float.IsNaN(val))
 			val = 0;
 		return val;
@@ -62,7 +65,7 @@ public class Team : ScriptableObject
 
 	public float SetRep(Team team, float value)
 	{
-		return reputations[team] = value;
+		return fear[team] = value;
 	}
 
 	public float AddRep(Team team, float value)

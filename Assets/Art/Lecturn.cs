@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class Lecturn : MonoBehaviour
 {
-	public Transform player;
+	public UnityEngine.Transform player;
 
 
-	public Transform start;
-	public Transform end;
+	public UnityEngine.Transform start;
+	public UnityEngine.Transform end;
 
 	public float maxDistance = 3;
 	public float minDistance = 1;
 	public AnimationCurve distanceCurve;
 
 
-	public Transform moveMe;
+	public UnityEngine.Transform moveMe;
 
 
 	private void Start()

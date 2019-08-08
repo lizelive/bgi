@@ -10,9 +10,9 @@ public class TileGrid : MonoBehaviour
         I = this;
     }
 
-    public Tile Get(Vector3Int pos) => world[pos];
+    public BlockState Get(Vector3Int pos) => world[pos];
 
-    public Tile this[Vector3Int index]
+    public BlockState this[Vector3Int index]
     {
         get => world[index];
 
@@ -22,7 +22,7 @@ public class TileGrid : MonoBehaviour
     //[SerializeField]
     public VoxelWorld world;
 
-    public Tile build = new Tile { blocktype = 1 };
+    public BlockState build = new BlockState { blocktype = 1 };
 
 
 
@@ -95,7 +95,7 @@ public class TileGrid : MonoBehaviour
         if (!boi.IsAir)
         {
 
-            this[cell] = Tile.Air;
+            this[cell] = BlockState.Air;
             return true;
         }
         return false;
@@ -107,7 +107,7 @@ public class TileGrid : MonoBehaviour
 
 public partial class Player
 {
-    public Transform buildPreview;
+    public UnityEngine.Transform buildPreview;
     private bool showPreview = false;
 
     public TileGrid grid;
@@ -116,7 +116,6 @@ public partial class Player
 
     void UpdateBuild()
     {
-
         //foreach (var move in maze)
         //{
         //	Debug.DrawLine(move.Item1.x0y(), move.Item2.x0y());

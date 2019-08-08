@@ -15,7 +15,7 @@ public class VillagerUI : MonoBehaviour
 	public Sprite[] fearImages;
 
 	public Image wheelImage, statusImage;
-	public Transform wheelParent;
+	public UnityEngine.Transform wheelParent;
 	Dictionary<Team, Image> teamWheels;
 
 
@@ -55,6 +55,6 @@ public class VillagerUI : MonoBehaviour
 		}
 
 		if (relationsText)
-			relationsText.text = $"Rep {village.Confidance}\n" + string.Join("\n", village.reputations.Select(x => $"{x.Key.name} : {x.Value} : {village.WhatBehavior(x.Key)}"));
+			relationsText.text = $"Rep {village.Confidance}\n" + string.Join("\n", village.fear.Select(x => $"{x.Key.name} : {x.Value} : {village.WhatBehavior(x.Key)}"));
 	}
 }

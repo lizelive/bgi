@@ -25,7 +25,7 @@ public static class U
 	public static bool Is(this GameObject obj) => obj;
 	public static bool Is(this object obj) => obj != null;
 
-    public static bool Is(this Tile obj) => obj;
+    public static bool Is(this BlockState obj) => obj;
 
     public static bool Not(this bool obj) => !obj;
 	public static bool Not(this Component obj) => !obj;
@@ -86,6 +86,16 @@ public static class U
             }
         }
         return best;
+    }
+
+
+    public static IEnumerable<T> Prepend<T>(this IEnumerable<T> self, T prepend)
+    {
+        yield return prepend;
+        foreach (var item in self)
+        {
+            yield return item;
+        }
     }
 
     public static T Random<T>(this IList<T> self)

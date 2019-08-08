@@ -3,22 +3,13 @@ using System.Linq;
 using UnityEngine;
 
 
-struct BlockInstance
-{
-    Vector3Int pos;
 
-}
 
-//struct Quad
-//{
-//    public Vector3 a, b, c, d;
-//    public Vector3 uv1, b, c, d;
-//}
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider))]
 public class ChunkRender : MonoBehaviour
 {
-    private UnboundArray3D<Tile>.Chunk chunk;
+    private UnboundArray3D<BlockState>.Chunk chunk;
 
     private MeshFilter meshfilter;
     private new MeshCollider collider;
@@ -28,7 +19,7 @@ public class ChunkRender : MonoBehaviour
         meshfilter = GetComponent<MeshFilter>();
     }
 
-    public static ChunkRender Make(UnboundArray3D<Tile>.Chunk chunk)
+    public static ChunkRender Make(UnboundArray3D<BlockState>.Chunk chunk)
     {
         var go = new GameObject();
         go.AddComponent<MeshFilter>();
@@ -74,7 +65,7 @@ public class ChunkRender : MonoBehaviour
             if (tile.IsAir)
                 continue;
 
-            var neighbors = VecU.CardnalVec3I.Select(o => o + innerPos).ToArray();
+            var neighbors = VecU.PureDirs.Select(o => o + innerPos).ToArray();
             
 
 
@@ -100,7 +91,7 @@ public class ChunkRender : MonoBehaviour
     void Remesh()
     {
         var mesh = new Mesh();
-        mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+        //mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         mesh.name = $"Voxel {chunk.cord} {Time.frameCount}";
         var todraw = GetStuffToRender().ToArray();
         mesh.CombineMeshes(combine: todraw);
@@ -110,3 +101,4 @@ public class ChunkRender : MonoBehaviour
         chunk.IsDirty = false;
     }
 }
+

@@ -109,7 +109,8 @@ public class Mob : MonoBehaviour
 
     Rigidbody carrying;
 
-    NavMeshAgent agent;
+
+    VoxelNavAgent agent;
     public Animator Animator { get; private set; }
 
     new Rigidbody rigidbody;
@@ -138,7 +139,7 @@ public class Mob : MonoBehaviour
     public Vector3 targetpos;
     public float targetDistace;
 
-    public Transform target;                                    // target to aim for
+    public UnityEngine.Transform target;                                    // target to aim for
 
     public float targetDistanceGoal = 1;
 
@@ -161,7 +162,7 @@ public class Mob : MonoBehaviour
     {
         Animator = GetComponentInChildren<Animator>();
         Animator.applyRootMotion = false;
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<VoxelNavAgent>();
         head = head ?? transform;
         Behaviors = GetComponents<AiBehavior>();
 
@@ -169,12 +170,10 @@ public class Mob : MonoBehaviour
         {
             var newtonIsALie = !physicsMovement;
             agent.updatePosition = newtonIsALie;
-            agent.updateUpAxis = newtonIsALie;
-            agent.updateRotation = newtonIsALie;
         }
         rigidbody = GetComponent<Rigidbody>();
 
-		rigidbody.isKinematic = IsGrounded && !physicsMovement;
+		rigidbody.isKinematic = !physicsMovement;
         rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         SwitchBehavior();
     }
@@ -352,7 +351,7 @@ public class Mob : MonoBehaviour
     }
 
 
-    public void SetTarget(Transform target, float distance)
+    public void SetTarget(UnityEngine.Transform target, float distance)
     {
         targetDistanceGoal = distance;
         SetTarget(target);
@@ -361,7 +360,7 @@ public class Mob : MonoBehaviour
 
 
 	public bool navDirty = false;
-    public void SetTarget(Transform target)
+    public void SetTarget(UnityEngine.Transform target)
     {
         this.target = target;
 		navDirty = true;
@@ -391,11 +390,11 @@ public class Mob : MonoBehaviour
         else
             target = null;
 		
-        if (agent.isOnNavMesh)
+        if (agent && agent.isOnNavMesh)
             if (navDirty || Vector3.Distance(lastTargetPos, targetpos) > targetPosMoveThreshold)
             {
 				navDirty = false;
-                agent.SetDestination(targetpos);
+                agent.SetDestination(Vector3Int.RoundToInt(targetpos));
                 lastTargetPos = targetpos;
             }
 
@@ -421,7 +420,7 @@ public class Mob : MonoBehaviour
     }
 
     public float rotationSpeed = 3;
-    public Transform head;
+    public UnityEngine.Transform head;
 
     public bool AtTarget => Vector3.Distance(transform.position, targetpos) < targetDistanceGoal;
 

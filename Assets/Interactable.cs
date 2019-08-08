@@ -5,5 +5,5 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
 	public string message;
-	public Transform offset;
+	public UnityEngine.Transform offset;
 }

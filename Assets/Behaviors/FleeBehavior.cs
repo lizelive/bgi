@@ -6,7 +6,7 @@ using System.Linq;
 public class FleeBehavior : AiBehavior
 {
 	private CooldownTimer checkTimer = new CooldownTimer(1);
-	Transform[] scaryThings = { };
+    UnityEngine.Transform[] scaryThings = { };
     public float MaxStepHight = 1;
     public float FleeRange = 5;
     public float FeelSafeThreshold = 0.2f;

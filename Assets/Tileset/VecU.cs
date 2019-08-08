@@ -3,7 +3,14 @@ using UnityEngine;
 
 public static class VecU
 {
-    public static readonly Vector3Int[] CardnalVec3I =
+    public static readonly Vector3Int[] CardnalDirs =
+    {
+        Vector3Int.left, Vector3Int.right,
+        Vector3Int.FloorToInt(Vector3.forward),
+        Vector3Int.FloorToInt(Vector3.back)
+    };
+
+    public static readonly Vector3Int[] PureDirs =
     {
         Vector3Int.up, Vector3Int.down,
         Vector3Int.left, Vector3Int.right,

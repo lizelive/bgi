@@ -93,7 +93,7 @@ public class VillageController : MonoBehaviour
 	public float heroRep = -10;
 
 	public float villageRadius = 32;
-	public Transform spawnPoint;
+	public UnityEngine.Transform spawnPoint;
 	public CooldownTimer heroCooldown = new CooldownTimer(60);
 	// Update is called once per frame
 	void Update()
@@ -103,7 +103,7 @@ public class VillageController : MonoBehaviour
 		timeCorrectedDecay *= Time.deltaTime;
 
 
-		var faction = team.reputations.Keys.FirstOrDefault(x => x != team);
+		var faction = team.fear.Keys.FirstOrDefault(x => x != team);
 
 
 		Team.Behavior behaviour = Team.Behavior.Normal;

@@ -44,7 +44,7 @@ public partial class Player : MonoBehaviour
 	public MeleeWeapon weapon;
 	public Norb NorbPrefab;
 
-	public Transform targeter;
+	public UnityEngine.Transform targeter;
 	public ParticleSystem caller;
 
 	// Start is called before the first frame update
@@ -289,5 +289,8 @@ public partial class Player : MonoBehaviour
 				norb.SwitchBehavior<FollowBehavior>(x=>x.following = this);
 			}
 		}
-	}
+
+        UpdateBuild();
+
+    }
 }

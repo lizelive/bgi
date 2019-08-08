@@ -5,7 +5,7 @@ using UnityEngine;
 public class FenceBuilder : MonoBehaviour
 {
 	public Building fencePrefab;
-	public Transform targeter;
+	public UnityEngine.Transform targeter;
 
 	public float fenceLength = 1;
     // Start is called before the first frame update

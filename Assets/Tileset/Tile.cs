@@ -1,47 +1,57 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using UnityEngine;
 
 
-// might want to rethink this...
-public class Block
-{
-
-	public string name;
-	public Mesh mesh;
-
-
-	public static Block[] Types => new [] 
-	{
-		new Block { name = "Air", mesh = new Mesh() },
-		new Block { name = "Block", mesh = Default.I.buildingBlockMesh}
-	};
-		
-		
-}
-
-
-[System.Serializable]
-public struct Tile 
-{
-	public short blocktype;
-    //public object data;
-    public override string ToString()
+    // might want to rethink this...
+    public class Block
     {
-        return $"Tile {blocktype}";
+
+        public string name;
+        public Mesh mesh;
+        public bool isAir;
+        public bool isSolid;
+
+
+        public static Block[] Types => new[]
+        {
+        new Block { name = "air", mesh = new Mesh() },
+        new Block { name = "stone", mesh = Default.I.buildingBlockMesh}
+    };
+
+
     }
-    public Block Block => Block.Types[blocktype];
-    public Mesh Mesh => Block.mesh;
-	public bool IsAir => blocktype == 0;
 
-	public static Tile Air => new Tile();
+    public interface IBlockData
+    {
+        string GetAsString();
+    }
 
-	public static implicit operator bool(Tile d) => !d.IsAir;
+    [Serializable]
+    public struct BlockState
+    {
+        public IBlockData data;
+        public short blocktype;
+        //public object data;
+        public override string ToString()
+        {
+            return $"Tile {blocktype}";
+        }
+        public Block Block => Block.Types[blocktype];
+        public Mesh Mesh => Block.mesh;
+        public bool IsAir => blocktype == 0;
+
+        public bool IsSolid => !IsAir;
+
+        public static BlockState Air => new BlockState();
+
+        public static implicit operator bool(BlockState d) => !d.IsAir;
 
 
-	bool BlockUpdate()
-	{
-		return false;
-	}
-}
+        bool BlockUpdate()
+        {
+            return false;
+        }
+    }

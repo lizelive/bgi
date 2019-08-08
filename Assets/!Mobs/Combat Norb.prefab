@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 5747699869365127302}
   - component: {fileID: 5747699869368469454}
   - component: {fileID: 5747699869377083780}
-  - component: {fileID: 5747699869351208504}
   - component: {fileID: 398277517026642155}
   - component: {fileID: 3148910654106154203}
   - component: {fileID: 2377542110400804684}
@@ -51,6 +50,7 @@ GameObject:
   - component: {fileID: 7011525910577069576}
   - component: {fileID: 6000462023112287527}
   - component: {fileID: 4930782922958461945}
+  - component: {fileID: 2063617567}
   m_Layer: 0
   m_Name: Combat Norb
   m_TagString: Untagged
@@ -104,28 +104,6 @@ CapsuleCollider:
   m_Height: 0.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.375, z: 0}
---- !u!195 &5747699869351208504
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5747699869365459964}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.25
-  m_Speed: 6
-  m_Acceleration: 10
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0.2
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 0.75
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &398277517026642155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,9 +123,11 @@ MonoBehaviour:
   RegenSpeed: 0
   ragdoll: {fileID: 0}
   deathParticle: {fileID: 0}
-  immunities: 0
-  killHealthBonus: 0.15
-  team: {fileID: 11400000, guid: bc38b09bd345fee4b92615d8456fc2b3, type: 2}
+  Stagger: 0
+  StaggerDecay: 0
+  immunities: 
+  hurtBonus: 1
+  team: {fileID: 11400000, guid: 9507aea42a064484094933db73196357, type: 2}
   centerOffset: {x: 0, y: 0, z: 0}
   radius: 0
 --- !u!114 &3148910654106154203
@@ -283,6 +263,23 @@ MonoBehaviour:
   Running: 0
   BasePriority: 0
   startTime: 0
+--- !u!114 &2063617567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5747699869365459964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32904de3bba31b847b47160879919172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 6
+  turnSpeed: 6
+  desiredVelocity: {x: 0, y: 0, z: 0}
+  steeringTarget: {x: 0, y: 0, z: 0}
+  updatePosition: 0
 --- !u!1001 &1525805030991770762
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -360,6 +357,31 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8635847452264678252, guid: 9163fd382b6ae5244af1f1d580767172,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 81cc486a84777ec4abdf4c5c1d4a9ffb, type: 2}
+    - target: {fileID: -8635847452264678252, guid: 9163fd382b6ae5244af1f1d580767172,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 81cc486a84777ec4abdf4c5c1d4a9ffb, type: 2}
+    - target: {fileID: -8635847452264678252, guid: 9163fd382b6ae5244af1f1d580767172,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 81cc486a84777ec4abdf4c5c1d4a9ffb, type: 2}
+    - target: {fileID: -8635847452264678252, guid: 9163fd382b6ae5244af1f1d580767172,
+        type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 81cc486a84777ec4abdf4c5c1d4a9ffb, type: 2}
+    - target: {fileID: -8635847452264678252, guid: 9163fd382b6ae5244af1f1d580767172,
+        type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: 81cc486a84777ec4abdf4c5c1d4a9ffb, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9163fd382b6ae5244af1f1d580767172, type: 3}
 --- !u!4 &5788826852027867024 stripped

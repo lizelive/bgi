@@ -8,7 +8,7 @@ public class VillagerHome : MonoBehaviour, IBurnable
 {
 
 	public Team Team => GetComponent<Health>().team;
-	public Transform spawnPoint;
+	public UnityEngine.Transform spawnPoint;
 	public float costToSpawn;
 
     public enum Status

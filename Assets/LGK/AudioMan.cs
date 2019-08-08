@@ -21,7 +21,7 @@ public class AudioMan : MonoBehaviour
         Vector3 pos;
     }
 
-    public Transform viewAs;
+    public UnityEngine.Transform viewAs;
     public static AudioMan I;
     AudioMan()
     {

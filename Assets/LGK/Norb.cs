@@ -18,7 +18,7 @@ public class Norb : MonoBehaviour
 
     public Rigidbody holding;
     public float maxFollowRange = 5;
-    public Transform holdSpot;
+    public UnityEngine.Transform holdSpot;
     MeleeWeapon weapon;
 
     public Rigidbody test;

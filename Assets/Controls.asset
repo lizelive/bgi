@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Throw: 323
   Attack: 324
+  Rally: 325
   Build: 323
   Break: 324
   Interact: 101
@@ -25,3 +26,12 @@ MonoBehaviour:
   MoveDown: 115
   MoveLeft: 97
   MoveRight: 100
+  Jump: 32
+  MoveUpAlt: 273
+  MoveDownAlt: 274
+  MoveLeftAlt: 276
+  MoveRightAlt: 275
+  BuildMC: 49
+  BreakMC: 50
+  BuildmodeMC: 51
+  TransRights: 294

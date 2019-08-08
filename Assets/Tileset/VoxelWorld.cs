@@ -3,9 +3,10 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using System.IO.Compression;
-using UArray = UnboundArray3D<Tile>;
-using Chunk = UnboundArray3D<Tile>.Chunk;
+using UArray = UnboundArray3D<BlockState>;
+using Chunk = UnboundArray3D<BlockState>.Chunk;
 using CompressionLevel = System.IO.Compression.CompressionLevel;
+using System.Linq;
 
 public class VoxelWorld : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class VoxelWorld : MonoBehaviour
 
     public WorldGen worldGen;
 
-    public Tile this[Vector3Int index]
+    public BlockState this[Vector3Int index]
     {
         get { return backing[index]; }
         set { backing[index] = value; }
@@ -36,9 +37,9 @@ public class VoxelWorld : MonoBehaviour
     }
 
 
-    UnboundArray3D<Tile> backing = new UnboundArray3D<Tile>();
+    UnboundArray3D<BlockState> backing = new UnboundArray3D<BlockState>();
 
-    UnboundArray3D<Tile>.Chunk Load(Vector3Int cord)
+    UnboundArray3D<BlockState>.Chunk Load(Vector3Int cord)
     {
 
         var filePath = GetChunkPath(cord);
@@ -53,7 +54,7 @@ public class VoxelWorld : MonoBehaviour
             }
         else
         {
-            chunk = new UnboundArray3D<Tile>.Chunk();
+            chunk = new UnboundArray3D<BlockState>.Chunk();
             chunk.cord = cord;
             worldGen.Populate(chunk);
         }
@@ -73,7 +74,7 @@ public class VoxelWorld : MonoBehaviour
 Application.persistentDataPath,
 $"{cord.x}_{cord.y}_{cord.z}.bgc");
 
-    void SaveChunk(UnboundArray3D<Tile>.Chunk chunk)
+    void SaveChunk(UnboundArray3D<BlockState>.Chunk chunk)
     {
         print("save to " + GetChunkPath(chunk.cord));
         using (var file = new GZipStream(File.OpenWrite(GetChunkPath(chunk.cord)), FileCompressionLevel))
@@ -104,7 +105,7 @@ $"{cord.x}_{cord.y}_{cord.z}.bgc");
 
 
         //if (Input.GetKeyDown(KeyCode.F3))
-            foreach (var chunk in backing.Chunks)
+            foreach (var chunk in backing.Chunks.ToArray())
             {
                 if (Camera.main.Distance(chunk.WorldPos) > viewDistance)
                     Unload(chunk.cord);
@@ -116,7 +117,7 @@ $"{cord.x}_{cord.y}_{cord.z}.bgc");
     private void OnDestroy()
     {
         // don't you ever just destroy the world?
-        foreach (var chunk in backing.Chunks)
+        foreach (var chunk in backing.Chunks.ToArray())
             Unload(chunk.cord);
     }
 }

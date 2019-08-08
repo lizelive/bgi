@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Chunk = UnboundArray3D<Tile>.Chunk;
+using Chunk = UnboundArray3D<BlockState>.Chunk;
 
 public class WorldGen : MonoBehaviour
 {
@@ -50,7 +50,7 @@ public class WorldGen : MonoBehaviour
             var mapHeight = heights.Index(pos.xz());
 
             if(worldPos.y < mapHeight)
-            chunk[pos] = new Tile { blocktype = 1 };
+            chunk[pos] = new BlockState { blocktype = 1 };
 
 
         }
