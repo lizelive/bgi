@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,11 +7,11 @@ public static class U
 {
     public static T Closest<T>(this IEnumerable<T> stuff, GameObject to) where T : Component
     {
-		return stuff.MinBy(to.Distance);
+        return stuff.MinBy(to.Distance);
     }
 
 
-	public static float Max(this Vector3 m) => Mathf.Max(m.x, m.y, m.z);
+    public static float Max(this Vector3 m) => Mathf.Max(m.x, m.y, m.z);
     public static float Pow2(this float x) => x * x;
 
     public static float Distance(this GameObject self, GameObject other)
@@ -21,17 +20,17 @@ public static class U
     }
 
 
-	public static bool Not(this GameObject obj) => !obj;
-	public static bool Is(this GameObject obj) => obj;
-	public static bool Is(this object obj) => obj != null;
+    public static bool Not(this GameObject obj) => !obj;
+    public static bool Is(this GameObject obj) => obj;
+    public static bool Is(this object obj) => obj != null;
 
     public static bool Is(this BlockState obj) => obj;
 
     public static bool Not(this bool obj) => !obj;
-	public static bool Not(this Component obj) => !obj;
-	public static bool Is(this Component obj) => obj;
+    public static bool Not(this Component obj) => !obj;
+    public static bool Is(this Component obj) => obj;
 
-	public static float Distance(this Component self, Component other)
+    public static float Distance(this Component self, Component other)
     {
         return Vector3.Distance(self.transform.position, other.transform.position);
     }
@@ -41,7 +40,7 @@ public static class U
         return Vector3.Distance(self.transform.position, other);
     }
 
-	public static TValue Key<TKey, TValue>(KeyValuePair<TKey, TValue> keyValuePair) => keyValuePair.Value;
+    public static TValue Key<TKey, TValue>(KeyValuePair<TKey, TValue> keyValuePair) => keyValuePair.Value;
 
     public static float Distance(this GameObject self, Component other)
     {
@@ -53,11 +52,11 @@ public static class U
         return new Vector2(self.x, self.z);
     }
 
-	public static Vector3Int x0y(this Vector2Int self)
-	{
-		return new Vector3Int(self.x, 0, self.y);
-	}
-	public static Vector3 x0y(this Vector2 self)
+    public static Vector3Int x0y(this Vector2Int self)
+    {
+        return new Vector3Int(self.x, 0, self.y);
+    }
+    public static Vector3 x0y(this Vector2 self)
     {
         return new Vector3(self.x, 0, self.y);
     }
@@ -79,7 +78,7 @@ public static class U
         foreach (var item in self)
         {
             var val = eval(item);
-            if(val > bestVal)
+            if (val > bestVal)
             {
                 bestVal = val;
                 best = item;
@@ -111,7 +110,7 @@ public static class U
     }
 
 
-    public static T WeightedRandom<T>(this Dictionary<T,float> self)
+    public static T WeightedRandom<T>(this Dictionary<T, float> self)
     {
         var total = self.Sum(x => x.Value);
         float target = UnityEngine.Random.value * total;
@@ -131,15 +130,15 @@ public static class U
         return new Vector3(s.x * o.x, s.y * o.y, s.z * o.z);
     }
 
-	public static void Foreach<T>(this IEnumerable<T> collection, Action<T> f)
-	{
-		foreach (var item in collection)
-		{
-			f(item);
-		}
-	}
+    public static void Foreach<T>(this IEnumerable<T> collection, Action<T> f)
+    {
+        foreach (var item in collection)
+        {
+            f(item);
+        }
+    }
 
-	public static T[] Find<T>(Vector3 pos, float range) where T:UnityEngine.Component
+    public static T[] Find<T>(Vector3 pos, float range) where T : UnityEngine.Component
     {
         return GameObject.FindObjectsOfType<T>().Where(x => x.Distance(pos) <= range).ToArray();
 
@@ -167,5 +166,47 @@ public static class U
     {
 
         return self.MaxBy(x => -eval(x));
+    }
+
+
+    // start counts from least sig
+    public static int Bits(this int i, int start, int size)
+    {
+
+        var mask = 1 << (size + 1) - 1;
+        return (i >> start) & mask;
+    }
+
+    public static int Bits(this int i, int start, int size, int value)
+    {
+        var mask = 1 << (size + 1) - 1;
+        value &= mask;
+        i &= ~(mask << start);
+        i |= value << start;
+        return i;
+    }
+
+
+    // start counts from least sig
+    public static byte Bits(this byte i, byte start, byte size) => (byte)Bits((int)i, start, size);
+
+    public static byte Bits(this byte i, byte start, byte size, byte value) => (byte)Bits((int)i, start, size, value);
+}
+
+
+public static class MergeUtil
+{
+    public static void Parent<T>(this T self, T parent)
+    {
+        var fields = typeof(T).GetFields();
+        foreach (var field in fields)
+        {
+            if (field.GetValue(self) == null)
+            {
+                var parentValue = field.GetValue(parent);
+                field.SetValue(self, parentValue);
+            }
+
+        }
     }
 }

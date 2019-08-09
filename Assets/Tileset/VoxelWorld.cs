@@ -10,6 +10,10 @@ using System.Linq;
 
 public class VoxelWorld : MonoBehaviour
 {
+
+    // i hate unity
+    public Dictionary<string, int> blockIds;
+
     public Dictionary<Vector3Int, ChunkRender> renders = new Dictionary<Vector3Int, ChunkRender>();
     public bool doRender = true;
     public float viewDistance = 100;
@@ -39,7 +43,7 @@ public class VoxelWorld : MonoBehaviour
 
     UnboundArray3D<BlockState> backing = new UnboundArray3D<BlockState>();
 
-    UnboundArray3D<BlockState>.Chunk Load(Vector3Int cord)
+    Chunk Load(Vector3Int cord)
     {
 
         var filePath = GetChunkPath(cord);
@@ -54,7 +58,7 @@ public class VoxelWorld : MonoBehaviour
             }
         else
         {
-            chunk = new UnboundArray3D<BlockState>.Chunk();
+            chunk = new Chunk();
             chunk.cord = cord;
             worldGen.Populate(chunk);
         }
@@ -74,7 +78,7 @@ public class VoxelWorld : MonoBehaviour
 Application.persistentDataPath,
 $"{cord.x}_{cord.y}_{cord.z}.bgc");
 
-    void SaveChunk(UnboundArray3D<BlockState>.Chunk chunk)
+    void SaveChunk(Chunk chunk)
     {
         print("save to " + GetChunkPath(chunk.cord));
         using (var file = new GZipStream(File.OpenWrite(GetChunkPath(chunk.cord)), FileCompressionLevel))

@@ -143,13 +143,16 @@
     <Compile Include="Assets\ParticlePack\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
     <Compile Include="Assets\PrintControls.cs" />
     <Compile Include="Assets\Spawner.cs" />
+    <Compile Include="Assets\Tileset\Block.cs" />
     <Compile Include="Assets\Tileset\Chunk.cs" />
     <Compile Include="Assets\Tileset\ChunkRender.cs" />
     <Compile Include="Assets\Tileset\Direction.cs" />
+    <Compile Include="Assets\Tileset\MaybeArray.cs" />
     <Compile Include="Assets\Tileset\MazeGenerator.cs" />
     <Compile Include="Assets\Tileset\McModel.cs" />
     <Compile Include="Assets\Tileset\McRespack.cs" />
     <Compile Include="Assets\Tileset\McTexture.cs" />
+    <Compile Include="Assets\Tileset\MulitpartCondition.cs" />
     <Compile Include="Assets\Tileset\Nav\VoxelNavAgent.cs" />
     <Compile Include="Assets\Tileset\Noise.cs" />
     <Compile Include="Assets\Tileset\Path.cs" />
@@ -200,6 +203,7 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\Art\Shaders\Noise\GLSL\NoiseTest.glslinc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\Art\Shaders\RenderDepthOnly.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\DecalSystem\README.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />

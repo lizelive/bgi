@@ -50,7 +50,7 @@ public class WorldGen : MonoBehaviour
             var mapHeight = heights.Index(pos.xz());
 
             if(worldPos.y < mapHeight)
-            chunk[pos] = new BlockState { blocktype = 1 };
+            chunk[pos] = new BlockState { blockId = 1 };
 
 
         }

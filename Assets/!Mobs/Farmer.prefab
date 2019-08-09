@@ -221,11 +221,6 @@ PrefabInstance:
       propertyPath: head
       value: 
       objectReference: {fileID: 8946568805673298212}
-    - target: {fileID: 6364313701537220960, guid: 7ade9c5a9f6852544902628052a88c37,
-        type: 3}
-      propertyPath: ViewRange
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 6364313701537220742, guid: 7ade9c5a9f6852544902628052a88c37,
         type: 3}
       propertyPath: m_LocalPosition.x

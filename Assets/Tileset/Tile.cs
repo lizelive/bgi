@@ -1,55 +1,30 @@
 ﻿using System;
 using UnityEngine;
 
-
-// might want to rethink this...
-public class Block
-{
-
-    public string name;
-    public Mesh mesh;
-    public bool isAir;
-    public bool isSolid;
-
-
-    public static Block[] Types => new[]
-    {
-        new Block { name = "air", mesh = new Mesh() },
-        new Block { name = "stone", mesh = Default.I.buildingBlockMesh}
-    };
-
-
-}
-
-public interface IBlockData
-{
-    string GetAsString();
-}
-
 [Serializable]
 public struct BlockState
 {
-    public IBlockData data;
-    public short blocktype;
+    public short blockId;
+    public byte magicNumber;
     private static readonly Mesh EmptyMesh = new Mesh();
     //public object data;
     public override string ToString()
     {
-        return $"Tile {blocktype}";
+        return $"Tile {blockId}";
     }
-    public Block Block => Block.Types[blocktype];
+    //public Block Block => Block.Types[blocktype];
     //public Mesh Mesh => Block.mesh;
     public Mesh Mesh
     {
         get
         {
-            if (blocktype == 1)
+            if (blockId == 1)
             {
-                return Default.I.buildingBlockMesh;
+                return Default.I.models[220];
             }
-            else if (blocktype > 0)
+            else if (blockId > 0)
             {
-                return Default.I.models[blocktype - 2];
+                return Default.I.models[blockId - 2];
             }
             else
             {
@@ -58,7 +33,7 @@ public struct BlockState
         }
 
     }
-    public bool IsAir => blocktype == 0;
+    public bool IsAir => blockId == 0;
 
     public bool IsSolid => !IsAir;
 

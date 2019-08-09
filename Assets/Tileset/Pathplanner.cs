@@ -72,7 +72,7 @@ public class Pathplanner
         }
     }
 
-    public NavPath AStar(Vector3Int start, Vector3Int end, int maxSteps = 128)
+    public NavPath AStar(Vector3Int start, Vector3Int end, int maxSteps = 32)
     {
         if (Vector3Int.Distance(start, end) > maxSteps)
             return null;

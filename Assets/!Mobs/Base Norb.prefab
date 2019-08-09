@@ -110,9 +110,13 @@ MonoBehaviour:
   ragdoll: {fileID: 0}
   deathParticle: {fileID: 7925395990273270106, guid: 65989700e59eec8438baaab0aad029cb,
     type: 3}
-  immunities: 0
-  killHealthBonus: 0
+  Stagger: 0
+  StaggerDecay: 0
+  immunities: 
+  hurtBonus: 1
   team: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  radius: 0
 --- !u!114 &6364313701537220963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,9 +150,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 631db0f464d615a43aac3095e062958e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 1
+  physicsMovement: 0
   Behaviors: []
   ActiveBehavior: {fileID: 0}
-  ViewRange: 10
+  ViewRange: 16
   maxSpeed: 1
   GroundCheckDistance: 0.3
   targetpos: {x: 0, y: 0, z: 0}

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
+using UnityEngine;
 
 namespace Mc
 {
@@ -8,24 +8,19 @@ namespace Mc
     {
 
         // note does not have to be an array.
-        public Dictionary<string, McModelDescriptor[]> variants;
-
-        public Dictionary<string, McModelDescriptor> variants2;
-        public McModelDescriptor[] multipart;
+        public Dictionary<string, MaybeMcModelDescriptorArray> variants;
+        public MulitpartCase[] multipart;
 
     }
 
-
-    class MulitpartCondition
+    [Serializable]
+    public class MulitpartCase
     {
-        public MulitpartCondition[] OR, AND;
-        public Dictionary<string, string> value;
+        public MulitpartCondition when;
+        public MaybeMcModelDescriptorArray apply;
     }
-    class MulitpartWhatever
-    {
-        public object when;
-        public McModelDescriptor apply;
-    }
+
+
     [Serializable]
 
     public class McModelDescriptor
@@ -60,6 +55,46 @@ namespace Mc
         public Transform @fixed;
     }
 
+
+
+
+    public class McRotation
+    {
+        public enum Axis
+        {
+            x, y, z
+        }
+
+        public Vector3 AxisVec
+        {
+            get
+            {
+                switch (axis)
+                {
+                    case Axis.x:
+                        return Vector3.right;
+                    case Axis.y:
+                        return Vector3.up;
+                    case Axis.z:
+                        return Vector3.forward;
+                    default:
+                        return Vector3.zero;
+                }
+            }
+        }
+
+        public float angle;
+        public float[] origin;
+        public Axis axis;
+        public bool rescale;
+
+        public Vector3 Origin => origin.ToVec3() / 16 - Vector3.one / 2;
+
+        public Matrix4x4 matrix =>
+            Matrix4x4.Translate(-Origin)
+            * Matrix4x4.Rotate(Quaternion.AngleAxis(angle, AxisVec))
+            * Matrix4x4.Translate(Origin);
+    }
     [Serializable]
     public partial class Transform
     {
@@ -73,6 +108,7 @@ namespace Mc
     {
         public float[] from;
         public float[] to;
+        public McRotation rotation;
         public Faces faces;
     }
 
@@ -90,15 +126,15 @@ namespace Mc
     [Serializable]
     public enum Rotation
     {
-        _0=0,
-        _90=90,
-        _180=180,
-        _270=270
+        _0 = 0,
+        _90 = 90,
+        _180 = 180,
+        _270 = 270
     }
     [Serializable]
     public enum Cullface
     {
-        down,up,north,south,west,east
+        down, up, north, south, west, east
     }
 
     [Serializable]

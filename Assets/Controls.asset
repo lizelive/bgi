@@ -34,4 +34,6 @@ MonoBehaviour:
   BuildMC: 49
   BreakMC: 50
   BuildmodeMC: 51
+  CycleBlockUp: 270
+  CycleBlockDown: 269
   TransRights: 294

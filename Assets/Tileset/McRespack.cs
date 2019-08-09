@@ -1,8 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using Mc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using UnityEngine;
+
+public class MaybeArrayConverter<T> : CustomCreationConverter<MaybeArray<T>>
+{
+    public override MaybeArray<T> Create(Type objectType)
+    {
+        return new MaybeArray<T>();
+    }
+
+    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+    {
+        if (reader.TokenType == JsonToken.StartArray)
+        {
+            var lol = reader.ReadAsString();
+            //base.ReadJson(reader, typeof(T[]) )
+        }
+        return base.ReadJson(reader, objectType, existingValue, serializer);
+    }
+}
+
 public class McRespack
 {
 
@@ -11,7 +34,8 @@ public class McRespack
     public const int AtlasSize = 4096;
     public int padding = 0;
     public Dictionary<string, Rect> textures;
-    public List<Mc.McModel> models = new List<Mc.McModel>();
+    public Dictionary<string, Mc.BlockStates> states;
+    public Dictionary<string, Mc.McModel> models = new Dictionary<string, Mc.McModel>();
 
     public List<Mesh> meshes = new List<Mesh>();
     /// <summary>
@@ -24,7 +48,7 @@ public class McRespack
         {
             var textureFiles = archive.Entries.Where(e => e.Name.EndsWith(".png") && e.FullName.StartsWith("assets/minecraft/textures")).ToArray();
 
-            
+
             var textures = textureFiles.Select(e =>
             {
                 var t = new Texture2D(0, 0);
@@ -42,23 +66,50 @@ public class McRespack
             var rects = atlas.PackTextures(textures, padding);
 
 
-            this.textures = textureFiles.Select(x => x.FullName.Substring(26,x.FullName.Length-26-4)).Zip(rects, (a, b) => (a, b)).ToDictionary(x => x.a, x => x.b);
+            this.textures = textureFiles.Select(x => x.FullName.Substring(26, x.FullName.Length - 26 - 4)).Zip(rects, (a, b) => (a, b)).ToDictionary(x => x.a, x => x.b);
 
             // block models
             var jsonFiles = archive.Entries.Where(e => e.FullName.EndsWith(".json")).ToArray();
 
-            var blockstateFiles = archive.Entries.Where(e => e.FullName.Contains("assets\\minecraft\\blockstates") && e.FullName.EndsWith(".json")).ToArray();
+            var blockstateFiles = archive.Entries.Where(e => e.FullName.Contains("assets/minecraft/blockstates/") && e.FullName.EndsWith(".json")).ToArray();
 
-            foreach (var block in blockstateFiles)
+            foreach (var blockstateFile in blockstateFiles)
             {
 
+                var name = blockstateFile.Name.Substring(0, blockstateFile.Name.Length - 4);
+
+                using (var stream = new StreamReader(blockstateFile.Open()))
+                {
+                    var json = stream.ReadToEnd().Trim(' ', '\n', '\r');
+
+                    json = string.Join(" ", json.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries));
+
+
+                    BlockStates blockstate;
+                    try
+                    {
+                        blockstate = JsonConvert.DeserializeObject<Mc.BlockStates>(json);
+
+                    }
+                    catch(JsonReaderException e)
+                    {
+                        Debug.LogError($"{name} has bad json at {e.LineNumber} {e.LinePosition}");
+                        json = json.Substring(0, e.LinePosition - 1);
+                        blockstate = JsonConvert.DeserializeObject<Mc.BlockStates>(json);
+                        
+                    }
+
+                }
             }
 
 
-            var modelFiles = archive.Entries.Where(e => e.FullName.Contains("models") && e.FullName.EndsWith(".json")).ToArray();
+            var modelFiles = archive.Entries.Where(e => e.FullName.Contains("assets/minecraft/models/") && e.FullName.EndsWith(".json")).ToArray();
 
             foreach (var modelFile in modelFiles)
             {
+
+                var prefixLength = "assets/minecraft/models/".Length;
+                var name = modelFile.FullName.Substring(prefixLength, modelFile.FullName.Length - prefixLength - 4 - 1);
                 using (var stream = new StreamReader(modelFile.Open()))
                 {
                     var json = stream.ReadToEnd();
@@ -67,8 +118,11 @@ public class McRespack
                     try
                     {
 
-                    model = Newtonsoft.Json.JsonConvert.DeserializeObject<Mc.McModel>(json);
-                        models.Add(model);
+                        model = Newtonsoft.Json.JsonConvert.DeserializeObject<Mc.McModel>(json);
+
+
+
+                        models.Add(name, model);
                     }
                     catch (System.ArgumentException e)
                     {
@@ -77,56 +131,29 @@ public class McRespack
                     }
 
 
-                    if (model.elements != null)
-                    {
-                        var quads = model.elements.SelectMany(e => DirectionUtils.Directions.Select(d => e.GetQuad(model, this, d))).Where(U.Is).ToArray();
 
-                        var mesh = new Mesh();
-
-                        var indices = new int[quads.Length * 4];
-                        var verts = new Vector3[quads.Length * 4];
-                        var uv = new Vector2[quads.Length * 4];
-
-                        for (int i = 0; i < quads.Length; i++)
-                        {
-                            var b = i * 4;
-                            var q = quads[i];
-
-                            indices[b + 0] = b + 0;
-                            indices[b + 1] = b + 1;
-                            indices[b + 2] = b + 2;
-                            indices[b + 3] = b + 3;
-
-                            verts[b + 0] = q.v1;
-                            verts[b + 1] = q.v2;
-                            verts[b + 2] = q.v3;
-                            verts[b + 3] = q.v4;
-
-                            uv[b + 0] = q.uv1;
-                            uv[b + 1] = q.uv2;
-                            uv[b + 2] = q.uv3;
-                            uv[b + 3] = q.uv4;
-                        }
-
-                        mesh.vertices = verts;
-                        mesh.uv = uv;
-
-                        mesh.SetIndices(indices, MeshTopology.Quads, 0);
-                        
-                        mesh.name = modelFile.FullName;
-
-                        mesh.RecalculateNormals();
-                        mesh.RecalculateTangents();
-                        mesh.RecalculateBounds();
-                        mesh.UploadMeshData(false);
-                        
-                        meshes.Add(mesh);
-                    }
-              
 
                 }
             }
 
+
+            foreach (var model in models.Values)
+            {
+                if (model.parent != null)
+                {
+                    if (models.TryGetValue(model.parent, out var mom))
+                        model.Parent(mom);
+                }
+            }
+
+            foreach (var model in models.Values)
+            {
+                if (model.elements != null)
+                {
+                    var mesh = model.GetMesh(this);
+                    meshes.Add(mesh);
+                }
+            }
         }
     }
 
@@ -140,6 +167,51 @@ public class Quad
 
 public static class McModelExtensions
 {
+    public static Mesh GetMesh(this Mc.McModel model, McRespack pack)
+    {
+        var quads = model.elements.SelectMany(e => DirectionUtils.Directions.Select(d => e.GetQuad(model, pack, d))).Where(U.Is).ToArray();
+
+        var mesh = new Mesh();
+
+        var indices = new int[quads.Length * 4];
+        var verts = new Vector3[quads.Length * 4];
+        var uv = new Vector2[quads.Length * 4];
+
+        for (int i = 0; i < quads.Length; i++)
+        {
+            var b = i * 4;
+            var q = quads[i];
+
+            indices[b + 0] = b + 0;
+            indices[b + 1] = b + 1;
+            indices[b + 2] = b + 2;
+            indices[b + 3] = b + 3;
+
+            verts[b + 0] = q.v1;
+            verts[b + 1] = q.v2;
+            verts[b + 2] = q.v3;
+            verts[b + 3] = q.v4;
+
+            uv[b + 0] = q.uv1;
+            uv[b + 1] = q.uv2;
+            uv[b + 2] = q.uv3;
+            uv[b + 3] = q.uv4;
+        }
+
+        mesh.vertices = verts;
+        mesh.uv = uv;
+
+        mesh.SetIndices(indices, MeshTopology.Quads, 0);
+
+        //mesh.name = modelFile.FullName;
+
+        mesh.RecalculateNormals();
+        mesh.RecalculateTangents();
+        mesh.RecalculateBounds();
+        mesh.UploadMeshData(false);
+
+        return mesh;
+    }
 
     public static Vector3 ToVec3(this float[] data)
     {
@@ -192,7 +264,7 @@ public static class McModelExtensions
         var dne = new Vector3(self.max.x, self.min.y, self.min.z);
         var use = new Vector3(self.max.x, self.max.y, self.max.z);
         var dse = new Vector3(self.max.x, self.min.y, self.max.z);
-        
+
 
         switch (face)
         {
@@ -247,14 +319,14 @@ public static class McModelExtensions
     public static Quad GetQuad(this Mc.Element element, Mc.McModel model, McRespack pack, Direction face)
     {
         var offset = -Vector3.one / 2;
-        var from = element.from.ToVec3()/16+offset;
-        var to = element.to.ToVec3()/16+offset;
+        var from = element.from.ToVec3() / 16 + offset;
+        var to = element.to.ToVec3() / 16 + offset;
 
         var mface = element.faces.GetFace(face);
 
-        if (mface==null|| mface.Uv==null) return null;
+        if (mface == null || mface.Uv == null) return null;
 
-
+        var rot = element.rotation?.matrix ?? Matrix4x4.identity; 
 
 
         var texture = new Rect(0, 0, 1, 1);
@@ -268,28 +340,34 @@ public static class McModelExtensions
 
         texturePath = texturePath ?? "";
 
-        if (pack.textures.TryGetValue(texturePath, out texture)){
+        if (pack.textures.TryGetValue(texturePath, out texture))
+        {
 
         }
         else
         {
             //Debug.LogWarning($"Missing texture {mface.Texture}");
         }
-        
+
         var (uv1, uv2) = mface.Uv.ToVec2s();
         uv1 /= 16;
         uv2 /= 16;
 
         uv1 = texture.Lerp(uv1);
         uv2 = texture.Lerp(uv2);
-    
-        
+
+
         var good = texture.Contains(uv1) && texture.Contains(uv2);
 
         var bounds = new Bounds(from, Vector3.zero);
         bounds.Encapsulate(to);
 
         var o = bounds.GetFace(face);
+
+        o.v1 = rot.MultiplyPoint(o.v1);
+        o.v2 = rot.MultiplyPoint(o.v2);
+        o.v3 = rot.MultiplyPoint(o.v3);
+        o.v4 = rot.MultiplyPoint(o.v4);
 
         o.uv1 = uv1;
         o.uv2.y = uv1.y;
