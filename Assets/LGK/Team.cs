@@ -165,7 +165,7 @@ public class Team : ScriptableObject
 		Fight,
 		Summon,
 		Praise,
-		Pleed,
+		Plead,
 		Join
 	}
 
@@ -183,7 +183,7 @@ public class Team : ScriptableObject
 
 		var hasGoodRep = rep > highRepThreshold;
 		var hasBadRep = rep < -highRepThreshold;
-		var hasNutralRep = !(hasGoodRep || hasBadRep);
+		var hasNeutralRep = !(hasGoodRep || hasBadRep);
 
 
 		if (hasBadRep)
@@ -197,10 +197,10 @@ public class Team : ScriptableObject
 
 		}
 
-		if (hasNutralRep)
+		if (hasNeutralRep)
 		{
 			if (highFear)
-				return Behavior.Pleed;
+				return Behavior.Plead;
 			if (medFear)
 				return Behavior.Normal;
 			if (lowFear)
@@ -212,7 +212,7 @@ public class Team : ScriptableObject
 			if (highFear)
 				return Behavior.Join;
 			if (medFear)
-				return Behavior.Pleed;
+				return Behavior.Plead;
 			if (lowFear)
 				return Behavior.Praise;
 		}

@@ -1,0 +1,41 @@
+[
+{
+		"package": "bgi",
+		"id": "air"
+},
+
+	{
+		"package": "bgi",
+		"id": "stone"
+	},
+	{
+		"package": "bgi",
+		"id": "grass"
+	},
+		{
+		"package": "bgi",
+		"id": "dirt"
+	},
+			{
+		"package": "bgi",
+		"id": "cobblestone"
+	},
+  {
+    "package": "bgi",
+    "id": "acacia_button",
+    "props": [
+      {
+        "name": "face",
+        "values": [ "floor", "wall", "ceiling", ]
+      },
+      {
+        "name": "facing",
+        "values": [ "east", "west", "south", "north" ]
+      },
+      {
+        "name": "powered",
+        "values": [ "true", "false" ]
+      }
+    ]
+  }
+]

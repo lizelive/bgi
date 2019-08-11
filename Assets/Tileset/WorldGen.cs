@@ -12,7 +12,7 @@ public class WorldGen : MonoBehaviour
         {
             var p = pos * scale * Mathf.Pow(1 / 2, i);
             var lmscale = Mathf.Pow(decay, i);
-            acc += lmscale * Mathf.PerlinNoise(p.x, p.y);
+            acc += lmscale * (Mathf.PerlinNoise(p.x, p.y)*2-1);
 
 
         }

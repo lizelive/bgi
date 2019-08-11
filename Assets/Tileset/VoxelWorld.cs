@@ -1,18 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-using System.IO.Compression;
-using UArray = UnboundArray3D<BlockState>;
 using Chunk = UnboundArray3D<BlockState>.Chunk;
 using CompressionLevel = System.IO.Compression.CompressionLevel;
-using System.Linq;
+using UArray = UnboundArray3D<BlockState>;
 
 public class VoxelWorld : MonoBehaviour
 {
-
+    public static VoxelWorld I; 
     // i hate unity
     public Dictionary<string, int> blockIds;
+
+    public Block[] blocks;
+
 
     public Dictionary<Vector3Int, ChunkRender> renders = new Dictionary<Vector3Int, ChunkRender>();
     public bool doRender = true;
@@ -43,6 +46,11 @@ public class VoxelWorld : MonoBehaviour
 
     UnboundArray3D<BlockState> backing = new UnboundArray3D<BlockState>();
 
+    public VoxelWorld()
+    {
+        I = this;
+    }
+
     Chunk Load(Vector3Int cord)
     {
 
@@ -54,7 +62,7 @@ public class VoxelWorld : MonoBehaviour
             using (var file = new GZipStream(File.OpenRead(GetChunkPath(cord)), CompressionMode.Decompress))
             {
                 chunk = formatter.Deserialize(file) as Chunk;
-                
+
             }
         else
         {
@@ -87,9 +95,17 @@ $"{cord.x}_{cord.y}_{cord.z}.bgc");
 
     }
 
+    public TextAsset blocksJson;
 
     private void Awake()
     {
+        blocks = Newtonsoft.Json.JsonConvert.DeserializeObject<Block[]>(blocksJson.text);
+
+        foreach (var block in blocks)
+        {
+            block.mesh = Default.I.buildingBlockMesh;
+        }
+
 
         backing.GetMissingChunk = Load;
     }
@@ -104,16 +120,13 @@ $"{cord.x}_{cord.y}_{cord.z}.bgc");
         {
             backing.GetChunk(item);
         }
-
-
-
-
+        
         //if (Input.GetKeyDown(KeyCode.F3))
-            foreach (var chunk in backing.Chunks.ToArray())
-            {
-                if (Camera.main.Distance(chunk.WorldPos) > viewDistance)
-                    Unload(chunk.cord);
-            }
+        foreach (var chunk in backing.Chunks.ToArray())
+        {
+            if (Camera.main.Distance(chunk.WorldPos) > viewDistance)
+                Unload(chunk.cord);
+        }
 
     }
 

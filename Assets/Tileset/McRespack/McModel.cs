@@ -6,7 +6,7 @@ namespace Mc
 {
     public class BlockStates
     {
-
+        public string name;
         // note does not have to be an array.
         public Dictionary<string, MaybeMcModelDescriptorArray> variants;
         public MulitpartCase[] multipart;

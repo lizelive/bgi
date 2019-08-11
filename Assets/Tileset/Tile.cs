@@ -4,13 +4,20 @@ using UnityEngine;
 [Serializable]
 public struct BlockState
 {
-    public short blockId;
+    public ushort blockId;
     public byte magicNumber;
     private static readonly Mesh EmptyMesh = new Mesh();
+
+
+    public Block Block => BlockRepo.Get(blockId);
+
     //public object data;
     public override string ToString()
     {
-        return $"Tile {blockId}";
+        var b = Block;
+        if (b != null)
+            return b.ToPropString(this);
+        return $"missinno {blockId} {magicNumber}";
     }
     //public Block Block => Block.Types[blocktype];
     //public Mesh Mesh => Block.mesh;
@@ -18,18 +25,30 @@ public struct BlockState
     {
         get
         {
+            if (blockId == 0)
+            {
+                return EmptyMesh;
+            }
+            var b = Block;
+            if (!(b is null))
+            {
+                if (!(b is null || b.render is null))
+                {
+                    var opts = b.render[magicNumber];
+                    if (!(opts is null))
+                        return opts.Random() ?? EmptyMesh;
+                }
+            }
+
             if (blockId == 1)
             {
                 return Default.I.models[220];
             }
-            else if (blockId > 0)
+            if (blockId > 1)
             {
                 return Default.I.models[blockId - 2];
             }
-            else
-            {
-                return EmptyMesh;
-            }
+            return Default.I.buildingBlockMesh;
         }
 
     }

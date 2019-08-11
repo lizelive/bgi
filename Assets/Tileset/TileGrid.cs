@@ -99,7 +99,7 @@ public class TileGrid : MonoBehaviour
         }
         return false;
     }
-    
+
     public bool abort;
 }
 
@@ -110,11 +110,23 @@ public partial class Player
     private bool showPreview = false;
 
     public TileGrid grid;
-
+    public bool showDebugInfo = true;
     public float buildCost = 1;
+    private Vector3Int selectedCell;
+
+    private void OnGUI()
+    {
+        if (showDebugInfo)
+        {
+            GUILayout.Label($"{selectedCell}");
+            GUILayout.Label($"{grid[selectedCell]}");
+        }
+    }
 
     void UpdateBuild()
     {
+
+        showDebugInfo ^= Input.GetKeyDown(KeyCode.F3);
         //foreach (var move in maze)
         //{
         //	Debug.DrawLine(move.Item1.x0y(), move.Item2.x0y());
@@ -128,7 +140,7 @@ public partial class Player
         buildPreview.gameObject.SetActive(showPreview);
 
         var pos = targeter.position;
-        var selectedCell = (pos / grid.gridSize - 0.1f * targeter.up).RoundToInt();
+        selectedCell = (pos / grid.gridSize - 0.1f * targeter.up).RoundToInt();
         pos += grid.gridSize / 2 * targeter.up;
         var cell = (pos / grid.gridSize).RoundToInt();
 
@@ -137,6 +149,7 @@ public partial class Player
         buildPreview.localScale = Vector3.one * grid.gridSize;
         buildPreview.position = grid.gridSize * (Vector3)selectedCell;
         var cell2d = cell;
+
 
 
         // slect logic
@@ -159,13 +172,13 @@ public partial class Player
 
 
         // build logic
-        if(InMan.ChangeBlockUp)
+        if (InMan.ChangeBlockUp)
         {
-            grid.build = new BlockState { blockId = (short) ((grid.build.blockId + 1) % Default.I.models.Count) };
+            grid.build = new BlockState { blockId = (ushort)((grid.build.blockId + 1) % Default.I.models.Count) };
         }
-        else if(InMan.ChangeBlockDown)
+        else if (InMan.ChangeBlockDown)
         {
-            grid.build = new BlockState { blockId = (short) ((grid.build.blockId - 1).ModPostive(Default.I.models.Count)) };
+            grid.build = new BlockState { blockId = (ushort)((grid.build.blockId - 1).ModPostive(Default.I.models.Count)) };
         }
 
         if (InMan.BuildMC)

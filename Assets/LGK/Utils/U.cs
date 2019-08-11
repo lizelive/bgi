@@ -99,6 +99,8 @@ public static class U
 
     public static T Random<T>(this IList<T> self)
     {
+        if (self.Count == 0)
+            return default(T);
         return self[UnityEngine.Random.Range(0, self.Count)];
     }
 

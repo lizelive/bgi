@@ -51,9 +51,11 @@ public class Default : MonoBehaviour
     }
 
     public int modelSelect = 0;
+    public VoxelWorld world;
+
     public void Update()
     {
-
+        if(models.Count > modelSelect)
         GetComponent<MeshFilter>().sharedMesh = models[modelSelect];
     }
 }

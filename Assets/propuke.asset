@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9f0031cddac3e2478f51409f9d1860b, type: 3}
+  m_Name: propuke
+  m_EditorClassIdentifier: 
+  Throw: 323
+  Attack: 324
+  Rally: 325
+  Build: 323
+  Break: 324
+  Interact: 101
+  Call: 114
+  Dismiss: 116
+  Mark: 113
+  CameraLock: 9
+  MoveUp: 119
+  MoveDown: 115
+  MoveLeft: 97
+  MoveRight: 100
+  Jump: 32
+  MoveUpAlt: 273
+  MoveDownAlt: 274
+  MoveLeftAlt: 276
+  MoveRightAlt: 275
+  BuildMC: 117
+  BreakMC: 107
+  BuildmodeMC: 106
+  CycleBlockUp: 43
+  CycleBlockDown: 45
+  TransRights: 294
