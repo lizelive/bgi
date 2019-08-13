@@ -11,6 +11,9 @@
 [Mm]emoryCaptures
 [Pp]ackages
 
+#ignore cspoj
+*.csproj
+*.sln
 
 
 # Never ignore Asset meta data
