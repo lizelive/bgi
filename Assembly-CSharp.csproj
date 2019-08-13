@@ -91,6 +91,7 @@
     <Compile Include="Assets\DecalSystem\Plugins\DecalSystem\Helpers\PolygonUtils.cs" />
     <Compile Include="Assets\DecalSystem\Plugins\DecalSystem\Helpers\TerrainUtils.cs" />
     <Compile Include="Assets\Followable.cs" />
+    <Compile Include="Assets\Hotbar.cs" />
     <Compile Include="Assets\Interactable.cs" />
     <Compile Include="Assets\InteractionToast.cs" />
     <Compile Include="Assets\Layers.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Assets\PrintControls.cs" />
     <Compile Include="Assets\Spawner.cs" />
     <Compile Include="Assets\Tileset\Block.cs" />
+    <Compile Include="Assets\Tileset\BlockRepo.cs" />
     <Compile Include="Assets\Tileset\Chunk.cs" />
     <Compile Include="Assets\Tileset\ChunkRender.cs" />
     <Compile Include="Assets\Tileset\Direction.cs" />

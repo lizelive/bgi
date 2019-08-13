@@ -19,14 +19,19 @@ public class ChunkRender : MonoBehaviour
         meshfilter = GetComponent<MeshFilter>();
     }
 
+    public static Material colored;
+
     public static ChunkRender Make(UnboundArray3D<BlockState>.Chunk chunk)
     {
         var go = new GameObject();
         go.AddComponent<MeshFilter>();
         var render =go.AddComponent<MeshRenderer>();
         var mc = go.AddComponent<MeshCollider>();
-        render.sharedMaterial = Default.I.worldAtlas;
+        var mat= Default.I.worldAtlas;
 
+        var matColored = colored??new Material(mat);
+        matColored.color = Color.green;
+        render.sharedMaterials = new Material[] { mat, matColored };
         
 
         go.name = $"ChunkRender {(Vector3Int)chunk.cord}";
@@ -52,7 +57,7 @@ public class ChunkRender : MonoBehaviour
     }
 
 
-    IEnumerable<CombineInstance> GetStuffToRender()
+    IEnumerable<CombineInstance> GetStuffToRender(int submesh = 0)
     {
         //if (chunk == null)
         //{
@@ -73,15 +78,24 @@ public class ChunkRender : MonoBehaviour
                 !neighbors.All(chunk.insideBounds.Contains) || // is an edge
                 neighbors.Any(p => chunk[p].IsAir) // has an neighbor that is air
                 
-                );
+                );       
 
 
             if (shouldShow)
-                yield return new CombineInstance()
+            {
+                var mesh = tile.Mesh;
+                for (int i = 0; i < mesh.subMeshCount; i++)
                 {
-                    mesh = tile.Mesh,
-                    transform = Matrix4x4.Translate(innerPos)
-                };
+                    if(i == submesh)
+                    yield return new CombineInstance()
+                    {
+                        mesh = mesh,
+                        transform = Matrix4x4.Translate(innerPos),
+                        subMeshIndex = i
+                    };
+                }
+
+            }
 
         }
 
@@ -93,8 +107,25 @@ public class ChunkRender : MonoBehaviour
         var mesh = new Mesh();
         mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         mesh.name = $"Voxel {chunk.cord} {Time.frameCount}";
-        var todraw = GetStuffToRender().ToArray();
-        mesh.CombineMeshes(combine: todraw);
+
+        var submeshes = Enumerable.Range(0, 2).Select(i =>
+          {
+              var m = new Mesh();
+              m.CombineMeshes(GetStuffToRender(i).ToArray());
+              
+
+              return new CombineInstance
+              {
+                  mesh = m ?? new Mesh(),
+                  transform = Matrix4x4.identity
+              };
+          }).ToArray();
+
+        mesh.CombineMeshes(submeshes, false);
+        mesh.subMeshCount = 2;
+
+        
+
         mesh.UploadMeshData(true); // not sure if this is the right call. we have so much to lose.
         meshfilter.sharedMesh = mesh;
         collider.sharedMesh = mesh;

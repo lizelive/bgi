@@ -175,15 +175,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63ccea295841457449a25200931d930c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 100
-  CurrentHealth: 100
+  MaxHealth: 10
+  CurrentHealth: 10
   HitCooldown: 1
   RegenCooldown: Infinity
   RegenSpeed: 0
   ragdoll: {fileID: 0}
   deathParticle: {fileID: 0}
-  immunities: 8
-  killHealthBonus: 0.15
+  Stagger: 0
+  StaggerDecay: 0
+  immunities: 
+  hurtBonus: 1
   team: {fileID: 11400000, guid: 9507aea42a064484094933db73196357, type: 2}
   centerOffset: {x: 0, y: 0, z: 0}
   radius: 0
@@ -204,6 +206,7 @@ MonoBehaviour:
   dropBuild: 0
   buildSpawnHeight: 10
   buildRep: 3
+  buildForSelf: 0
   cost: 0
 --- !u!1001 &439798295427284158
 PrefabInstance:
@@ -215,10 +218,6 @@ PrefabInstance:
     - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_Name
       value: Apple_1_1 (16)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
@@ -287,10 +286,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Apple_1_1 (14)
       objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.06
@@ -357,10 +352,6 @@ PrefabInstance:
     - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_Name
       value: Apple_1_1 (12)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
@@ -429,10 +420,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Apple_1_1 (13)
       objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.17990112
@@ -499,10 +486,6 @@ PrefabInstance:
     - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_Name
       value: Apple_1_1 (19)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
@@ -571,10 +554,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Apple_1_1 (18)
       objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.8622551
@@ -641,10 +620,6 @@ PrefabInstance:
     - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_Name
       value: Apple_1_1 (11)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
@@ -713,10 +688,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Apple_1_1 (10)
       objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.5256233
@@ -783,10 +754,6 @@ PrefabInstance:
     - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_Name
       value: Apple_1_1 (15)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
@@ -855,10 +822,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Apple_1_1 (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.0878487
@@ -922,10 +885,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Apple_1_1 (6)
       objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.6406517
@@ -988,10 +947,6 @@ PrefabInstance:
     - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_Name
       value: Apple_1_1 (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1068,10 +1023,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Apple_1_1 (4)
       objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.52143097
@@ -1147,10 +1098,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Apple_1_1 (8)
       objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.21811295
@@ -1222,10 +1169,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Apple_1_1
       objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.18856812
@@ -1296,10 +1239,6 @@ PrefabInstance:
     - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_Name
       value: Apple_1_1 (5)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1376,10 +1315,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Apple_1_1 (9)
       objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.6826935
@@ -1451,10 +1386,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Apple_1_1 (7)
       objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.22460938
@@ -1517,10 +1448,6 @@ PrefabInstance:
     - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_Name
       value: Apple_1_1 (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1046656170161362, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4488625856254588, guid: 040b672c2038c2d47b816ecd2d7e6855, type: 3}
       propertyPath: m_LocalPosition.x

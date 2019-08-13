@@ -18,7 +18,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2954729730242865133
 Transform:
@@ -54,8 +54,10 @@ MonoBehaviour:
   RegenSpeed: 0
   ragdoll: {fileID: 0}
   deathParticle: {fileID: 0}
-  immunities: 8
-  killHealthBonus: 0
+  Stagger: 0
+  StaggerDecay: 0
+  immunities: 
+  hurtBonus: 1
   team: {fileID: 11400000, guid: bc38b09bd345fee4b92615d8456fc2b3, type: 2}
   centerOffset: {x: 0, y: 0, z: 0}
   radius: 2
@@ -92,8 +94,8 @@ MonoBehaviour:
   team: {fileID: 11400000, guid: 9507aea42a064484094933db73196357, type: 2}
   spawns: {fileID: 8946568805673298210, guid: b33ab3ff496ebc6418972bc63f1b7fb8, type: 3}
   numToSpawn: 1
-  lastSpawned: -Infinity
-  spawnInterval: 60
+  lastSpawned: 0
+  spawnInterval: 10
   spawnCost: 1
   spawned: []
   spawnPoint: {fileID: 0}
@@ -122,6 +124,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: clonevat
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 5065c33709347cc4996fcba084986d5c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535950596441299671, guid: 5065c33709347cc4996fcba084986d5c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -3511214872798129571, guid: 5065c33709347cc4996fcba084986d5c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 3453726410435098964, guid: 5065c33709347cc4996fcba084986d5c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 5065c33709347cc4996fcba084986d5c,
         type: 3}

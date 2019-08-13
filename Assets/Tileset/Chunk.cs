@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Runtime.InteropServices;
+using System.Text;
 
 public partial class UnboundArray3D<T>
 {
@@ -50,5 +51,11 @@ public partial class UnboundArray3D<T>
 
         }
 
-	}
+        void Serialize()
+        {
+            var utf8 = new UTF8Encoding(true);
+            var e = utf8.GetEncoder();
+        }
+
+    }
 }

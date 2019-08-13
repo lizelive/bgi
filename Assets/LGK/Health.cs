@@ -15,6 +15,8 @@ public class Health : MonoBehaviour
     public float HitCooldown = 1;
     public float RegenCooldown = float.PositiveInfinity;
     public float RegenSpeed = 0;
+    public float Armor = 0;
+
     public GameObject ragdoll;
     public ParticleSystem deathParticle;
 

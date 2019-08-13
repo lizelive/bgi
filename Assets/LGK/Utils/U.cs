@@ -175,13 +175,13 @@ public static class U
     public static int Bits(this int i, int start, int size)
     {
 
-        var mask = 1 << (size + 1) - 1;
+        var mask = (1 << (size)) - 1;
         return (i >> start) & mask;
     }
 
     public static int Bits(this int i, int start, int size, int value)
     {
-        var mask = 1 << (size + 1) - 1;
+        var mask = (1 << (size)) - 1;
         value &= mask;
         i &= ~(mask << start);
         i |= value << start;

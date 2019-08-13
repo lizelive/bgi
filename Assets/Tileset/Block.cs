@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -36,6 +35,8 @@ public class Block
 
     public Prop GetProp(string name)
     {
+        if (props == null)
+            return null;
         return props.FirstOrDefault(x => x.name == name);
 
     }
@@ -62,7 +63,8 @@ public class Block
     {
         var t = GetProp(tag);
         if (t == null)
-            throw new ArgumentOutOfRangeException("Tag not found");
+            return state;
+            //throw new ArgumentOutOfRangeException("Tag not found");
 
         byte value;
 
@@ -176,6 +178,7 @@ public class Block
 
     public Mc.BlockStates blockStates;
     public Mesh[][] render;
+    public Matrix4x4 display;
 
     public void RecomputeAssets(McRespack respack)
     {
@@ -193,43 +196,4 @@ interface IBlockData
     byte AsMagic(byte magic);
     void FromString(string data);
     string AsString();
-}
-
-public class BlockRepo
-{
-    public static Dictionary<string, Block> blockById;
-    public static Block[] blocks;
-
-    static BlockRepo()
-    {
-
-        //TODO don't do this. please do literly anything else.
-        var path = @"C:\Users\Lize\source\bgi\Assets\Tileset\blocks.json";
-        var json = System.IO.File.ReadAllText(path);
-        blocks = Newtonsoft.Json.JsonConvert.DeserializeObject<Block[]>(json);
-        for (ushort i = 0; i < blocks.Length; i++)
-        {
-            var block = blocks[i];
-            block.idnum = i;
-        }
-
-        blockById = blocks.ToDictionary(x => x.id, x => x);
-
-    }
-
-    public static Block Get(string id)
-    {
-        if (blockById.TryGetValue(id, out var block))
-        {
-            return block;
-        }
-        return null;
-    }
-
-    public static Block Get(int id)
-    {
-        if (id < blocks.Length)
-            return blocks[id];
-        return null;
-    }
 }

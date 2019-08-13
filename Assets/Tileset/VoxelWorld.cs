@@ -82,14 +82,25 @@ public class VoxelWorld : MonoBehaviour
         return chunk;
     }
 
+    public bool save = true;
+
     string GetChunkPath(Vector3Int cord) => Path.Combine(
 Application.persistentDataPath,
+"saves",
+        "test1"
+,
 $"{cord.x}_{cord.y}_{cord.z}.bgc");
 
     void SaveChunk(Chunk chunk)
     {
+
+        if (!save)
+            return;
+        var path = GetChunkPath(chunk.cord);
         print("save to " + GetChunkPath(chunk.cord));
-        using (var file = new GZipStream(File.OpenWrite(GetChunkPath(chunk.cord)), FileCompressionLevel))
+        var saveDir = Path.GetDirectoryName(path);
+        Directory.CreateDirectory(saveDir); 
+        using (var file = new GZipStream(File.OpenWrite(path), FileCompressionLevel))
             formatter.Serialize(file, chunk);
 
 
@@ -99,14 +110,6 @@ $"{cord.x}_{cord.y}_{cord.z}.bgc");
 
     private void Awake()
     {
-        blocks = Newtonsoft.Json.JsonConvert.DeserializeObject<Block[]>(blocksJson.text);
-
-        foreach (var block in blocks)
-        {
-            block.mesh = Default.I.buildingBlockMesh;
-        }
-
-
         backing.GetMissingChunk = Load;
     }
     // Update is called once per frame

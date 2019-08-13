@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using System.Collections.Generic;
 
 public static class McModelExtensions
 {
@@ -12,19 +13,33 @@ public static class McModelExtensions
 
         var mesh = new Mesh();
 
+        if(quads.Length==0)
+        {
+            return mesh;
+        }
+
         var indices = new int[quads.Length * 4];
         var verts = new Vector3[quads.Length * 4];
         var uv = new Vector2[quads.Length * 4];
+
+        var numSubmeshes = quads.Max(x => x.submesh) + 1;
+        List<int>[] indicess = new List<int>[numSubmeshes];
+        for (int i = 0; i < indicess.Length; i++)
+        {
+            indicess[i] = new List<int>();
+        }
+        mesh.subMeshCount = indicess.Length;
 
         for (int i = 0; i < quads.Length; i++)
         {
             var b = i * 4;
             var q = quads[i];
 
-            indices[b + 0] = b + 0;
-            indices[b + 1] = b + 1;
-            indices[b + 2] = b + 2;
-            indices[b + 3] = b + 3;
+
+            indicess[q.submesh].Add(b + 0);
+            indicess[q.submesh].Add(b + 1);
+            indicess[q.submesh].Add(b + 2);
+            indicess[q.submesh].Add(b + 3);
 
             verts[b + 0] = q.v1;
             verts[b + 1] = q.v2;
@@ -40,7 +55,11 @@ public static class McModelExtensions
         mesh.vertices = verts;
         mesh.uv = uv;
 
-        mesh.SetIndices(indices, MeshTopology.Quads, 0);
+
+        for (int i = 0; i < indicess.Length; i++)
+        {
+            mesh.SetIndices(indicess[i].ToArray(), MeshTopology.Quads, i);
+        }
 
         //mesh.name = modelFile.FullName;
 
@@ -146,6 +165,7 @@ public static class McModelExtensions
             default:
                 break;
         }
+
         return o;
     }
 
@@ -179,13 +199,9 @@ public static class McModelExtensions
 
         texturePath = texturePath ?? "";
 
-        if (pack.textures.TryGetValue(texturePath, out texture))
+        if (!pack.textures.TryGetValue(texturePath, out texture))
         {
-
-        }
-        else
-        {
-            //Debug.LogWarning($"Missing texture {mface.Texture}");
+            Debug.LogWarning($"Missing texture {mface.Texture} {texturePath}");
         }
 
         var (uv1, uv2) = mface.Uv.ToVec2s();
@@ -202,6 +218,8 @@ public static class McModelExtensions
         bounds.Encapsulate(to);
 
         var o = bounds.GetFace(face);
+
+        o.submesh = mface.TintIndex == null ? 0 : 1;
 
         o.v1 = rot.MultiplyPoint(o.v1);
         o.v2 = rot.MultiplyPoint(o.v2);

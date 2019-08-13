@@ -123,6 +123,22 @@ public partial class Player
         }
     }
 
+    private void LateUpdate()
+    {
+        DrawCurrentBlockUI();
+    }
+
+    void DrawCurrentBlockUI()
+    {
+        var mesh = grid.build.Mesh ?? Default.I.buildingBlockMesh;
+        var cam = Camera.main;
+        var pos = cam.ViewportToWorldPoint(new Vector3(.9f, .9f, 3));
+        var drawmat = Matrix4x4.TRS(pos, cam.transform.rotation, Vector3.one/3);
+        //drawmat = Matrix4x4.identity;
+        var mat = Default.I.worldAtlas;
+        Graphics.DrawMesh(mesh, drawmat, mat, 5);
+    }
+
     void UpdateBuild()
     {
 
@@ -186,6 +202,8 @@ public partial class Player
             if (grid.Build(cell))
                 Team.Balance -= buildCost;
         }
+
+        
 
     }
 }

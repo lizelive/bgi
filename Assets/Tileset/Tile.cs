@@ -40,14 +40,14 @@ public struct BlockState
                 }
             }
 
-            if (blockId == 1)
-            {
-                return Default.I.models[220];
-            }
-            if (blockId > 1)
-            {
-                return Default.I.models[blockId - 2];
-            }
+            //if (blockId == 1)
+            //{
+            //    return Default.I.models[220];
+            //}
+            //if (blockId > 1)
+            //{
+            //    return Default.I.models[blockId - 2];
+            //}
             return Default.I.buildingBlockMesh;
         }
 

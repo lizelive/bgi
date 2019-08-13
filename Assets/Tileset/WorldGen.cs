@@ -12,7 +12,7 @@ public class WorldGen : MonoBehaviour
         {
             var p = pos * scale * Mathf.Pow(1 / 2, i);
             var lmscale = Mathf.Pow(decay, i);
-            acc += lmscale * (Mathf.PerlinNoise(p.x, p.y)*2-1);
+            acc += lmscale * (Mathf.PerlinNoise(p.x, p.y) * 2 - 1);
 
 
         }
@@ -42,17 +42,26 @@ public class WorldGen : MonoBehaviour
             }
         }
 
+        var stone = new BlockState { blockId = 1 };
+        var dirt = new BlockState { blockId = 3 };
+        var grass_block = new BlockState { blockId = 2 };
 
         foreach (var pos in chunk.insideBounds.allPositionsWithin)
         {
             var worldPos = pos + chunk.WorldPos;
             //var mapHeight = height * OctaveNoise2d(worldPos.xz(), scale, decay, levels);
-            var mapHeight = heights.Index(pos.xz());
+            var mapHeight = (int)heights.Index(pos.xz());
+            var y = (int)worldPos.y;
 
-            if(worldPos.y < mapHeight)
-            chunk[pos] = new BlockState { blockId = 1 };
+            if (worldPos.y < mapHeight)
+            {
+                chunk[pos] = dirt;
+            }
 
-
+            if (worldPos.y == mapHeight)
+            {
+                chunk[pos] = grass_block;
+            }
         }
     }
 }

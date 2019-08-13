@@ -1,0 +1,219 @@
+fileFormatVersion: 2
+guid: 470e4b9236a9d154e8d96fd1c50fb9a5
+ModelImporter:
+  serializedVersion: 25
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: Lusca(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: c_006a_hair
+      parentName: Lusca(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: root
+      parentName: c_006a_hair
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: body
+      parentName: root
+      position: {x: -1.2325952e-32, y: 0.4, z: 0}
+      rotation: {x: 0.000000022197748, y: 0.9999897, z: 0.004545808, w: 0.00000007559959}
+      scale: {x: 1, y: 0.99999976, z: 1}
+    - name: head
+      parentName: body
+      position: {x: 3.8438056e-10, y: 0.2799885, z: 0.0025456264}
+      rotation: {x: 0.004545807, y: 0.00000003178618, z: -5.4190297e-10, w: 0.9999897}
+      scale: {x: 1, y: 0.99999994, z: 0.99999994}
+    - name: head_end
+      parentName: head
+      position: {x: -0, y: 0.21989334, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Larm
+      parentName: body
+      position: {x: 0.1310878, y: 0.1790658, z: 0.0016280276}
+      rotation: {x: 0.0032142876, y: 0.0032143944, z: -0.7070995, w: 0.70709944}
+      scale: {x: 1, y: 1, z: 0.99999994}
+    - name: Larm.001
+      parentName: Larm
+      position: {x: -1.4815926e-12, y: 0.1700021, z: 1.0269563e-15}
+      rotation: {x: 0.003928391, y: 0.0003603725, z: 0.0036556637, w: 0.9999856}
+      scale: {x: 1, y: 0.9999999, z: 1}
+    - name: Lhand
+      parentName: Larm.001
+      position: {x: -0.0000000473907, y: 0.11284156, z: -5.820766e-11}
+      rotation: {x: 0.091145396, y: 0.0067800623, z: -0.012944896, w: 0.9957304}
+      scale: {x: 0.9999999, y: 0.9999999, z: 0.99999994}
+    - name: L_itemhook
+      parentName: Lhand
+      position: {x: 0.029999968, y: -0.29856277, z: -0.000000007450581}
+      rotation: {x: -0.7071067, y: 0.7071068, z: -0.000000049876274, w: 0.00000005689388}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: Lhand_end
+      parentName: Lhand
+      position: {x: -0, y: 0.06644155, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Lleg
+      parentName: body
+      position: {x: 0.096, y: -0.13437675, z: -0.0031784102}
+      rotation: {x: 0.000000075548336, y: -0.00454174, z: 0.9999897, w: 0.000000075841804}
+      scale: {x: 1, y: 0.99999976, z: 0.9982145}
+    - name: Lleg.001
+      parentName: Lleg
+      position: {x: 0.0000000057405765, y: 0.13000004, z: -4.7302242e-11}
+      rotation: {x: -0.0045218873, y: 0.00000013462896, z: -0.0017660358, w: 0.99998826}
+      scale: {x: 0.99999994, y: 1, z: 0.99999994}
+    - name: Lfoot
+      parentName: Lleg.001
+      position: {x: 1.70985e-10, y: 0.121783994, z: 1.15960574e-10}
+      rotation: {x: -0.68627995, y: 0.00045694402, z: -0.044305485, w: 0.72598666}
+      scale: {x: 0.99999994, y: 0.99999994, z: 1.0000001}
+    - name: Lfoot_end
+      parentName: Lfoot
+      position: {x: -0, y: 0.089847505, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Rarm
+      parentName: body
+      position: {x: -0.1209122, y: 0.1790658, z: 0.0016280657}
+      rotation: {x: 0.0032144878, y: -0.0032143807, z: 0.7070995, w: 0.70709944}
+      scale: {x: 1, y: 1, z: 0.99999994}
+    - name: Rarm.001
+      parentName: Rarm
+      position: {x: -1.4316326e-12, y: 0.17000203, z: 1.3877788e-17}
+      rotation: {x: -0.02855132, y: 0.0024701145, z: 0.014961576, w: 0.9994773}
+      scale: {x: 1, y: 0.9999999, z: 0.99999994}
+    - name: Rhand
+      parentName: Rarm.001
+      position: {x: -0.000000047522917, y: 0.09879774, z: -4.656613e-10}
+      rotation: {x: -0.0539957, y: 0.001922809, z: -0.010444964, w: 0.9984847}
+      scale: {x: 0.99999994, y: 1, z: 1}
+    - name: R_itemhook
+      parentName: Rhand
+      position: {x: -0.030000046, y: -0.28646314, z: 0}
+      rotation: {x: 0.0000000016515063, y: 0.0000000017968491, z: 0.7071068, w: 0.7071067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Rhand_end
+      parentName: Rhand
+      position: {x: -0, y: 0.07854092, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Rleg
+      parentName: body
+      position: {x: -0.096, y: -0.13437673, z: -0.003178381}
+      rotation: {x: 0.000000119004675, y: -0.0045417445, z: 0.9999897, w: 0.000000044252335}
+      scale: {x: 1, y: 0.99999976, z: 0.9982158}
+    - name: Rleg.001
+      parentName: Rleg
+      position: {x: 0.0000000011652672, y: 0.13000004, z: -4.950031e-11}
+      rotation: {x: -0.000047602098, y: -0.000047496607, z: -0.0000957208, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Rfoot
+      parentName: Rleg.001
+      position: {x: 5.215526e-10, y: 0.13025738, z: -1.7411139e-10}
+      rotation: {x: -0.71632606, y: 0.08436043, z: -0.12394555, w: 0.6814674}
+      scale: {x: 0.99999994, y: 1, z: 1}
+    - name: Rfoot_end
+      parentName: Rfoot
+      position: {x: -0, y: 0.08635372, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: hair
+      parentName: Lusca(Clone)
+      position: {x: -0, y: 1.0781187e-30, z: -6.617445e-24}
+      rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -91,9 +91,9 @@ namespace Mc
         public Vector3 Origin => origin.ToVec3() / 16 - Vector3.one / 2;
 
         public Matrix4x4 matrix =>
-            Matrix4x4.Translate(-Origin)
+            Matrix4x4.Translate(Origin)
             * Matrix4x4.Rotate(Quaternion.AngleAxis(angle, AxisVec))
-            * Matrix4x4.Translate(Origin);
+            * Matrix4x4.Translate(-Origin);
     }
     [Serializable]
     public partial class Transform
@@ -143,6 +143,7 @@ namespace Mc
         public float[] Uv;
         public string Texture;
         public string Cullface;
+        public int? TintIndex;
     }
 
 }

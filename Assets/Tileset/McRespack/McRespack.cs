@@ -113,14 +113,22 @@ public class McRespack
                 }
             }
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 5; i++)
             {
                 foreach (var model in models.Values)
                 {
                     if (model.parent != null)
                     {
                         if (models.TryGetValue(model.parent, out var mom))
+                        {
                             model.Parent(mom);
+                            if (mom.textures != null && model.textures != null)
+                                foreach (var att in mom.textures.Keys.Except(model.textures.Keys).ToArray())
+                                {
+                                    model.textures[att] = mom.textures[att];
+                                }
+                        }
+
                     }
                 }
             }
@@ -140,23 +148,64 @@ public class McRespack
             {
                 var block = BlockRepo.Get(state.name);
 
-                if(block == null)
+                if (block == null)
                 {
                     continue;
                 }
 
+                block.blockStates = state;
+                block.display = GetDisplayMatrix(block);
                 var meshes = new Mesh[256][];
 
-                foreach(var vars in state.variants)
+                if (state.variants != null && state.variants.Any())
                 {
-                    var s = block.ParseState(vars.Key);
+                    foreach (var vars in state.variants)
+                    {
+                        var s = block.ParseState(vars.Key);
 
-                    var magicNumber = s.magicNumber;
-                    meshes[magicNumber] = vars.Value.value.Select(x => models[x.model].GetMesh(this)).Where(U.Is).ToArray();
+                        var magicNumber = s.magicNumber;
+                        meshes[magicNumber] = vars.Value.value.Select(x => models[x.model].GetMesh(this)).Where(U.Is).ToArray();
+                    }
+                }
+                else if (state.multipart != null)
+                {
+                    foreach (var mp in state.multipart)
+                    {
+
+                    }
+
                 }
                 block.render = meshes;
 
             }
+        }
+    }
+
+    private Matrix4x4 GetDisplayMatrix(Block block)
+    {
+        return Matrix4x4.identity;
+        // TODO : Craig finish function and remeber block.blockStates is nullable
+
+        //empty case - I don't know how you're setting the defaults and I'm agnostic of it. Yaaaaay!
+        if ((block.blockStates.variants == null && block.blockStates.variants.Count == 0) &&
+            (block.blockStates.multipart == null && block.blockStates.multipart.Length == 0))
+        {
+            return Matrix4x4.identity;
+        }
+        //multipart case
+        if (block.blockStates.variants == null || block.blockStates.variants.Count == 0)
+        {
+            return Matrix4x4.identity;
+        }
+        //standard variant case
+        else if (block.blockStates.variants.TryGetValue("", out var model))
+        {
+            return Matrix4x4.identity;
+        }
+        //pick-a-variant case
+        else
+        {
+            return Matrix4x4.identity;
         }
     }
 
