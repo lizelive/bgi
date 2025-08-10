@@ -1,35 +1,35 @@
-# Rambo
+# Magnus Drake
 
 ## Overview
-Rambo is a battle-hardened warrior with unmatched combat skills. He thrives in chaos and is a one-man army, capable of taking down entire battalions.
+Magnus Drake is a ruthless enforcer and mercenary leader who operates as a tool of powerful governments and corporations. Tasked with securing resources and suppressing dissent, he uses his tactical expertise to maintain control over regions rich in oil and other valuable commodities, often at the expense of local populations.
 
 ## Traits
-- **Alignment**: Chaotic Good
-- **Abilities**: Expert in guerrilla warfare, mastery of weapons, survival skills
-- **Appearance**: Muscular build, bandana, armed to the teeth
+- **Alignment**: Lawful Evil
+- **Abilities**: Strategic planning, corporate manipulation, military expertise
+- **Appearance**: A sharp-dressed figure with a commanding presence, often seen with a cigar and a map of his next conquest
 
 ## Backstory
-A veteran of countless wars, Rambo fights for justice and to protect the innocent. His past is filled with loss and betrayal, fueling his relentless drive.
+Born into a wealthy family, Magnus Drake inherited a small oil company and turned it into a global powerhouse through aggressive tactics and ruthless efficiency. His ventures have left a trail of environmental destruction and displaced communities, but his focus remains on profit and power.
 
 ## Relationships
-- **Allies**: Rebels, freedom fighters
-- **Enemies**: Oppressive regimes, warlords
+- **Allies**: Corporate executives, mercenaries, corrupt officials
+- **Enemies**: Environmental activists, local resistance groups, rival corporations
 
 ## Strengths
-- Exceptional combat skills and mastery of various weapons.
-- Highly adaptable and resourceful in any environment.
-- Inspires allies with his bravery and determination.
+- Vast financial resources to fund his operations.
+- Highly skilled in military strategy and corporate espionage.
+- Commands a private army of mercenaries and advanced technology.
 
 ## Weaknesses
-- Lone wolf tendencies can isolate him from support.
-- Limited defense against magical or supernatural threats.
-- Emotional trauma can cloud his judgment in critical moments.
-
-## Gameplay Role
-Rambo is a relentless force on the battlefield, using his combat prowess to inspire allies and decimate enemies.
+- Over-reliance on his wealth and resources.
+- Public backlash and resistance from affected communities.
+- Vulnerable to exposure of his unethical practices.
 
 ## Following
-Rambo builds his following through his actions and reputation. His bravery and relentless fight for justice inspire others to join his cause. Rebels and freedom fighters see him as a symbol of hope and resilience.
+Magnus Drake builds his following by offering lucrative deals and promises of wealth to those who align with his interests. His charisma and ability to deliver results make him a magnet for ambitious individuals and opportunists.
 
 ## Source of Glamor
-Rambo's glamor comes from his rugged charisma and battlefield prowess. His ability to overcome impossible odds and his unwavering determination make him a legendary figure among his followers.
+Drake's glamor comes from his aura of power and success. His luxurious lifestyle, combined with his ability to command respect and fear, makes him an imposing figure in both corporate and military circles.
+
+## Gameplay Role
+Magnus Drake serves as a cunning and resourceful antagonist, using his wealth and influence to outmaneuver players. His operations challenge players to confront the consequences of unchecked greed and exploitation.
