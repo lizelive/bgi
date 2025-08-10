@@ -60,6 +60,45 @@ export default function App() {
     setState(s => ({ ...s, log: [msg, ...s.log].slice(0, 40) }))
   }
 
+  function scavenge() {
+    setState(s => {
+      if (s.ops && s.ops.scavengeCD > 0) return s
+      const followers = Math.max(1, Math.floor(s.resources.followers))
+      const haul = Math.round(5 + followers * 0.8 + (s.bars.security * 0.1))
+      const mishapChance = Math.max(0, 0.2 - s.bars.security * 0.001 - (s.traits.technocracy * 0.02))
+      let newBars = { ...s.bars }
+      let msg = `Scavenged +${haul} materials.`
+      if (Math.random() < mishapChance) {
+        newBars.security = Math.max(0, newBars.security - 2)
+        newBars.fear = Math.min(100, newBars.fear + 1)
+        msg += ' Minor mishap (−2 Security, +1 Fear).'
+      }
+      return {
+        ...s,
+        resources: { ...s.resources, materials: s.resources.materials + haul },
+        bars: newBars,
+        ops: { ...(s.ops || { scavengeCD: 0, tradeCD: 0 }), scavengeCD: 20 },
+        log: [msg, ...s.log].slice(0, 40),
+      }
+    })
+  }
+
+  function trade() {
+    setState(s => {
+      if (s.ops && s.ops.tradeCD > 0) return s
+      const spend = Math.min(s.resources.influence, 10 + s.traits.charisma * 5)
+      const rate = 1.6 + s.traits.charisma * 0.2 + s.bars.status * 0.01
+      const gained = Math.round(spend * rate)
+      if (spend <= 0.5) return s
+      return {
+        ...s,
+        resources: { ...s.resources, influence: s.resources.influence - spend, materials: s.resources.materials + gained },
+        ops: { ...(s.ops || { scavengeCD: 0, tradeCD: 0 }), tradeCD: 12 },
+        log: [`Traded ${spend.toFixed(0)} Influence for +${gained} Materials.`, ...s.log].slice(0, 40),
+      }
+    })
+  }
+
   return (
     <div className="app">
       <header className="panel">
@@ -94,6 +133,14 @@ export default function App() {
               <span>Loyalty Index</span>
               <span className="badge">{fmt(loyalty, 0)}%</span>
             </div>
+            <div className="row" style={{ gap: 8 }}>
+              <button className="button primary" onClick={scavenge} disabled={!!state.ops && state.ops.scavengeCD > 0}>
+                Scavenge{state.ops && state.ops.scavengeCD > 0 ? ` (${state.ops.scavengeCD.toFixed(0)}s)` : ''}
+              </button>
+              <button className="button" onClick={trade} disabled={!!state.ops && state.ops.tradeCD > 0}>
+                Trade{state.ops && state.ops.tradeCD > 0 ? ` (${state.ops.tradeCD.toFixed(0)}s)` : ''}
+              </button>
+            </div>
           </div>
         </Panel>
 
@@ -124,6 +171,16 @@ export default function App() {
                       <span className="muted small">x{count}</span>
                     </div>
                     <span className="muted small">{b.description}</span>
+                    {(b.pros && b.pros.length > 0) || (b.cons && b.cons.length > 0) ? (
+                      <div className="col small" style={{ gap: 2, marginTop: 2 }}>
+                        {b.pros?.map((p, i) => (
+                          <span key={`pro-${i}`} style={{ color: '#22c55e' }}>+ {p}</span>
+                        ))}
+                        {b.cons?.map((c, i) => (
+                          <span key={`con-${i}`} style={{ color: '#ef4444' }}>- {c}</span>
+                        ))}
+                      </div>
+                    ) : null}
                     <span className="small">Cost: {b.cost} materials</span>
                   </div>
                   <div className="col" style={{ gap: 6, minWidth: 120 }}>

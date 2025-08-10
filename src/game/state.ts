@@ -29,6 +29,7 @@ export function makeInitialState(): GameState {
     traits: { ...initialTraits },
     resources: { influence: 10, materials: 50, followers: 5 },
     buildings: {},
+  ops: { scavengeCD: 0, tradeCD: 0 },
     log: [
       'A whisper becomes a rumor. A rumor becomes a movement.',
       'You are the Brand. The world is the market.',

@@ -31,6 +31,8 @@ export type BuildingType = {
   cost: number
   effects: Partial<Bars> // per-tick percentage deltas
   color?: string
+  pros?: string[]
+  cons?: string[]
 }
 
 export type GameState = {
@@ -41,5 +43,9 @@ export type GameState = {
   traits: LeaderTraits
   resources: Resources
   buildings: Record<string, number>
+  ops?: {
+    scavengeCD: number
+    tradeCD: number
+  }
   log: string[]
 }
