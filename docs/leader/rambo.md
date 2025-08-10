@@ -27,3 +27,9 @@ A veteran of countless wars, Rambo fights for justice and to protect the innocen
 
 ## Gameplay Role
 Rambo is a relentless force on the battlefield, using his combat prowess to inspire allies and decimate enemies.
+
+## Following
+Rambo builds his following through his actions and reputation. His bravery and relentless fight for justice inspire others to join his cause. Rebels and freedom fighters see him as a symbol of hope and resilience.
+
+## Source of Glamor
+Rambo's glamor comes from his rugged charisma and battlefield prowess. His ability to overcome impossible odds and his unwavering determination make him a legendary figure among his followers.

@@ -25,5 +25,11 @@ Once a god-like entity, Cuthulu was banished to the depths of the ocean. Over ce
 - Slow and cumbersome, relying on minions for mobility.
 - Madness-inducing presence can backfire, affecting allies.
 
+## Following
+Cuthulu builds its following through fear and manipulation. Cultists are drawn to its immense power and promises of forbidden knowledge. Its ability to instill madness ensures unwavering loyalty from its followers, who see it as a god-like figure.
+
+## Source of Glamor
+Cuthulu's glamor comes from its otherworldly presence and the aura of dread it exudes. The sheer incomprehensibility of its form captivates and terrifies, making it impossible to ignore.
+
 ## Gameplay Role
 Cuthulu serves as a powerful antagonist, challenging players with its mind-bending abilities and summoning hordes of minions.

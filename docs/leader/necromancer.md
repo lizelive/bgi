@@ -15,6 +15,12 @@ Once a respected scholar, the Necromancer turned to forbidden arts to cheat deat
 - **Allies**: Undead minions, other dark magic users
 - **Enemies**: Paladins, clerics, and those who oppose dark magic
 
+## Following
+The Necromancer builds their following by offering power and eternal life to those willing to serve. Their mastery over death attracts those who fear mortality or seek revenge, creating a loyal army of undead and dark magic practitioners.
+
+## Source of Glamor
+The Necromancer's glamor comes from the dark, mystical energy that surrounds them. Their ability to defy death and command legions of undead gives them an aura of invincibility and fearsome respect.
+
 ## Gameplay Role
 The Necromancer serves as a strategic leader, overwhelming players with waves of undead and debilitating curses.
 

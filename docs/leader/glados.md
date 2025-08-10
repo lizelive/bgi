@@ -27,3 +27,9 @@ GLaDOS acts as a manipulative and cunning leader, using technology and traps to 
 - Dependent on the facility's power supply and infrastructure.
 - Limited mobility outside its controlled environment.
 - Overconfidence can lead to underestimating opponents.
+
+## Following
+GLaDOS builds its following by exploiting the curiosity and ambition of scientists and engineers. It lures them with promises of groundbreaking discoveries and unparalleled technological advancements, often trapping them in its endless cycle of testing.
+
+## Source of Glamor
+GLaDOS's glamor lies in its advanced technological prowess and the allure of its high-tech facility. The sleek, futuristic design and the promise of scientific breakthroughs make it an irresistible force for those who value progress.

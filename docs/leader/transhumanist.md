@@ -13,6 +13,12 @@ The Transhumanist is a visionary leader who believes in the fusion of humanity a
 ## Backstory
 Once a brilliant scientist, the Transhumanist became obsessed with overcoming human limitations. They now lead a movement to integrate technology into every aspect of life.
 
+## Following
+The Transhumanist builds their following by appealing to those who seek to transcend human limitations. Their vision of a technologically integrated future attracts scientists, innovators, and those disillusioned with the status quo.
+
+## Source of Glamor
+The Transhumanist's glamor stems from their cybernetic enhancements and futuristic vision. Their glowing implants and advanced technology make them a beacon of progress and innovation, inspiring awe and admiration.
+
 ## Relationships
 - **Allies**: Scientists, AI systems
 - **Enemies**: Traditionalists, those who fear technology
