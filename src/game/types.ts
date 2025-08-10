@@ -33,6 +33,8 @@ export type BuildingType = {
   color?: string
   pros?: string[]
   cons?: string[]
+  tags?: string[]
+  upkeep?: { materialsPerSec?: number; influencePerSec?: number }
 }
 
 export type GameState = {
@@ -47,5 +49,14 @@ export type GameState = {
     scavengeCD: number
     tradeCD: number
   }
+  doctrine: Doctrine
   log: string[]
+}
+
+export type Archetype = 'charisma' | 'terror' | 'technocracy' | 'mystic'
+
+export type Doctrine = {
+  archetype: Archetype | null
+  points: number
+  cooldown: number // seconds until you can earn/spend again
 }

@@ -4,6 +4,7 @@ import ProgressBar from './components/ProgressBar'
 import { BUILDINGS, computeTick } from './game/systems'
 import { GameState } from './game/types'
 import { loadState, makeInitialState, saveState } from './game/state'
+import { MusicEngine } from './audio/music'
 
 function fmt(n: number, digits = 0) {
   const v = n < 1000 ? n : Math.round(n)
@@ -14,6 +15,10 @@ export default function App() {
   const [state, setState] = useState<GameState>(() => loadState() || makeInitialState())
   const [last, setLast] = useState<number>(() => performance.now())
   const raf = useRef(0)
+  const musicRef = useRef<MusicEngine | null>(null)
+  const [audioOn, setAudioOn] = useState(false)
+  const [muted, setMuted] = useState(false)
+  const [volume, setVolume] = useState(0.6)
 
   // main loop
   useEffect(() => {
@@ -32,6 +37,16 @@ export default function App() {
     const id = setInterval(() => saveState(state), 2000)
     return () => clearInterval(id)
   }, [state])
+
+  // music engine
+  useEffect(() => {
+    if (!audioOn) return
+    if (!musicRef.current) musicRef.current = new MusicEngine()
+    musicRef.current.start()
+    musicRef.current.setMuted(muted)
+    musicRef.current.setVolume(volume)
+    musicRef.current.update(state)
+  }, [audioOn, muted, volume, state])
 
   const loyalty = useMemo(() => (state.bars.faith + state.bars.ecstasy + state.bars.security + state.bars.truth + state.bars.identity + state.bars.gain - state.bars.fear) / 5.0, [state.bars])
 
@@ -111,6 +126,15 @@ export default function App() {
           <button className="button" onClick={() => setState(s => ({...s, running: !s.running}))}>
             {state.running ? 'Pause' : 'Resume'}
           </button>
+          <span className="badge">Audio</span>
+          {!audioOn ? (
+            <button className="button primary" onClick={() => setAudioOn(true)}>Enable</button>
+          ) : (
+            <>
+              <button className="button" onClick={() => setMuted(m => !m)}>{muted ? 'Unmute' : 'Mute'}</button>
+              <input type="range" min={0} max={1} step={0.01} value={volume} onChange={e => setVolume(Number(e.target.value))} />
+            </>
+          )}
         </div>
       </header>
 
@@ -196,20 +220,47 @@ export default function App() {
 
       <aside className="right">
         <Panel title="Doctrine & Traits">
-          <div className="col">
-            <Slider label="Rigidity" value={state.traits.rigidity} min={0} max={100} step={1}
-              onChange={v => setState(s => ({ ...s, traits: { ...s.traits, rigidity: v }}))} />
-            <Slider label="Charisma" value={state.traits.charisma} min={0} max={5} step={1}
-              onChange={v => setState(s => ({ ...s, traits: { ...s.traits, charisma: v }}))} />
-            <Slider label="Terror" value={state.traits.terror} min={0} max={5} step={1}
-              onChange={v => setState(s => ({ ...s, traits: { ...s.traits, terror: v }}))} />
-            <Slider label="Temptation" value={state.traits.temptation} min={0} max={5} step={1}
-              onChange={v => setState(s => ({ ...s, traits: { ...s.traits, temptation: v }}))} />
-            <Slider label="Mysticism" value={state.traits.mysticism} min={0} max={5} step={1}
-              onChange={v => setState(s => ({ ...s, traits: { ...s.traits, mysticism: v }}))} />
-            <Slider label="Technocracy" value={state.traits.technocracy} min={0} max={5} step={1}
-              onChange={v => setState(s => ({ ...s, traits: { ...s.traits, technocracy: v }}))} />
-          </div>
+          {state.doctrine.archetype === null ? (
+            <div className="col">
+              <span className="small muted">Choose an archetype. This locks your style and grants unique synergies. You’ll earn points to tweak traits, but you can’t freely swap archetypes.</span>
+              <div className="grid">
+                {[
+                  { key: 'charisma', name: 'Charisma', desc: 'Media and ritual flourish. Status rises.' },
+                  { key: 'terror', name: 'Terror', desc: 'Order through fear. Mishaps less likely.' },
+                  { key: 'technocracy', name: 'Technocracy', desc: 'Industry and truth hum. Identity thins.' },
+                  { key: 'mystic', name: 'Mystic', desc: 'Ritual and ambiguity sway minds.' },
+                ].map(a => (
+                  <div key={a.key} className="listItem">
+                    <div className="col">
+                      <strong>{a.name}</strong>
+                      <span className="small muted">{a.desc}</span>
+                    </div>
+                    <button className="button primary" onClick={() => setState(s => ({ ...s, doctrine: { ...s.doctrine, archetype: a.key as any } }))}>Select</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="col">
+              <div className="row" style={{ justifyContent: 'space-between' }}>
+                <span className="badge">Archetype: {state.doctrine.archetype}</span>
+                <span className="badge">Points: {state.doctrine.points}</span>
+              </div>
+              <span className="small muted">Spend points to nudge traits. Points accrue slowly over time; respec is limited.</span>
+              <TraitSpend label="Rigidity" value={state.traits.rigidity} min={0} max={100} step={5}
+                canChange={(delta) => state.doctrine.points >= 1 && !(delta < 0 && state.traits.rigidity <= 0)}
+                onChange={(delta) => setState(s => ({ ...s, traits: { ...s.traits, rigidity: clampNum(s.traits.rigidity + delta, 0, 100) }, doctrine: { ...s.doctrine, points: s.doctrine.points - 1 } }))} />
+              {(
+                [
+                  ['charisma','Charisma'], ['terror','Terror'], ['temptation','Temptation'], ['mysticism','Mysticism'], ['technocracy','Technocracy']
+                ] as const
+              ).map(([k, label]) => (
+                <TraitSpend key={k} label={label} value={(state.traits as any)[k]} min={0} max={5} step={1}
+                  canChange={(delta) => state.doctrine.points >= 1 && !((state.traits as any)[k] + delta < 0)}
+                  onChange={(delta) => setState(s => ({ ...s, traits: { ...s.traits, [k]: clampNum((s.traits as any)[k] + delta, 0, 5) as any }, doctrine: { ...s.doctrine, points: s.doctrine.points - 1 } }))} />
+              ))}
+            </div>
+          )}
         </Panel>
 
         <Panel title="Event Log">
@@ -241,3 +292,18 @@ function Slider({ label, value, min, max, step, onChange }: { label: string; val
     </div>
   )
 }
+
+function TraitSpend({ label, value, min, max, step = 1, canChange, onChange }: { label: string; value: number; min: number; max: number; step?: number; canChange: (delta: number) => boolean; onChange: (delta: number) => void }) {
+  return (
+    <div className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+      <span className="small" style={{ width: 96 }}>{label}</span>
+      <span className="badge" style={{ minWidth: 36, textAlign: 'center' }}>{value}</span>
+      <div className="row" style={{ gap: 6 }}>
+        <button className="button" onClick={() => canChange(-step) && onChange(-step)}>-{step}</button>
+        <button className="button" onClick={() => canChange(step) && onChange(step)}>+{step}</button>
+      </div>
+    </div>
+  )
+}
+
+function clampNum(n: number, min: number, max: number) { return Math.max(min, Math.min(max, n)) }

@@ -1,1 +1,1 @@
-{"root":["./src/App.tsx","./src/main.tsx","./src/components/Panel.tsx","./src/components/ProgressBar.tsx","./src/game/state.ts","./src/game/systems.ts","./src/game/types.ts"],"version":"5.9.2"}
+{"root":["./src/App.tsx","./src/main.tsx","./src/audio/music.ts","./src/components/Panel.tsx","./src/components/ProgressBar.tsx","./src/game/state.ts","./src/game/systems.ts","./src/game/types.ts"],"version":"5.9.2"}

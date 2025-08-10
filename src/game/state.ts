@@ -30,6 +30,7 @@ export function makeInitialState(): GameState {
     resources: { influence: 10, materials: 50, followers: 5 },
     buildings: {},
   ops: { scavengeCD: 0, tradeCD: 0 },
+  doctrine: { archetype: null, points: 2, cooldown: 0 },
     log: [
       'A whisper becomes a rumor. A rumor becomes a movement.',
       'You are the Brand. The world is the market.',
