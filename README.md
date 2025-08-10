@@ -77,3 +77,19 @@ Each trait can unlock perks or gameplay modes. For example:
 | **Truth**                | Cognitive alignment with leader’s ideology or narrative.                  |
 | **Identity Dissolution** | Hive-style loyalty. High = merged minds. Low = rebellion or confusion.    |
 | **Personal Gain**        | Loyalty based on benefits — powers, upgrades, perks.                      |
+
+## ▶️ Play the Prototype (Web)
+
+An interactive web prototype now lives in this repo (Vite + React + TS):
+
+- Start the dev server: `npm run dev` (or build + preview: `npm run build` then `npm run preview`)
+- Open: http://localhost:5173/
+
+What’s included:
+- Real-time simulation loop (pause/speed 1x/2x/4x)
+- Follower bars (Faith, Fear, Ecstasy, Security, Status, Truth, Identity Dissolution, Personal Gain)
+- Facilities that shape bars and resources (build/dismantle)
+- Doctrine sliders (traits) that steer system dynamics
+- Autosave and Reset
+
+This is a prototype; numbers and interactions are placeholder but wired for iteration.

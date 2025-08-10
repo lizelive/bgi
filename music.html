@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Bad Guy Inc — Trailer Score</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #0d0f14; color: #e6e9ef; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
+  .wrap { text-align:center; max-width:760px; padding:24px; border:1px solid #232735; border-radius:12px; background: radial-gradient(140% 100% at 50% 0%, #131824 0%, #0d0f14 70%); box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+  h1 { font-size: 20px; margin: 0 0 12px; letter-spacing: .5px; }
+  p  { color:#aab3c5; margin: 8px 0 20px; }
+  button { appearance:none; border:0; padding:12px 18px; border-radius:10px; font-weight:700; cursor:pointer; margin: 0 6px; }
+  #play { background:#7c4dff; color:white; }
+  #stop { background:#2b2f3f; color:#e6e9ef; }
+  small { color:#7f8aa5; display:block; margin-top:14px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Bad Guy Inc — Trailer Score</h1>
+    <p>Revelation → Ascent → Confrontation → Apotheosis (1:45)</p>
+    <div>
+      <button id="play">Play</button>
+      <button id="stop" disabled>Stop</button>
+    </div>
+    <small>Tip: Keep this tab focused for best timing.</small>
+  </div>
+
+<script>
+(() => {
+  // --- CONFIG ---
+  const CONFIG = {
+    tempo: 90, // BPM
+    masterGain: 0.8,
+    sections: {
+      revelation: { start: 0,   dur: 25 },
+      ascent:     { start: 25,  dur: 30 },
+      fight:      { start: 55,  dur: 25 },
+      apoth:      { start: 80,  dur: 25 }
+    },
+    // C minor palette
+    scale: { base: 130.81,  // C3
+             notes: [0, 3, 5, 7, 10, 12] }, // Aeolian-ish
+    chords: [
+      [0, 3, 7],     // Cm
+      [-3, 0, 5],    // Ab
+      [5, 8, 12],    // Fm
+      [7, 10, 14]    // Gm(ish) tension
+    ]
+  };
+
+  // --- STATE ---
+  let ctx = null;
+  let master = null;
+  let limiter = null;
+  let fx = {};
+  let startedAt = 0;
+  let activeNodes = new Set();
+  let timers = new Set();
+  let running = false;
+
+  function now() { return ctx ? ctx.currentTime : 0; }
+  function secToBeat(s) { return s * CONFIG.tempo / 60; }
+  function beatToSec(b) { return b * 60 / CONFIG.tempo; }
+  function freqFromSemis(baseHz, semis) { return baseHz * Math.pow(2, semis / 12); }
+
+  // --- AUDIO GRAPH INIT ---
+  function initAudio() {
+    if (ctx) return;
+    ctx = new (window.AudioContext || window.webkitAudioContext)({ latencyHint: "interactive" });
+
+    // Master gain + gentle limiter (compressor + soft clipper)
+    master = ctx.createGain();
+    master.gain.value = CONFIG.masterGain;
+
+    limiter = ctx.createDynamicsCompressor();
+    limiter.threshold.value = -8;
+    limiter.knee.value = 20;
+    limiter.ratio.value = 8;
+    limiter.attack.value = 0.003;
+    limiter.release.value = 0.15;
+
+    // Subtle clipper
+    const clipper = waveshaper(tanhCurve(2.5));
+
+    master.connect(limiter);
+    limiter.connect(clipper);
+    clipper.connect(ctx.destination);
+
+    // FX: delay bus (reverb-less but lush enough)
+    fx.delay = ctx.createDelay(1.0);
+    fx.delay.delayTime.value = 0.28;
+
+    fx.feedback = ctx.createGain();
+    fx.feedback.gain.value = 0.35;
+
+    fx.damp = ctx.createBiquadFilter();
+    fx.damp.type = 'lowpass';
+    fx.damp.frequency.value = 3000;
+
+    fx.wet = ctx.createGain();
+    fx.wet.gain.value = 0.22;
+
+    fx.delay.connect(fx.feedback);
+    fx.feedback.connect(fx.damp);
+    fx.damp.connect(fx.delay);
+    fx.delay.connect(fx.wet);
+    fx.wet.connect(master);
+  }
+
+  // --- UTIL NODES ---
+  function waveshaper(curve) {
+    const ws = ctx.createWaveShaper();
+    ws.curve = curve;
+    ws.oversample = '4x';
+    return ws;
+  }
+
+  function tanhCurve(amount = 1.0) {
+    const n = 2048, curve = new Float32Array(n);
+    for (let i = 0; i < n; i++) {
+      const x = (i / (n - 1)) * 2 - 1;
+      curve[i] = Math.tanh(x * amount);
+    }
+    return curve;
+  }
+
+  function lfo(freq = 5, type = 'sine', min = 0, max = 1) {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    gain.gain.value = (max - min) / 2;
+    const dc = ctx.createConstantSource();
+    dc.offset.value = (max + min) / 2;
+    osc.connect(gain);
+    gain.connect(dc.offset);
+    dc.start();
+    osc.start();
+    activeNodes.add(osc); activeNodes.add(gain); activeNodes.add(dc);
+    return { node: dc, stop: (t) => { osc.stop(t); dc.stop(t); activeNodes.delete(osc); activeNodes.delete(gain); activeNodes.delete(dc);} };
+  }
+
+  function schedule(fn, msDelay) {
+    const id = setTimeout(fn, msDelay);
+    timers.add(id);
+  }
+  function clearTimers() {
+    for (const id of timers) clearTimeout(id);
+    timers.clear();
+  }
+
+  // --- VOICES ---
+  function playPad(freqs, t0, dur, opts = {}) {
+    const {
+      type = 'sawtooth',
+      detuneCents = [0, +4, -6],
+      attack = 1.5, release = 2.5,
+      cutoff = 800, cutoffEnd = 2000, q = 8,
+      pan = 0
+    } = opts;
+
+    const out = ctx.createGain();
+    out.gain.value = 0.0;
+    const panner = ctx.createStereoPanner();
+    panner.pan.value = pan;
+    const lp = ctx.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.frequency.setValueAtTime(cutoff, t0);
+    lp.Q.value = q;
+
+    out.connect(lp);
+    lp.connect(master);
+    lp.connect(fx.delay);
+    panner.connect(out);
+
+    const voices = [];
+    freqs.forEach((f, i) => {
+      const osc = ctx.createOscillator();
+      osc.type = type;
+      osc.frequency.setValueAtTime(f, t0);
+      osc.detune.value = detuneCents[i % detuneCents.length];
+      const g = ctx.createGain();
+      g.gain.value = 0.33;
+      osc.connect(g);
+      g.connect(panner);
+      osc.start(t0);
+      osc.stop(t0 + dur + release + 0.5);
+      activeNodes.add(osc); activeNodes.add(g);
+      voices.push(osc, g);
+    });
+
+    // envelope
+    out.gain.setValueAtTime(0.0001, t0);
+    out.gain.linearRampToValueAtTime(0.7, t0 + attack);
+    out.gain.setValueAtTime(0.7, t0 + dur);
+    out.gain.exponentialRampToValueAtTime(0.0001, t0 + dur + release);
+
+    // filter sweep
+    lp.frequency.linearRampToValueAtTime(cutoffEnd, t0 + dur * 0.8);
+
+    activeNodes.add(out); activeNodes.add(lp); activeNodes.add(panner);
+    return { stop: (t) => { voices.forEach(n => { if (n.stop) try{ n.stop(t); }catch{} }); } };
+  }
+
+  function playBell(freq, t0, opts = {}) {
+    const { mod = 2.1, index = 100, decay = 3.5, pan = 0 } = opts;
+    const carrier = ctx.createOscillator();
+    const modOsc = ctx.createOscillator();
+    const modGain = ctx.createGain();
+    const env = ctx.createGain();
+    const p = ctx.createStereoPanner();
+    p.pan.value = pan;
+
+    carrier.type = 'sine';
+    modOsc.type = 'sine';
+    carrier.frequency.setValueAtTime(freq, t0);
+    modOsc.frequency.setValueAtTime(freq * mod, t0);
+    modGain.gain.setValueAtTime(index, t0);
+
+    env.gain.setValueAtTime(0.0001, t0);
+    env.gain.exponentialRampToValueAtTime(0.9, t0 + 0.01);
+    env.gain.exponentialRampToValueAtTime(0.0001, t0 + decay);
+
+    modOsc.connect(modGain);
+    modGain.connect(carrier.frequency);
+    carrier.connect(env);
+    env.connect(p);
+    p.connect(master);
+    p.connect(fx.delay);
+
+    carrier.start(t0);
+    modOsc.start(t0);
+    carrier.stop(t0 + decay + 0.2);
+    modOsc.stop(t0 + decay + 0.2);
+    [carrier, modOsc, modGain, env, p].forEach(n => activeNodes.add(n));
+  }
+
+  function playLead(freq, t0, dur, opts = {}) {
+    const { type='triangle', attack=0.02, release=0.3, glide=0, gain=0.5, pan=0, vibrato=0, vibratoRate=5, tone='bright' } = opts;
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    const p = ctx.createStereoPanner();
+    const shaper = waveshaper(tanhCurve(tone === 'bright' ? 1.8 : 1.2));
+
+    osc.type = type;
+    g.gain.value = 0.0001;
+    p.pan.value = pan;
+
+    osc.connect(shaper);
+    shaper.connect(g);
+    g.connect(p);
+    p.connect(master);
+    p.connect(fx.delay);
+
+    const t1 = t0 + dur;
+
+    if (glide > 0) {
+      const f0 = osc.frequency;
+      f0.setValueAtTime(freq * 0.97, t0);
+      f0.exponentialRampToValueAtTime(freq, t0 + glide);
+    } else {
+      osc.frequency.setValueAtTime(freq, t0);
+    }
+
+    if (vibrato > 0) {
+      const v = lfo(vibratoRate, 'sine', -vibrato, +vibrato);
+      v.node.connect(osc.detune);
+      schedule(() => v.stop(now() + 0.1), (t1 - now()) * 1000);
+    }
+
+    g.gain.linearRampToValueAtTime(gain, t0 + attack);
+    g.gain.setValueAtTime(gain, t1);
+    g.gain.exponentialRampToValueAtTime(0.0001, t1 + release);
+
+    osc.start(t0);
+    osc.stop(t1 + release + 0.1);
+    activeNodes.add(osc); activeNodes.add(g); activeNodes.add(p); activeNodes.add(shaper);
+  }
+
+  function playBass(freq, t0, dur, opts = {}) {
+    const { thump = true } = opts;
+    // double-thump heartbeat
+    const g = ctx.createGain(); g.gain.value = 0.0001;
+    const osc = ctx.createOscillator(); osc.type = 'sine';
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 240;
+    osc.frequency.setValueAtTime(freq, t0);
+    osc.connect(lp); lp.connect(g); g.connect(master);
+
+    const d = dur * 0.45;
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(0.9, t0 + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + d);
+
+    if (thump) {
+      g.gain.setValueAtTime(0.0001, t0 + d + 0.06);
+      g.gain.exponentialRampToValueAtTime(0.7, t0 + d + 0.09);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + Math.min(dur, d + 0.3));
+    }
+
+    osc.start(t0);
+    osc.stop(t0 + dur + 0.2);
+    activeNodes.add(osc); activeNodes.add(lp); activeNodes.add(g);
+  }
+
+  function playKick(t0, vol=1) {
+    const osc = ctx.createOscillator(); osc.type='sine';
+    const g = ctx.createGain(); g.gain.value = 1 * vol;
+    osc.connect(g); g.connect(master);
+
+    osc.frequency.setValueAtTime(140, t0);
+    osc.frequency.exponentialRampToValueAtTime(45, t0 + 0.12);
+
+    g.gain.setValueAtTime(1*vol, t0);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.18);
+
+    osc.start(t0);
+    osc.stop(t0 + 0.2);
+    activeNodes.add(osc); activeNodes.add(g);
+  }
+
+  function playSnare(t0, vol=0.6) {
+    const noise = ctx.createBufferSource();
+    noise.buffer = whiteNoiseBuffer();
+    const bp = ctx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=1800; bp.Q.value=0.7;
+    const hp = ctx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=600;
+    const g = ctx.createGain(); g.gain.value = vol;
+    noise.connect(bp); bp.connect(hp); hp.connect(g); g.connect(master);
+
+    g.gain.setValueAtTime(vol, t0);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.15);
+
+    noise.start(t0);
+    noise.stop(t0 + 0.2);
+    ;[noise,bp,hp,g].forEach(n=>activeNodes.add(n));
+  }
+
+  function playHat(t0, vol=0.25, len=0.06) {
+    const noise = ctx.createBufferSource();
+    noise.buffer = whiteNoiseBuffer();
+    const hp = ctx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=5200;
+    const g = ctx.createGain(); g.gain.value = vol;
+    noise.connect(hp); hp.connect(g); g.connect(master);
+    g.gain.setValueAtTime(vol, t0);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + len);
+    noise.start(t0);
+    noise.stop(t0 + len + 0.02);
+    ;[noise,hp,g].forEach(n=>activeNodes.add(n));
+  }
+
+  let _noiseBuf = null;
+  function whiteNoiseBuffer() {
+    if (_noiseBuf) return _noiseBuf;
+    const length = ctx.sampleRate * 1.0;
+    const buffer = ctx.createBuffer(1, length, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i=0;i<length;i++) data[i] = Math.random()*2-1;
+    _noiseBuf = buffer; return buffer;
+  }
+
+  function brassStab(freqs, t0, opts={}) {
+    const { dur=0.4, pan=-0.1 } = opts;
+    const p = ctx.createStereoPanner(); p.pan.value = pan;
+    const bp = ctx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value = 800; bp.Q.value = 5;
+    const g = ctx.createGain(); g.gain.value = 0.0001;
+
+    const sh = waveshaper(tanhCurve(3.2));
+
+    const group = ctx.createGain();
+    group.connect(sh); sh.connect(bp); bp.connect(g); g.connect(master); g.connect(fx.delay);
+    p.connect(group);
+
+    freqs.forEach((f, i) => {
+      const o = ctx.createOscillator(); o.type = 'sawtooth';
+      const det = (-8 + i*8);
+      o.frequency.setValueAtTime(f, t0);
+      o.detune.value = det;
+      o.connect(p);
+      o.start(t0);
+      o.stop(t0 + dur + 0.2);
+      activeNodes.add(o);
+    });
+
+    g.gain.linearRampToValueAtTime(0.9, t0 + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+
+    [p,bp,g,sh,group].forEach(n=>activeNodes.add(n));
+  }
+
+  function tremGuitar(freq, t0, dur) {
+    const o = ctx.createOscillator(); o.type='triangle';
+    const bp = ctx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=1400; bp.Q.value=1.2;
+    const g = ctx.createGain(); g.gain.value=0.7;
+    const trem = lfo(6.3, 'sine', 0.2, 1.0);
+    o.frequency.setValueAtTime(freq, t0);
+    o.connect(bp); bp.connect(g); g.connect(master); g.connect(fx.delay);
+    trem.node.connect(g.gain);
+
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.linearRampToValueAtTime(0.7, t0 + 0.05);
+    g.gain.setValueAtTime(0.7, t0 + dur - 0.1);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+
+    o.start(t0); o.stop(t0 + dur + 0.05);
+    activeNodes.add(o); activeNodes.add(bp); activeNodes.add(g);
+    schedule(() => trem.stop(now()+0.1), (t0 + dur - now())*1000);
+  }
+
+  // --- MUSIC SCHEDULER ---
+  function schedulePiece(anchor) {
+    const { revelation, ascent, fight, apoth } = CONFIG.sections;
+
+    // Section 1: Revelation — pads, sparse bells, ghost motif
+    scheduleRevelation(anchor + revelation.start, revelation.dur);
+
+    // Section 2: Ascent — arp, heartbeat bass, ethereal choir lead
+    scheduleAscent(anchor + ascent.start, ascent.dur);
+
+    // Section 3: Confrontation — drums, brass stabs, trem guitar
+    scheduleFight(anchor + fight.start, fight.dur);
+
+    // Section 4: Apotheosis — big pad, soaring lead, ritual percussion, glitch tail
+    scheduleApotheosis(anchor + apoth.start, apoth.dur);
+  }
+
+  function scheduleRevelation(t0, dur) {
+    const chords = rotateChords([0,1], dur, t0);
+    chords.forEach((ch, idx) => {
+      const freqs = ch.map(semi => freqFromSemis(CONFIG.scale.base, semi));
+      playPad(freqs, t0 + idx*(dur/2), dur/2, { cutoff: 400, cutoffEnd: 1200, q: 10, pan: idx%2?0.2:-0.2});
+    });
+
+    // Sparse ritual bells
+    for (let i=0;i<4;i++) {
+      const t = t0 + 2 + i*(dur/4);
+      const semi = [0, 3, 7, 10][i];
+      playBell(freqFromSemis(CONFIG.scale.base*2, semi), t, { decay: 2.8, pan: (i%2?0.35:-0.35) });
+    }
+
+    // Ghost motif (reverse-ish swell simulated)
+    for (let i=0;i<3;i++) {
+      const t = t0 + 4 + i*5.5;
+      const f = freqFromSemis(CONFIG.scale.base*2, 7 + (i%2?3:0));
+      playLead(f, t - 0.3, 1.2, { type:'sine', attack:0.6, release:0.9, gain:0.4, vibrato:3, vibratoRate:5, pan: (i%2?0.25:-0.25) });
+    }
+  }
+
+  function scheduleAscent(t0, dur) {
+    // Chordal pad evolving
+    const chords = rotateChords([2,3], dur, t0);
+    chords.forEach((ch, idx) => {
+      const f = ch.map(semi => freqFromSemis(CONFIG.scale.base, semi));
+      playPad(f, t0 + idx*(dur/2), dur/2, { cutoff: 600, cutoffEnd: 2400, q: 8, pan: idx%2?0.15:-0.15 });
+    });
+
+    // Arp engine (16ths)
+    const steps = Math.floor(secToBeat(dur)*4); // 16ths count
+    for (let s=0; s<steps; s++) {
+      const t = t0 + beatToSec(s/4);
+      const degree = [0,7,3,10,5,12,7,15][s % 8];
+      const f = freqFromSemis(CONFIG.scale.base*2, degree);
+      playLead(f, t, 0.12, { type:'sawtooth', attack:0.005, release:0.08, gain:0.22, pan: (s%2?0.1:-0.1), tone:'bright' });
+    }
+
+    // Heartbeat bass on downbeats
+    const beats = Math.floor(secToBeat(dur));
+    for (let b=0;b<beats;b++) {
+      const t = t0 + beatToSec(b);
+      const rootSemi = [0,0,5,7][Math.floor(b/2) % 4]; // rotate roots
+      const f = freqFromSemis(CONFIG.scale.base, rootSemi - 12);
+      playBass(f, t, 0.5, {});
+    }
+
+    // Airy lead hints
+    for (let i=0;i<6;i++) {
+      const t = t0 + 0.8 + i*(dur/6);
+      const deg = [10,12,15,17,19,22][i];
+      playLead(freqFromSemis(CONFIG.scale.base*2, deg), t, 0.4, { type:'triangle', gain:0.28, vibrato:4, vibratoRate:5.5, pan:(i%2?0.2:-0.2) });
+    }
+  }
+
+  function scheduleFight(t0, dur) {
+    // Drums: 2-bar loop feel
+    const bars = Math.floor(secToBeat(dur)/4);
+    for (let bar=0; bar<bars; bar++) {
+      const bt = t0 + beatToSec(bar*4);
+      for (let i=0;i<4;i++){
+        const beatT = bt + beatToSec(i);
+        playKick(beatT, 0.95);
+        playHat(beatT + 0.0, 0.22, 0.04);
+        playHat(beatT + beatToSec(0.5), 0.18, 0.03);
+        playSnare(beatT + beatToSec(2), 0.55);
+      }
+    }
+
+    // Aggro brass stabs on offbeats
+    const pattern = [ [0,3,7], [5,8,12], [7,10,14], [0,3,7] ];
+    for (let i=0;i<pattern.length;i++) {
+      const t = t0 + beatToSec(i*2 + 1);
+      const freqs = pattern[i].map(semi => freqFromSemis(CONFIG.scale.base*2, semi));
+      brassStab(freqs, t, {});
+    }
+
+    // Trem "guitar" counterline
+    for (let i=0;i<5;i++) {
+      const t = t0 + 1.2 + i*3.8;
+      const deg = [15,14,12,10,7][i];
+      tremGuitar(freqFromSemis(CONFIG.scale.base*2, deg), t, 1.6);
+    }
+  }
+
+  function scheduleApotheosis(t0, dur) {
+    // Massive pad sustained
+    const freqs = [0,3,7,12].map(semi => freqFromSemis(CONFIG.scale.base*2, semi));
+    playPad(freqs, t0, dur*0.8, { cutoff: 700, cutoffEnd: 3200, q: 6, pan: 0 });
+
+    // Soaring lead theme
+    const motif = [0,3,5,7,10,12,15,12].map(semi => freqFromSemis(CONFIG.scale.base*2, semi));
+    motif.forEach((f, i) => {
+      const t = t0 + i*(dur*0.7/motif.length) + 0.2;
+      playLead(f, t, 0.5, { type:'triangle', gain:0.5, vibrato:7, vibratoRate:5.5, pan: (i%2?0.15:-0.15) });
+    });
+
+    // Ritual percussion accents
+    for (let i=0;i<Math.floor(secToBeat(dur)); i++) {
+      const t = t0 + beatToSec(i + 0.5);
+      playHat(t, 0.18, 0.025);
+      if (i % 4 === 0) playKick(t + 0.01, 0.8);
+    }
+
+    // Glitched logo tail: stutter master gain + pitch swoop on last hit
+    const tailT = t0 + dur - 2.3;
+    const swoopFreq = freqFromSemis(CONFIG.scale.base*2, 24);
+    playLead(swoopFreq, tailT + 0.2, 1.5, { type:'sawtooth', gain:0.35, vibrato:0, pan:0 });
+    // Stutter via quick hats + snare ghosts
+    for (let i=0;i<8;i++) playHat(tailT + 0.1*i, 0.2, 0.02);
+    playSnare(tailT + 0.95, 0.5);
+  }
+
+  function rotateChords(indices, dur, t0) {
+    // Map chord semis to absolute semis around base octave
+    const out = [];
+    for (let i=0;i<2;i++) {
+      const idx = indices[i % indices.length];
+      out.push(CONFIG.chords[idx]);
+    }
+    return out;
+  }
+
+  // --- TRANSPORT ---
+  async function start() {
+    if (running) return;
+    initAudio();
+    await ctx.resume();
+
+    running = true;
+    startedAt = now() + 0.1;
+
+    schedulePiece(startedAt);
+
+    document.getElementById('play').disabled = true;
+    document.getElementById('stop').disabled = false;
+
+    // Safety: auto-stop after piece duration (~105s)
+    const totalDur = CONFIG.sections.apoth.start + CONFIG.sections.apoth.dur + 1.0;
+    schedule(stop, totalDur * 1000);
+  }
+
+  function stop() {
+    if (!ctx) return;
+    clearTimers();
+    const t = now() + 0.02;
+    for (const n of activeNodes) {
+      try { if (n.stop) n.stop(t); } catch (_) {}
+    }
+    activeNodes.clear();
+    ctx.close().catch(()=>{}).finally(() => {
+      ctx = null; master=null; limiter=null; fx={};
+      running = false;
+      document.getElementById('play').disabled = false;
+      document.getElementById('stop').disabled = true;
+    });
+  }
+
+  // --- UI ---
+  document.getElementById('play').addEventListener('click', start);
+  document.getElementById('stop').addEventListener('click', stop);
+})();
+</script>
+</body>
+</html>
