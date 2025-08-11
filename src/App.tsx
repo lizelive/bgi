@@ -119,6 +119,58 @@ export default function App() {
     })
   }
 
+  function canRecruit() {
+    return !(state.ops && state.ops.recruitCD && state.ops.recruitCD > 0)
+  }
+
+  function recruitRally() {
+    setState(s => {
+      if (s.ops && s.ops.recruitCD && s.ops.recruitCD > 0) return s
+      const cost = 8
+      if (s.resources.influence < cost) return s
+      const gained = Math.max(1, Math.floor(1 + (s.bars.faith + s.bars.status) / 80))
+      return {
+        ...s,
+        resources: { ...s.resources, influence: s.resources.influence - cost, followers: s.resources.followers + gained },
+        ops: { ...(s.ops || { scavengeCD: 0, tradeCD: 0 }), recruitCD: 15 },
+        log: [`Rally drew +${gained} followers (−${cost} Influence).`, ...s.log].slice(0, 40),
+      }
+    })
+  }
+
+  function recruitTempt() {
+    setState(s => {
+      if (s.ops && s.ops.recruitCD && s.ops.recruitCD > 0) return s
+      const cost = 12
+      if (s.resources.materials < cost) return s
+      const gained = Math.max(1, Math.floor(1 + (s.bars.ecstasy + s.bars.gain) / 90))
+      const bars = { ...s.bars, ecstasy: Math.min(100, s.bars.ecstasy + 1) }
+      return {
+        ...s,
+        resources: { ...s.resources, materials: s.resources.materials - cost, followers: s.resources.followers + gained },
+        bars,
+        ops: { ...(s.ops || { scavengeCD: 0, tradeCD: 0 }), recruitCD: 18 },
+        log: [`Tempting offer converted +${gained} (−${cost} Materials).`, ...s.log].slice(0, 40),
+      }
+    })
+  }
+
+  function recruitFear() {
+    setState(s => {
+      if (s.ops && s.ops.recruitCD && s.ops.recruitCD > 0) return s
+      // risky: move people via fear; minor security hit
+      const gained = Math.max(1, Math.floor(1 + (state.bars.fear + 10) / 70))
+      const bars = { ...s.bars, fear: Math.min(100, s.bars.fear + 2), security: Math.max(0, s.bars.security - 1) }
+      return {
+        ...s,
+        resources: { ...s.resources, followers: s.resources.followers + gained },
+        bars,
+        ops: { ...(s.ops || { scavengeCD: 0, tradeCD: 0 }), recruitCD: 20 },
+        log: [`Fear drive coerced +${gained}.`, ...s.log].slice(0, 40),
+      }
+    })
+  }
+
   return (
     <div className="app">
   <header className={`panel ${flash ? 'attackBanner' : ''}`}>
@@ -195,6 +247,9 @@ export default function App() {
               <button className="button" onClick={trade} disabled={!!state.ops && state.ops.tradeCD > 0}>
                 Trade{state.ops && state.ops.tradeCD > 0 ? ` (${state.ops.tradeCD.toFixed(0)}s)` : ''}
               </button>
+              <button className="button" onClick={recruitRally} disabled={!canRecruit()} title="Spend Influence to recruit via rally">Rally{state.ops?.recruitCD ? ` (${state.ops.recruitCD.toFixed(0)}s)` : ''}</button>
+              <button className="button" onClick={recruitTempt} disabled={!canRecruit()} title="Spend Materials for tempting perks">Tempt</button>
+              <button className="button" onClick={recruitFear} disabled={!canRecruit()} title="Leverage fear for fast recruits">Fear</button>
             </div>
           </div>
         </Panel>

@@ -102,6 +102,7 @@ export type GameState = {
   ops?: {
     scavengeCD: number
     tradeCD: number
+  recruitCD?: number
   }
   doctrine: Doctrine
   log: string[]

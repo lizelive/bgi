@@ -92,5 +92,6 @@ What’s included:
 - Doctrine sliders (traits) that steer system dynamics
 - Autosave and Reset
  - Heat & Hero Attacks: Heat rises with Influence and facilities, drops with Security. The higher the Heat, the sooner a hero will strike. A timer shows when the next attack hits; heroes apply deterministic debuffs when they attack.
+ - Manual Recruiting: Use Rally (Influence), Tempt (Materials), or Fear (no cost, risky) to gain followers on demand with a short cooldown.
 
 This is a prototype; numbers and interactions are placeholder but wired for iteration.

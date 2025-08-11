@@ -196,6 +196,7 @@ export function computeTick(state: GameState, dtSeconds: number): GameState {
   if (s.ops) {
     s.ops.scavengeCD = Math.max(0, (s.ops.scavengeCD || 0) - dtSeconds)
     s.ops.tradeCD = Math.max(0, (s.ops.tradeCD || 0) - dtSeconds)
+  s.ops.recruitCD = Math.max(0, (s.ops.recruitCD || 0) - dtSeconds)
   }
 
   // doctrine points accrual with cooldown to prevent willy-nilly changes
