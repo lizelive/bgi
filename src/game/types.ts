@@ -62,6 +62,16 @@ export type ThreatState = {
   nextAttackIn: number // seconds until next hero attack
   attackCount: number
   lastHeroId?: string | null
+  lastHeroName?: string | null
+  lastEffects?: {
+    materials?: number
+    influence?: number
+    security?: number
+    fear?: number
+    status?: number
+    truth?: number
+  } | null
+  flashSec?: number // UI cue duration
 }
 
 export type BuildingType = {

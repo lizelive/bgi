@@ -52,6 +52,8 @@ export default function App() {
   const loyalty = useMemo(() => (state.bars.faith + state.bars.ecstasy + state.bars.security + state.bars.truth + state.bars.identity + state.bars.gain - state.bars.fear) / 5.0, [state.bars])
   const followersList = state.followersList || []
   const selectedFollower: Follower | null = useMemo(() => followersList.find(f => f.id === selectedFollowerId) || null, [followersList, selectedFollowerId])
+  const lastEffects = state.threat?.lastEffects
+  const flash = (state.threat?.flashSec || 0) > 0
 
   function addBuilding(id: string) {
     const def = BUILDINGS.find(b => b.id === id)!
@@ -119,7 +121,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <header className="panel">
+  <header className={`panel ${flash ? 'attackBanner' : ''}`}>
         <div className="title">Bad Guy Inc — Villain Colony (Prototype)</div>
         <div className="row" style={{ gap: 12 }}>
           <span className="badge">Speed</span>
@@ -140,6 +142,22 @@ export default function App() {
           )}
         </div>
       </header>
+      {flash && (
+        <div className="panel attackBanner" style={{ padding: 10 }}>
+          <div className="row" style={{ justifyContent: 'space-between' }}>
+            <strong>Under Attack: {state.threat?.lastHeroName}</strong>
+            <span className="small muted">Effects applied</span>
+          </div>
+          <div className="row" style={{ gap: 12, marginTop: 6, flexWrap: 'wrap' }}>
+            {lastEffects?.materials !== undefined && <span className={lastEffects.materials < 0 ? 'deltaNeg' : 'deltaPos'}>Materials {lastEffects.materials > 0 ? '+' : ''}{lastEffects.materials}</span>}
+            {lastEffects?.influence !== undefined && <span className={lastEffects.influence < 0 ? 'deltaNeg' : 'deltaPos'}>Influence {lastEffects.influence > 0 ? '+' : ''}{lastEffects.influence}</span>}
+            {lastEffects?.security !== undefined && <span className={lastEffects.security < 0 ? 'deltaNeg' : 'deltaPos'}>Security {lastEffects.security > 0 ? '+' : ''}{lastEffects.security}</span>}
+            {lastEffects?.fear !== undefined && <span className={lastEffects.fear < 0 ? 'deltaNeg' : 'deltaPos'}>Fear {lastEffects.fear > 0 ? '+' : ''}{lastEffects.fear}</span>}
+            {lastEffects?.status !== undefined && <span className={lastEffects.status < 0 ? 'deltaNeg' : 'deltaPos'}>Status {lastEffects.status > 0 ? '+' : ''}{lastEffects.status}</span>}
+            {lastEffects?.truth !== undefined && <span className={lastEffects.truth < 0 ? 'deltaNeg' : 'deltaPos'}>Truth {lastEffects.truth > 0 ? '+' : ''}{lastEffects.truth}</span>}
+          </div>
+        </div>
+      )}
 
       <div className="left">
         <Panel title="Resources">
@@ -183,12 +201,12 @@ export default function App() {
 
         <Panel title="Follower Bars">
           <div className="col" style={{ gap: 10 }}>
-            <ProgressBar label="Faith" value={state.bars.faith} color="#a78bfa" />
-            <ProgressBar label="Fear" value={state.bars.fear} color="#ef4444" />
-            <ProgressBar label="Ecstasy" value={state.bars.ecstasy} color="#22c55e" />
-            <ProgressBar label="Security" value={state.bars.security} color="#60a5fa" />
-            <ProgressBar label="Status" value={state.bars.status} color="#f472b6" />
-            <ProgressBar label="Truth" value={state.bars.truth} color="#f59e0b" />
+            <ProgressBar label="Faith" value={state.bars.faith} color="#a78bfa" delta={0} />
+            <ProgressBar label="Fear" value={state.bars.fear} color="#ef4444" delta={lastEffects?.fear ?? 0} />
+            <ProgressBar label="Ecstasy" value={state.bars.ecstasy} color="#22c55e" delta={0} />
+            <ProgressBar label="Security" value={state.bars.security} color="#60a5fa" delta={lastEffects?.security ?? 0} />
+            <ProgressBar label="Status" value={state.bars.status} color="#f472b6" delta={lastEffects?.status ?? 0} />
+            <ProgressBar label="Truth" value={state.bars.truth} color="#f59e0b" delta={lastEffects?.truth ?? 0} />
             <ProgressBar label="Identity Dissolution" value={state.bars.identity} color="#94a3b8" />
             <ProgressBar label="Personal Gain" value={state.bars.gain} color="#34d399" />
           </div>

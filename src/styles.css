@@ -93,12 +93,34 @@ footer {
   overflow: hidden;
 }
 .progress > span { display:block; height:100%; border-radius: 999px; }
+.progress > span.pulse { animation: pulseGlow 0.9s ease-in-out 2; }
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0px rgba(239,68,68,0.0); }
+  50% { box-shadow: 0 0 10px rgba(239,68,68,0.6); }
+  100% { box-shadow: 0 0 0px rgba(239,68,68,0.0); }
+}
+
+.deltaPos { color: var(--success); }
+.deltaNeg { color: var(--danger); }
 
 .badge { padding: 2px 8px; border-radius: 999px; background:#23283a; border:1px solid #2e3550; font-size: 12px; }
 
 .listItem {
   display:flex; align-items:center; justify-content:space-between;
   padding:8px; border:1px solid #252c45; border-radius:8px; background:#141828;
+}
+
+.attackBanner {
+  background: linear-gradient(180deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05));
+  border: 1px solid rgba(239,68,68,0.4);
+  animation: shake 0.4s ease-in-out 1;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
 }
 
 .sliderRow { display:flex; align-items:center; gap:10px; }

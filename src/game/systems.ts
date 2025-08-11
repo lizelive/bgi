@@ -254,11 +254,27 @@ export function computeTick(state: GameState, dtSeconds: number): GameState {
     s.nextFollowerId = nextId + want
   }
 
-  // Heat system: grows with influence and buildings; reduced by security
+  // Heat system: rises with Influence, Fear, and specific buildings; Security damps it
   if (s.heat === undefined) s.heat = 5
   if (!s.threat) s.threat = { nextAttackIn: 90, attackCount: 0, lastHeroId: null }
-  const buildingPressure = Object.values(s.buildings).reduce((a, b) => a + (b || 0), 0) * 0.02
-  const heatDelta = (s.resources.influence * 0.001 + buildingPressure - s.bars.security * 0.002) * dtSeconds
+  // tag-weighted building heat
+  let buildingHeat = 0
+  for (const b of BUILDINGS) {
+    const count = s.buildings[b.id] || 0
+    if (count <= 0) continue
+    const tags = b.tags || []
+    let per = 0.01 // base per-building heat
+    if (tags.includes('terror')) per += 0.03
+    if (tags.includes('ritual')) per += 0.02
+    if (tags.includes('media')) per += 0.01
+    if (tags.includes('industry') || tags.includes('technocracy')) per += 0.01
+    if (tags.includes('order')) per -= 0.01
+    buildingHeat += per * count
+  }
+  const fearHeat = s.bars.fear * 0.002
+  const influenceHeat = s.resources.influence * 0.001
+  const securityDamp = s.bars.security * 0.001 // softer damping
+  const heatDelta = (influenceHeat + buildingHeat + fearHeat - securityDamp) * dtSeconds
   s.heat = clamp(Math.max(0, Math.min(100, (s.heat || 0) + heatDelta)))
 
   // Threat timer ticks down faster with heat
@@ -279,13 +295,18 @@ export function computeTick(state: GameState, dtSeconds: number): GameState {
     if (e.status) s.bars.status = clamp(s.bars.status + e.status)
     if ((e as any).truth) s.bars.truth = clamp(s.bars.truth + (e as any).truth)
     s.threat.attackCount += 1
-    s.threat.lastHeroId = hero.id
+  s.threat.lastHeroId = hero.id
+  s.threat.lastHeroName = hero.name
+  s.threat.lastEffects = { ...e }
+  s.threat.flashSec = 3
     // reset timer based on heat; higher heat shorter interval
     const base = 90
     const reduce = (s.heat / 100) * 50 // up to 50s shorter
     s.threat.nextAttackIn = base - reduce
     s.log = [`Hero attack: ${hero.name} hit your ops.`, ...s.log].slice(0, 40)
   }
+  // tick down UI flash
+  if (s.threat.flashSec && s.threat.flashSec > 0) s.threat.flashSec = Math.max(0, s.threat.flashSec - dtSeconds)
 
   s.bars = clampBars(s.bars)
   return s
