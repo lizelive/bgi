@@ -1,8 +1,12 @@
-Hunger
-Family
-Material
-Suffering
-Knowladge
+## Hunger
+Glutany
+## Family
+
+## Material
+Greed
+## Suffering
+Wraitj
+## Knowladge
 
 
 Glamor
@@ -13,3 +17,5 @@ collectiisms
 
 vengance
 decayed ideals
+
+

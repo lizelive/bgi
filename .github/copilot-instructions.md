@@ -1,6 +1,6 @@
 # Copilot instructions for this repo
 
-Purpose: Help AI agents contribute productively to this Vite + React + TypeScript game prototype by following the project’s architecture, conventions, and workflows.
+Purpose: Help AI agents contribute productively to this Vite + React + TypeScript game by following the project’s architecture, conventions, and workflows.
 
 ## Big picture
 - The UI is React; the game simulation is headless, pure TypeScript in `src/game/**`.
@@ -34,8 +34,6 @@ Purpose: Help AI agents contribute productively to this Vite + React + TypeScrip
   - `npm run build` then `npm run preview` (prod build + preview)
 - Tests (e2e simulation and future unit tests):
   - `npm test` (Vitest run)
-  - `npm run test:watch`
-- TypeScript config expects `tests/**` and Vitest globals; see `tsconfig.json`.
 
 ## How to extend
 - Add a building:
@@ -56,6 +54,7 @@ Purpose: Help AI agents contribute productively to this Vite + React + TypeScrip
 - Avoid re-formatting large files; keep diffs focused. Add small, targeted tests with clear bounds (e.g., bars remain in [0..100], resources non-explosive growth).
 
 ## Reference files
+- The docs are king. Check `docs/**` and `README.md` for relevent docs before making changes.
 - Game types/state: `src/game/types.ts`, `src/game/state.ts`
 - Core sim and content: `src/game/systems.ts`
 - Headless harness & AI: `src/game/actions.ts`, `src/game/ai.ts`
