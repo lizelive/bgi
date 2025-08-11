@@ -1,1 +1,1 @@
-{"root":["./src/App.tsx","./src/main.tsx","./src/audio/music.ts","./src/components/Panel.tsx","./src/components/ProgressBar.tsx","./src/game/state.ts","./src/game/systems.ts","./src/game/types.ts"],"version":"5.9.2"}
+{"root":["./src/app.tsx","./src/main.tsx","./src/audio/music.ts","./src/components/panel.tsx","./src/components/progressbar.tsx","./src/game/actions.ts","./src/game/ai.ts","./src/game/state.ts","./src/game/systems.ts","./src/game/types.ts","./tests/e2e.sim.test.ts","./vitest.config.ts"],"version":"5.9.2"}

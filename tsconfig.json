@@ -10,7 +10,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "strict": true
+    "strict": true,
+    "types": ["vitest/globals", "node"]
   },
-  "include": ["src"]
+  "include": ["src", "tests", "vitest.config.ts"]
 }
