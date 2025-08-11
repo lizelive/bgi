@@ -1,6 +1,11 @@
-Physiological Needs: Basic requirements for human survival, such as food, water, and shelter.
-Safety Needs: Protection from physical and emotional harm, including job security and health.
-Love and Belonging Needs: Emotional relationships, including friendships and family connections.
-Esteem Needs: The need for self-esteem and recognition from others.
-Self-Actualization: The realization of personal potential and self-fulfillment. 
+Physiological Needs: Basic requirements for survival. In-game proxy: security + personal gain.
+Safety Needs: Protection from harm. In-game proxy: security − fear.
+Love and Belonging Needs: Social connection. In-game proxy: faith + ecstasy + status.
+Esteem Needs: Respect and recognition. In-game proxy: status + truth − identity dissolution.
+Self-Actualization: Purpose and potential. In-game proxy: truth + faith − identity dissolution.
+
+Notes
+- Each follower tracks these five needs [0..100] and relaxes toward the global bars each tick.
+- Loyalty is the average of these needs. Focus is the lowest unmet need.
+- Intent is derived from loyalty and fear (idle/seek/resist) for flavor; no randomness involved.
  

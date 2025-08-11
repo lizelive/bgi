@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Panel from './components/Panel'
 import ProgressBar from './components/ProgressBar'
 import { BUILDINGS, computeTick } from './game/systems'
-import { GameState } from './game/types'
+import { GameState, Follower } from './game/types'
 import { loadState, makeInitialState, saveState } from './game/state'
 import { MusicEngine } from './audio/music'
 
@@ -19,6 +19,7 @@ export default function App() {
   const [audioOn, setAudioOn] = useState(false)
   const [muted, setMuted] = useState(false)
   const [volume, setVolume] = useState(0.6)
+  const [selectedFollowerId, setSelectedFollowerId] = useState<number | null>(null)
 
   // main loop
   useEffect(() => {
@@ -49,6 +50,8 @@ export default function App() {
   }, [audioOn, muted, volume, state])
 
   const loyalty = useMemo(() => (state.bars.faith + state.bars.ecstasy + state.bars.security + state.bars.truth + state.bars.identity + state.bars.gain - state.bars.fear) / 5.0, [state.bars])
+  const followersList = state.followersList || []
+  const selectedFollower: Follower | null = useMemo(() => followersList.find(f => f.id === selectedFollowerId) || null, [followersList, selectedFollowerId])
 
   function addBuilding(id: string) {
     const def = BUILDINGS.find(b => b.id === id)!
@@ -154,6 +157,16 @@ export default function App() {
               <span className="badge">{fmt(state.resources.followers, 1)}</span>
             </div>
             <div className="row" style={{ justifyContent: 'space-between' }}>
+              <span>Heat</span>
+              <span className="badge">{fmt(state.heat ?? 0, 0)}%</span>
+            </div>
+            {state.threat && (
+              <div className="row" style={{ justifyContent: 'space-between' }}>
+                <span>Next Attack</span>
+                <span className="badge">{Math.max(0, state.threat.nextAttackIn).toFixed(0)}s</span>
+              </div>
+            )}
+            <div className="row" style={{ justifyContent: 'space-between' }}>
               <span>Loyalty Index</span>
               <span className="badge">{fmt(loyalty, 0)}%</span>
             </div>
@@ -219,6 +232,40 @@ export default function App() {
       </main>
 
       <aside className="right">
+        <Panel title="Followers">
+          <div className="col" style={{ gap: 8 }}>
+            <div className="row" style={{ justifyContent: 'space-between' }}>
+              <span className="small muted">Individuals: {followersList.length}</span>
+              <button className="button" onClick={() => setSelectedFollowerId(null)}>Clear</button>
+            </div>
+            <div className="col" style={{ maxHeight: 160, overflow: 'auto', gap: 4 }}>
+              {followersList.slice(-50).map(f => (
+                <button key={f.id} className={`listItem ${selectedFollowerId===f.id ? 'selected' : ''}`} onClick={() => setSelectedFollowerId(f.id)}>
+                  <div className="row" style={{ justifyContent: 'space-between', width: '100%' }}>
+                    <span className="small">{f.name}</span>
+                    <span className="badge" title={`Focus: ${f.focus}`}>{f.loyalty.toFixed(0)}%</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+            {selectedFollower && (
+              <div className="col" style={{ gap: 6, marginTop: 6 }}>
+                <span className="small">{selectedFollower.name}</span>
+                <div className="col" style={{ gap: 6 }}>
+                  <ProgressBar label="Physiological" value={selectedFollower.needs.physiological} color="#22c55e" />
+                  <ProgressBar label="Safety" value={selectedFollower.needs.safety} color="#60a5fa" />
+                  <ProgressBar label="Love/Belonging" value={selectedFollower.needs.love} color="#a78bfa" />
+                  <ProgressBar label="Esteem" value={selectedFollower.needs.esteem} color="#f59e0b" />
+                  <ProgressBar label="Self-Actualization" value={selectedFollower.needs.self} color="#f472b6" />
+                </div>
+                <div className="row" style={{ justifyContent: 'space-between' }}>
+                  <span className="badge">Focus: {selectedFollower.focus}</span>
+                  <span className="badge">Intent: {selectedFollower.intent}</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </Panel>
         <Panel title="Doctrine & Traits">
           {state.doctrine.archetype === null ? (
             <div className="col">

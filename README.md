@@ -91,5 +91,6 @@ What’s included:
 - Facilities that shape bars and resources (build/dismantle)
 - Doctrine sliders (traits) that steer system dynamics
 - Autosave and Reset
+ - Heat & Hero Attacks: Heat rises with Influence and facilities, drops with Security. The higher the Heat, the sooner a hero will strike. A timer shows when the next attack hits; heroes apply deterministic debuffs when they attack.
 
 This is a prototype; numbers and interactions are placeholder but wired for iteration.

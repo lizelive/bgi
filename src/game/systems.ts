@@ -1,4 +1,5 @@
-import { Bars, BuildingType, GameState } from './types'
+import { Bars, BuildingType, GameState, Follower, FollowerNeeds } from './types'
+import { HEROES } from './state'
 
 export const BUILDINGS: BuildingType[] = [
   {
@@ -210,6 +211,81 @@ export function computeTick(state: GameState, dtSeconds: number): GameState {
   // follower growth from PR pressure and faith
   const growth = Math.max(0, (s.bars.faith + s.bars.ecstasy + s.resources.influence * 0.02 - s.bars.fear * 0.5) / 500)
   s.resources.followers += growth * dtSeconds
+
+  // update individual followers (deterministic, no randomness)
+  const needsTarget = (bars: Bars): FollowerNeeds => ({
+    physiological: clamp(0.6 * bars.security + 0.4 * bars.gain),
+    safety: clamp(0.8 * bars.security + 0.2 * (100 - bars.fear)),
+    love: clamp(0.5 * bars.faith + 0.3 * bars.ecstasy + 0.2 * bars.status),
+    esteem: clamp(0.6 * bars.status + 0.2 * bars.truth + 0.2 * (100 - bars.identity)),
+    self: clamp(0.4 * bars.truth + 0.2 * bars.faith + 0.4 * (100 - bars.identity)),
+  })
+
+  const relax = 0.6 // per-second proportional relaxation toward target
+  const targets = needsTarget(s.bars)
+  if (!s.followersList) s.followersList = []
+  for (const f of s.followersList) {
+    // evolve needs toward targets
+    for (const k of Object.keys(f.needs) as (keyof FollowerNeeds)[]) {
+      const cur = f.needs[k]
+      const tgt = (targets as any)[k] as number
+      f.needs[k] = clamp(cur + (tgt - cur) * relax * dtSeconds)
+    }
+    // recompute loyalty and focus
+    const avg = (f.needs.physiological + f.needs.safety + f.needs.love + f.needs.esteem + f.needs.self) / 5
+    f.loyalty = clamp(avg)
+    f.focus = (Object.entries(f.needs).sort((a, b) => a[1] - b[1])[0][0] as keyof FollowerNeeds)
+    // simple intent
+    f.intent = f.loyalty < 40 && s.bars.fear > 55 ? 'resist' : (f.loyalty < 65 ? 'seek' : 'idle')
+  }
+
+  // create new individual followers if population grew past integer thresholds
+  const want = Math.max(0, Math.floor(s.resources.followers) - (s.followersList?.length || 0))
+  if (want > 0) {
+    const nextId = s.nextFollowerId || 1
+    for (let i = 0; i < want; i++) {
+      const id = nextId + i
+      const needs: FollowerNeeds = { ...targets }
+      const loyalty = clamp((needs.physiological + needs.safety + needs.love + needs.esteem + needs.self) / 5)
+      const focus = (Object.entries(needs).sort((a, b) => a[1] - b[1])[0][0] as keyof FollowerNeeds)
+      const f: Follower = { id, name: `Follower ${id}`, needs, loyalty, focus, intent: 'idle' }
+      s.followersList!.push(f)
+    }
+    s.nextFollowerId = nextId + want
+  }
+
+  // Heat system: grows with influence and buildings; reduced by security
+  if (s.heat === undefined) s.heat = 5
+  if (!s.threat) s.threat = { nextAttackIn: 90, attackCount: 0, lastHeroId: null }
+  const buildingPressure = Object.values(s.buildings).reduce((a, b) => a + (b || 0), 0) * 0.02
+  const heatDelta = (s.resources.influence * 0.001 + buildingPressure - s.bars.security * 0.002) * dtSeconds
+  s.heat = clamp(Math.max(0, Math.min(100, (s.heat || 0) + heatDelta)))
+
+  // Threat timer ticks down faster with heat
+  const speedMul = 1 + (s.heat / 100) * 1.5 // up to 2.5x faster
+  s.threat.nextAttackIn = Math.max(0, s.threat.nextAttackIn - dtSeconds * speedMul)
+
+  // On attack trigger, pick hero deterministically by tier from heat and apply effects
+  if (s.threat.nextAttackIn <= 0) {
+    const tier = s.heat > 66 ? 3 : s.heat > 33 ? 2 : 1
+    const pool = HEROES.filter(h => h.tier === tier)
+    const idx = s.threat.attackCount % pool.length
+    const hero = pool[idx]
+    const e = hero.effects
+    if (e.materials) s.resources.materials = Math.max(0, s.resources.materials + e.materials)
+    if (e.influence) s.resources.influence = Math.max(0, s.resources.influence + e.influence)
+    if (e.security) s.bars.security = clamp(s.bars.security + e.security)
+    if (e.fear) s.bars.fear = clamp(s.bars.fear + e.fear)
+    if (e.status) s.bars.status = clamp(s.bars.status + e.status)
+    if ((e as any).truth) s.bars.truth = clamp(s.bars.truth + (e as any).truth)
+    s.threat.attackCount += 1
+    s.threat.lastHeroId = hero.id
+    // reset timer based on heat; higher heat shorter interval
+    const base = 90
+    const reduce = (s.heat / 100) * 50 // up to 50s shorter
+    s.threat.nextAttackIn = base - reduce
+    s.log = [`Hero attack: ${hero.name} hit your ops.`, ...s.log].slice(0, 40)
+  }
 
   s.bars = clampBars(s.bars)
   return s

@@ -24,6 +24,46 @@ export type Resources = {
   followers: number
 }
 
+// Individual follower modeling using Maslow-like needs
+export type FollowerNeeds = {
+  physiological: number
+  safety: number
+  love: number
+  esteem: number
+  self: number // self-actualization
+}
+
+export type Follower = {
+  id: number
+  name: string
+  needs: FollowerNeeds
+  loyalty: number // 0..100 average of needs
+  focus: keyof FollowerNeeds // current most unmet need
+  intent: 'idle' | 'seek' | 'resist'
+}
+
+export type Hero = {
+  id: string
+  name: string
+  description: string
+  tier: 1 | 2 | 3
+  // Deterministic attack effects applied on hit
+  effects: {
+    materials?: number // negative numbers reduce
+    influence?: number
+    security?: number
+    fear?: number
+    status?: number
+  truth?: number
+  }
+}
+
+export type ThreatState = {
+  nextAttackIn: number // seconds until next hero attack
+  attackCount: number
+  lastHeroId?: string | null
+}
+
 export type BuildingType = {
   id: string
   name: string
@@ -45,6 +85,10 @@ export type GameState = {
   traits: LeaderTraits
   resources: Resources
   buildings: Record<string, number>
+  followersList?: Follower[]
+  nextFollowerId?: number
+  heat?: number // 0..100
+  threat?: ThreatState
   ops?: {
     scavengeCD: number
     tradeCD: number
