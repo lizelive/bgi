@@ -93,6 +93,10 @@ footer {
   overflow: hidden;
 }
 .progress > span { display:block; height:100%; border-radius: 999px; }
+.barWrapper { position: relative; display:flex; align-items:center; }
+.barWrapper .progress { flex:1; }
+.barWrapper .barDeltaBadge { position:absolute; right:-8px; top:50%; transform: translate(100%, -50%); }
+
 .progress > span.pulse { animation: pulseGlow 0.9s ease-in-out 2; }
 
 @keyframes pulseGlow {
@@ -103,6 +107,27 @@ footer {
 
 .deltaPos { color: var(--success); }
 .deltaNeg { color: var(--danger); }
+
+.barDeltaBadge {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translate(100%, -50%);
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid #2e3550;
+  background: #101422;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  animation: badgePop 0.15s ease-out 1;
+}
+.barDeltaBadge.pos { color: var(--success); border-color: rgba(34,197,94,0.35); }
+.barDeltaBadge.neg { color: var(--danger); border-color: rgba(239,68,68,0.35); }
+
+@keyframes badgePop {
+  0% { transform: translate(100%, -50%) scale(0.9); opacity: 0; }
+  100% { transform: translate(100%, -50%) scale(1); opacity: 1; }
+}
 
 .badge { padding: 2px 8px; border-radius: 999px; background:#23283a; border:1px solid #2e3550; font-size: 12px; }
 

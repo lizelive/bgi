@@ -16,13 +16,14 @@ export default function ProgressBar({ value, color = '#9b87f5', label, delta = 0
       {label && (
         <div className="row" style={{ justifyContent: 'space-between', marginBottom: 4 }}>
           <span className="small">{label}</span>
-          <span className={`small ${showDelta ? (delta < 0 ? 'deltaNeg' : 'deltaPos') : 'muted'}`}>
-            {v.toFixed(0)}% {showDelta ? `(${deltaText})` : ''}
-          </span>
+          <span className={`small muted`}>{v.toFixed(0)}%</span>
         </div>
       )}
-      <div className={`progress`} title={`${v.toFixed(0)}%`}>
-        <span className={`${showDelta ? 'pulse' : ''}`} style={{ width: `${v}%`, background: color }} />
+      <div className="barWrapper" title={`${v.toFixed(0)}%`}>
+        <div className={`progress`}>
+          <span className={`${showDelta ? 'pulse' : ''}`} style={{ width: `${v}%`, background: color }} />
+        </div>
+        {showDelta && <span className={`barDeltaBadge ${delta < 0 ? 'neg' : 'pos'}`}>{deltaText}</span>}
       </div>
     </div>
   )

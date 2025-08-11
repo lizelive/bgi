@@ -202,11 +202,11 @@ export default function App() {
         <Panel title="Follower Bars">
           <div className="col" style={{ gap: 10 }}>
             <ProgressBar label="Faith" value={state.bars.faith} color="#a78bfa" delta={0} />
-            <ProgressBar label="Fear" value={state.bars.fear} color="#ef4444" delta={lastEffects?.fear ?? 0} />
+            <ProgressBar label="Fear" value={state.bars.fear} color="#ef4444" delta={flash ? (lastEffects?.fear ?? 0) : 0} />
             <ProgressBar label="Ecstasy" value={state.bars.ecstasy} color="#22c55e" delta={0} />
-            <ProgressBar label="Security" value={state.bars.security} color="#60a5fa" delta={lastEffects?.security ?? 0} />
-            <ProgressBar label="Status" value={state.bars.status} color="#f472b6" delta={lastEffects?.status ?? 0} />
-            <ProgressBar label="Truth" value={state.bars.truth} color="#f59e0b" delta={lastEffects?.truth ?? 0} />
+            <ProgressBar label="Security" value={state.bars.security} color="#60a5fa" delta={flash ? (lastEffects?.security ?? 0) : 0} />
+            <ProgressBar label="Status" value={state.bars.status} color="#f472b6" delta={flash ? (lastEffects?.status ?? 0) : 0} />
+            <ProgressBar label="Truth" value={state.bars.truth} color="#f59e0b" delta={flash ? (lastEffects?.truth ?? 0) : 0} />
             <ProgressBar label="Identity Dissolution" value={state.bars.identity} color="#94a3b8" />
             <ProgressBar label="Personal Gain" value={state.bars.gain} color="#34d399" />
           </div>

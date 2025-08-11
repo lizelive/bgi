@@ -305,8 +305,14 @@ export function computeTick(state: GameState, dtSeconds: number): GameState {
     s.threat.nextAttackIn = base - reduce
     s.log = [`Hero attack: ${hero.name} hit your ops.`, ...s.log].slice(0, 40)
   }
-  // tick down UI flash
-  if (s.threat.flashSec && s.threat.flashSec > 0) s.threat.flashSec = Math.max(0, s.threat.flashSec - dtSeconds)
+  // tick down UI flash; clear lastEffects after it ends
+  if (s.threat.flashSec && s.threat.flashSec > 0) {
+    s.threat.flashSec = Math.max(0, s.threat.flashSec - dtSeconds)
+    if (s.threat.flashSec === 0) {
+      s.threat.lastEffects = null
+      s.threat.lastHeroName = null
+    }
+  }
 
   s.bars = clampBars(s.bars)
   return s
