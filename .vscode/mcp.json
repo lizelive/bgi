@@ -1,0 +1,14 @@
+{
+	"servers": {
+		"bgi": {
+			"type": "stdio",
+			"command": "npx",
+			"cwd": "${workspaceFolder}",
+			"args": [
+				"tsx",
+				"./src/index.ts"
+			]
+		}
+	},
+	"inputs": []
+}

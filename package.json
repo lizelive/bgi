@@ -1,0 +1,36 @@
+{
+  "name": "bgi",
+  "version": "1.0.0",
+  "description": "*The only diffrance between heros and villian is PR.*",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc && shx chmod +x dist/*.js",
+    "mcp": "tsx ./src/index.ts",
+    "watch": "tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lizelive/bgi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "UNLICENSED",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/lizelive/bgi/issues"
+  },
+  "homepage": "https://github.com/lizelive/bgi#readme",
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "tsx": "^4.20.4",
+    "typescript": "^5.9.2"
+  },
+  "private": true,
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.3"
+  }
+}
