@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Panel from './components/Panel'
 import ProgressBar from './components/ProgressBar'
+import OpenAIChat from './components/OpenAIChat'
 import { BUILDINGS, computeTick } from './game/systems'
 import { GameState, Follower } from './game/types'
 import { loadState, makeInitialState, saveState } from './game/state'
@@ -12,6 +13,7 @@ function fmt(n: number, digits = 0) {
 }
 
 export default function App() {
+  const [page, setPage] = useState<'game' | 'chat'>('game')
   const [state, setState] = useState<GameState>(() => loadState() || makeInitialState())
   const [last, setLast] = useState<number>(() => performance.now())
   const raf = useRef(0)
@@ -173,232 +175,199 @@ export default function App() {
 
   return (
     <div className="app">
-  <header className={`panel ${flash ? 'attackBanner' : ''}`}>
+      <header className="panel" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div className="title">Bad Guy Inc — Villain Colony (Prototype)</div>
-        <div className="row" style={{ gap: 12 }}>
-          <span className="badge">Speed</span>
-          {([1,2,4] as const).map(sp => (
-            <button key={sp} className={`button ${state.speed===sp ? 'primary' : ''}`} onClick={() => setState(s => ({...s, speed: sp}))}>{sp}x</button>
-          ))}
-          <button className="button" onClick={() => setState(s => ({...s, running: !s.running}))}>
-            {state.running ? 'Pause' : 'Resume'}
-          </button>
-          <span className="badge">Audio</span>
-          {!audioOn ? (
-            <button className="button primary" onClick={() => setAudioOn(true)}>Enable</button>
-          ) : (
-            <>
-              <button className="button" onClick={() => setMuted(m => !m)}>{muted ? 'Unmute' : 'Mute'}</button>
-              <input type="range" min={0} max={1} step={0.01} value={volume} onChange={e => setVolume(Number(e.target.value))} />
-            </>
-          )}
-        </div>
+        <nav style={{ display: 'flex', gap: 12 }}>
+          <button className="button" onClick={() => setPage('game')} disabled={page==='game'}>Game</button>
+          <button className="button" onClick={() => setPage('chat')} disabled={page==='chat'}>Chat (Blathers)</button>
+        </nav>
       </header>
-      {flash && (
-        <div className="panel attackBanner" style={{ padding: 10 }}>
-          <div className="row" style={{ justifyContent: 'space-between' }}>
-            <strong>Under Attack: {state.threat?.lastHeroName}</strong>
-            <span className="small muted">Effects applied</span>
-          </div>
-          <div className="row" style={{ gap: 12, marginTop: 6, flexWrap: 'wrap' }}>
-            {lastEffects?.materials !== undefined && <span className={lastEffects.materials < 0 ? 'deltaNeg' : 'deltaPos'}>Materials {lastEffects.materials > 0 ? '+' : ''}{lastEffects.materials}</span>}
-            {lastEffects?.influence !== undefined && <span className={lastEffects.influence < 0 ? 'deltaNeg' : 'deltaPos'}>Influence {lastEffects.influence > 0 ? '+' : ''}{lastEffects.influence}</span>}
-            {lastEffects?.security !== undefined && <span className={lastEffects.security < 0 ? 'deltaNeg' : 'deltaPos'}>Security {lastEffects.security > 0 ? '+' : ''}{lastEffects.security}</span>}
-            {lastEffects?.fear !== undefined && <span className={lastEffects.fear < 0 ? 'deltaNeg' : 'deltaPos'}>Fear {lastEffects.fear > 0 ? '+' : ''}{lastEffects.fear}</span>}
-            {lastEffects?.status !== undefined && <span className={lastEffects.status < 0 ? 'deltaNeg' : 'deltaPos'}>Status {lastEffects.status > 0 ? '+' : ''}{lastEffects.status}</span>}
-            {lastEffects?.truth !== undefined && <span className={lastEffects.truth < 0 ? 'deltaNeg' : 'deltaPos'}>Truth {lastEffects.truth > 0 ? '+' : ''}{lastEffects.truth}</span>}
-          </div>
-        </div>
-      )}
-
-      <div className="left">
-        <Panel title="Resources">
-          <div className="col">
-            <div className="row" style={{ justifyContent: 'space-between' }}>
-              <span>Influence</span>
-              <span className="badge">{fmt(state.resources.influence)}</span>
-            </div>
-            <div className="row" style={{ justifyContent: 'space-between' }}>
-              <span>Materials</span>
-              <span className="badge">{fmt(state.resources.materials)}</span>
-            </div>
-            <div className="row" style={{ justifyContent: 'space-between' }}>
-              <span>Followers</span>
-              <span className="badge">{fmt(state.resources.followers, 1)}</span>
-            </div>
-            <div className="row" style={{ justifyContent: 'space-between' }}>
-              <span>Heat</span>
-              <span className="badge">{fmt(state.heat ?? 0, 0)}%</span>
-            </div>
-            {state.threat && (
+      {page === 'chat' ? (
+        <OpenAIChat />
+      ) : (
+        <>
+          {/* ...existing game UI... */}
+          {flash && (
+            <div className="panel attackBanner" style={{ padding: 10 }}>
               <div className="row" style={{ justifyContent: 'space-between' }}>
-                <span>Next Attack</span>
-                <span className="badge">{Math.max(0, state.threat.nextAttackIn).toFixed(0)}s</span>
+                <strong>Under Attack: {state.threat?.lastHeroName}</strong>
+                <span className="small muted">Effects applied</span>
               </div>
-            )}
-            <div className="row" style={{ justifyContent: 'space-between' }}>
-              <span>Loyalty Index</span>
-              <span className="badge">{fmt(loyalty, 0)}%</span>
+              <div className="row" style={{ gap: 12, marginTop: 6, flexWrap: 'wrap' }}>
+                {lastEffects?.materials !== undefined && <span className={lastEffects.materials < 0 ? 'deltaNeg' : 'deltaPos'}>Materials {lastEffects.materials > 0 ? '+' : ''}{lastEffects.materials}</span>}
+                {lastEffects?.influence !== undefined && <span className={lastEffects.influence < 0 ? 'deltaNeg' : 'deltaPos'}>Influence {lastEffects.influence > 0 ? '+' : ''}{lastEffects.influence}</span>}
+                {lastEffects?.security !== undefined && <span className={lastEffects.security < 0 ? 'deltaNeg' : 'deltaPos'}>Security {lastEffects.security > 0 ? '+' : ''}{lastEffects.security}</span>}
+                {lastEffects?.fear !== undefined && <span className={lastEffects.fear < 0 ? 'deltaNeg' : 'deltaPos'}>Fear {lastEffects.fear > 0 ? '+' : ''}{lastEffects.fear}</span>}
+                {lastEffects?.status !== undefined && <span className={lastEffects.status < 0 ? 'deltaNeg' : 'deltaPos'}>Status {lastEffects.status > 0 ? '+' : ''}{lastEffects.status}</span>}
+                {lastEffects?.truth !== undefined && <span className={lastEffects.truth < 0 ? 'deltaNeg' : 'deltaPos'}>Truth {lastEffects.truth > 0 ? '+' : ''}{lastEffects.truth}</span>}
+              </div>
             </div>
-            <div className="row" style={{ gap: 8 }}>
-              <button className="button primary" onClick={scavenge} disabled={!!state.ops && state.ops.scavengeCD > 0}>
-                Scavenge{state.ops && state.ops.scavengeCD > 0 ? ` (${state.ops.scavengeCD.toFixed(0)}s)` : ''}
-              </button>
-              <button className="button" onClick={trade} disabled={!!state.ops && state.ops.tradeCD > 0}>
-                Trade{state.ops && state.ops.tradeCD > 0 ? ` (${state.ops.tradeCD.toFixed(0)}s)` : ''}
-              </button>
-              <button className="button" onClick={recruitRally} disabled={!canRecruit()} title="Spend Influence to recruit via rally">Rally{state.ops?.recruitCD ? ` (${state.ops.recruitCD.toFixed(0)}s)` : ''}</button>
-              <button className="button" onClick={recruitTempt} disabled={!canRecruit()} title="Spend Materials for tempting perks">Tempt</button>
-              <button className="button" onClick={recruitFear} disabled={!canRecruit()} title="Leverage fear for fast recruits">Fear</button>
-            </div>
-          </div>
-        </Panel>
-
-        <Panel title="Follower Bars">
-          <div className="col" style={{ gap: 10 }}>
-            <ProgressBar label="Faith" value={state.bars.faith} color="#a78bfa" delta={0} />
-            <ProgressBar label="Fear" value={state.bars.fear} color="#ef4444" delta={flash ? (lastEffects?.fear ?? 0) : 0} />
-            <ProgressBar label="Ecstasy" value={state.bars.ecstasy} color="#22c55e" delta={0} />
-            <ProgressBar label="Security" value={state.bars.security} color="#60a5fa" delta={flash ? (lastEffects?.security ?? 0) : 0} />
-            <ProgressBar label="Status" value={state.bars.status} color="#f472b6" delta={flash ? (lastEffects?.status ?? 0) : 0} />
-            <ProgressBar label="Truth" value={state.bars.truth} color="#f59e0b" delta={flash ? (lastEffects?.truth ?? 0) : 0} />
-            <ProgressBar label="Identity Dissolution" value={state.bars.identity} color="#94a3b8" />
-            <ProgressBar label="Personal Gain" value={state.bars.gain} color="#34d399" />
-          </div>
-        </Panel>
-      </div>
-
-      <main className="main">
-        <Panel title="Facilities">
-          <div className="grid">
-            {BUILDINGS.map(b => {
-              const count = state.buildings[b.id] || 0
-              return (
-                <div className="listItem" key={b.id}>
-                  <div className="col" style={{ gap: 4 }}>
-                    <div className="row" style={{ gap: 8 }}>
-                      <div className="badge" style={{ background: '#0f1324', borderColor: '#222a44', color: b.color }}>{b.name}</div>
-                      <span className="muted small">x{count}</span>
-                    </div>
-                    <span className="muted small">{b.description}</span>
-                    {(b.pros && b.pros.length > 0) || (b.cons && b.cons.length > 0) ? (
-                      <div className="col small" style={{ gap: 2, marginTop: 2 }}>
-                        {b.pros?.map((p, i) => (
-                          <span key={`pro-${i}`} style={{ color: '#22c55e' }}>+ {p}</span>
-                        ))}
-                        {b.cons?.map((c, i) => (
-                          <span key={`con-${i}`} style={{ color: '#ef4444' }}>- {c}</span>
-                        ))}
-                      </div>
-                    ) : null}
-                    <span className="small">Cost: {b.cost} materials</span>
-                  </div>
-                  <div className="col" style={{ gap: 6, minWidth: 120 }}>
-                    <button className="button primary" onClick={() => addBuilding(b.id)}>Build</button>
-                    <button className="button" onClick={() => removeBuilding(b.id)} disabled={count===0}>Dismantle</button>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </Panel>
-      </main>
-
-      <aside className="right">
-        <Panel title="Followers">
-          <div className="col" style={{ gap: 8 }}>
-            <div className="row" style={{ justifyContent: 'space-between' }}>
-              <span className="small muted">Individuals: {followersList.length}</span>
-              <button className="button" onClick={() => setSelectedFollowerId(null)}>Clear</button>
-            </div>
-            <div className="col" style={{ maxHeight: 160, overflow: 'auto', gap: 4 }}>
-              {followersList.slice(-50).map(f => (
-                <button key={f.id} className={`listItem ${selectedFollowerId===f.id ? 'selected' : ''}`} onClick={() => setSelectedFollowerId(f.id)}>
-                  <div className="row" style={{ justifyContent: 'space-between', width: '100%' }}>
-                    <span className="small">{f.name}</span>
-                    <span className="badge" title={`Focus: ${f.focus}`}>{f.loyalty.toFixed(0)}%</span>
-                  </div>
-                </button>
-              ))}
-            </div>
-            {selectedFollower && (
-              <div className="col" style={{ gap: 6, marginTop: 6 }}>
-                <span className="small">{selectedFollower.name}</span>
-                <div className="col" style={{ gap: 6 }}>
-                  <ProgressBar label="Physiological" value={selectedFollower.needs.physiological} color="#22c55e" />
-                  <ProgressBar label="Safety" value={selectedFollower.needs.safety} color="#60a5fa" />
-                  <ProgressBar label="Love/Belonging" value={selectedFollower.needs.love} color="#a78bfa" />
-                  <ProgressBar label="Esteem" value={selectedFollower.needs.esteem} color="#f59e0b" />
-                  <ProgressBar label="Self-Actualization" value={selectedFollower.needs.self} color="#f472b6" />
-                </div>
-                <div className="row" style={{ justifyContent: 'space-between' }}>
-                  <span className="badge">Focus: {selectedFollower.focus}</span>
-                  <span className="badge">Intent: {selectedFollower.intent}</span>
+          )}
+          <div className="left">
+            {/* ...existing code... */}
+            <Panel title="Resources">
+              {/* ...existing code... */}
+              <div className="col">
+                {/* ...existing code... */}
+                <div className="row" style={{ gap: 8 }}>
+                  <button className="button primary" onClick={scavenge} disabled={!!state.ops && state.ops.scavengeCD > 0}>
+                    Scavenge{state.ops && state.ops.scavengeCD > 0 ? ` (${state.ops.scavengeCD.toFixed(0)}s)` : ''}
+                  </button>
+                  <button className="button" onClick={trade} disabled={!!state.ops && state.ops.tradeCD > 0}>
+                    Trade{state.ops && state.ops.tradeCD > 0 ? ` (${state.ops.tradeCD.toFixed(0)}s)` : ''}
+                  </button>
+                  <button className="button" onClick={recruitRally} disabled={!canRecruit()} title="Spend Influence to recruit via rally">Rally{state.ops?.recruitCD ? ` (${state.ops.recruitCD.toFixed(0)}s)` : ''}</button>
+                  <button className="button" onClick={recruitTempt} disabled={!canRecruit()} title="Spend Materials for tempting perks">Tempt</button>
+                  <button className="button" onClick={recruitFear} disabled={!canRecruit()} title="Leverage fear for fast recruits">Fear</button>
                 </div>
               </div>
-            )}
+            </Panel>
+            <Panel title="Follower Bars">
+              {/* ...existing code... */}
+              <div className="col" style={{ gap: 10 }}>
+                <ProgressBar label="Faith" value={state.bars.faith} color="#a78bfa" delta={0} />
+                <ProgressBar label="Fear" value={state.bars.fear} color="#ef4444" delta={flash ? (lastEffects?.fear ?? 0) : 0} />
+                <ProgressBar label="Ecstasy" value={state.bars.ecstasy} color="#22c55e" delta={0} />
+                <ProgressBar label="Security" value={state.bars.security} color="#60a5fa" delta={flash ? (lastEffects?.security ?? 0) : 0} />
+                <ProgressBar label="Status" value={state.bars.status} color="#f472b6" delta={flash ? (lastEffects?.status ?? 0) : 0} />
+                <ProgressBar label="Truth" value={state.bars.truth} color="#f59e0b" delta={flash ? (lastEffects?.truth ?? 0) : 0} />
+                <ProgressBar label="Identity Dissolution" value={state.bars.identity} color="#94a3b8" />
+                <ProgressBar label="Personal Gain" value={state.bars.gain} color="#34d399" />
+              </div>
+            </Panel>
           </div>
-        </Panel>
-        <Panel title="Doctrine & Traits">
-          {state.doctrine.archetype === null ? (
-            <div className="col">
-              <span className="small muted">Choose an archetype. This locks your style and grants unique synergies. You’ll earn points to tweak traits, but you can’t freely swap archetypes.</span>
+          <main className="main">
+            {/* ...existing code... */}
+            <Panel title="Facilities">
               <div className="grid">
-                {[
-                  { key: 'charisma', name: 'Charisma', desc: 'Media and ritual flourish. Status rises.' },
-                  { key: 'terror', name: 'Terror', desc: 'Order through fear. Mishaps less likely.' },
-                  { key: 'technocracy', name: 'Technocracy', desc: 'Industry and truth hum. Identity thins.' },
-                  { key: 'mystic', name: 'Mystic', desc: 'Ritual and ambiguity sway minds.' },
-                ].map(a => (
-                  <div key={a.key} className="listItem">
-                    <div className="col">
-                      <strong>{a.name}</strong>
-                      <span className="small muted">{a.desc}</span>
+                {BUILDINGS.map(b => {
+                  const count = state.buildings[b.id] || 0
+                  return (
+                    <div className="listItem" key={b.id}>
+                      <div className="col" style={{ gap: 4 }}>
+                        <div className="row" style={{ gap: 8 }}>
+                          <div className="badge" style={{ background: '#0f1324', borderColor: '#222a44', color: b.color }}>{b.name}</div>
+                          <span className="muted small">x{count}</span>
+                        </div>
+                        <span className="muted small">{b.description}</span>
+                        {(b.pros && b.pros.length > 0) || (b.cons && b.cons.length > 0) ? (
+                          <div className="col small" style={{ gap: 2, marginTop: 2 }}>
+                            {b.pros?.map((p, i) => (
+                              <span key={`pro-${i}`} style={{ color: '#22c55e' }}>+ {p}</span>
+                            ))}
+                            {b.cons?.map((c, i) => (
+                              <span key={`con-${i}`} style={{ color: '#ef4444' }}>- {c}</span>
+                            ))}
+                          </div>
+                        ) : null}
+                        <span className="small">Cost: {b.cost} materials</span>
+                      </div>
+                      <div className="col" style={{ gap: 6, minWidth: 120 }}>
+                        <button className="button primary" onClick={() => addBuilding(b.id)}>Build</button>
+                        <button className="button" onClick={() => removeBuilding(b.id)} disabled={count===0}>Dismantle</button>
+                      </div>
                     </div>
-                    <button className="button primary" onClick={() => setState(s => ({ ...s, doctrine: { ...s.doctrine, archetype: a.key as any } }))}>Select</button>
+                  )
+                })}
+              </div>
+            </Panel>
+          </main>
+          <aside className="right">
+            {/* ...existing code... */}
+            <Panel title="Followers">
+              <div className="col" style={{ gap: 8 }}>
+                <div className="row" style={{ justifyContent: 'space-between' }}>
+                  <span className="small muted">Individuals: {followersList.length}</span>
+                  <button className="button" onClick={() => setSelectedFollowerId(null)}>Clear</button>
+                </div>
+                <div className="col" style={{ maxHeight: 160, overflow: 'auto', gap: 4 }}>
+                  {followersList.slice(-50).map(f => (
+                    <button key={f.id} className={`listItem ${selectedFollowerId===f.id ? 'selected' : ''}`} onClick={() => setSelectedFollowerId(f.id)}>
+                      <div className="row" style={{ justifyContent: 'space-between', width: '100%' }}>
+                        <span className="small">{f.name}</span>
+                        <span className="badge" title={`Focus: ${f.focus}`}>{f.loyalty.toFixed(0)}%</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+                {selectedFollower && (
+                  <div className="col" style={{ gap: 6, marginTop: 6 }}>
+                    <span className="small">{selectedFollower.name}</span>
+                    <div className="col" style={{ gap: 6 }}>
+                      <ProgressBar label="Physiological" value={selectedFollower.needs.physiological} color="#22c55e" />
+                      <ProgressBar label="Safety" value={selectedFollower.needs.safety} color="#60a5fa" />
+                      <ProgressBar label="Love/Belonging" value={selectedFollower.needs.love} color="#a78bfa" />
+                      <ProgressBar label="Esteem" value={selectedFollower.needs.esteem} color="#f59e0b" />
+                      <ProgressBar label="Self-Actualization" value={selectedFollower.needs.self} color="#f472b6" />
+                    </div>
+                    <div className="row" style={{ justifyContent: 'space-between' }}>
+                      <span className="badge">Focus: {selectedFollower.focus}</span>
+                      <span className="badge">Intent: {selectedFollower.intent}</span>
+                    </div>
                   </div>
+                )}
+              </div>
+            </Panel>
+            <Panel title="Doctrine & Traits">
+              {state.doctrine.archetype === null ? (
+                <div className="col">
+                  <span className="small muted">Choose an archetype. This locks your style and grants unique synergies. You’ll earn points to tweak traits, but you can’t freely swap archetypes.</span>
+                  <div className="grid">
+                    {[
+                      { key: 'charisma', name: 'Charisma', desc: 'Media and ritual flourish. Status rises.' },
+                      { key: 'terror', name: 'Terror', desc: 'Order through fear. Mishaps less likely.' },
+                      { key: 'technocracy', name: 'Technocracy', desc: 'Industry and truth hum. Identity thins.' },
+                      { key: 'mystic', name: 'Mystic', desc: 'Ritual and ambiguity sway minds.' },
+                    ].map(a => (
+                      <div key={a.key} className="listItem">
+                        <div className="col">
+                          <strong>{a.name}</strong>
+                          <span className="small muted">{a.desc}</span>
+                        </div>
+                        <button className="button primary" onClick={() => setState(s => ({ ...s, doctrine: { ...s.doctrine, archetype: a.key as any } }))}>Select</button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="col">
+                  <div className="row" style={{ justifyContent: 'space-between' }}>
+                    <span className="badge">Archetype: {state.doctrine.archetype}</span>
+                    <span className="badge">Points: {state.doctrine.points}</span>
+                  </div>
+                  <span className="small muted">Spend points to nudge traits. Points accrue slowly over time; respec is limited.</span>
+                  <TraitSpend label="Rigidity" value={state.traits.rigidity} min={0} max={100} step={5}
+                    canChange={(delta) => state.doctrine.points >= 1 && !(delta < 0 && state.traits.rigidity <= 0)}
+                    onChange={(delta) => setState(s => ({ ...s, traits: { ...s.traits, rigidity: clampNum(s.traits.rigidity + delta, 0, 100) }, doctrine: { ...s.doctrine, points: s.doctrine.points - 1 } }))} />
+                  {(
+                    [
+                      ['charisma','Charisma'], ['terror','Terror'], ['temptation','Temptation'], ['mysticism','Mysticism'], ['technocracy','Technocracy']
+                    ] as const
+                  ).map(([k, label]) => (
+                    <TraitSpend key={k} label={label} value={(state.traits as any)[k]} min={0} max={5} step={1}
+                      canChange={(delta) => state.doctrine.points >= 1 && !((state.traits as any)[k] + delta < 0)}
+                      onChange={(delta) => setState(s => ({ ...s, traits: { ...s.traits, [k]: clampNum((s.traits as any)[k] + delta, 0, 5) as any }, doctrine: { ...s.doctrine, points: s.doctrine.points - 1 } }))} />
+                  ))}
+                </div>
+              )}
+            </Panel>
+            <Panel title="Event Log">
+              <div className="col" style={{ maxHeight: 280, overflow: 'auto' }}>
+                {state.log.map((l, i) => (
+                  <span key={i} className="small">• {l}</span>
                 ))}
               </div>
+            </Panel>
+          </aside>
+          <footer>
+            <span className="muted small">Tip: Build facilities to shape bars. Adjust traits to steer your doctrine.</span>
+            <div className="row" style={{ gap: 8 }}>
+              <button className="button" onClick={() => { saveState(state); }}>Save</button>
+              <button className="button" onClick={() => { localStorage.clear(); location.reload(); }}>Reset</button>
             </div>
-          ) : (
-            <div className="col">
-              <div className="row" style={{ justifyContent: 'space-between' }}>
-                <span className="badge">Archetype: {state.doctrine.archetype}</span>
-                <span className="badge">Points: {state.doctrine.points}</span>
-              </div>
-              <span className="small muted">Spend points to nudge traits. Points accrue slowly over time; respec is limited.</span>
-              <TraitSpend label="Rigidity" value={state.traits.rigidity} min={0} max={100} step={5}
-                canChange={(delta) => state.doctrine.points >= 1 && !(delta < 0 && state.traits.rigidity <= 0)}
-                onChange={(delta) => setState(s => ({ ...s, traits: { ...s.traits, rigidity: clampNum(s.traits.rigidity + delta, 0, 100) }, doctrine: { ...s.doctrine, points: s.doctrine.points - 1 } }))} />
-              {(
-                [
-                  ['charisma','Charisma'], ['terror','Terror'], ['temptation','Temptation'], ['mysticism','Mysticism'], ['technocracy','Technocracy']
-                ] as const
-              ).map(([k, label]) => (
-                <TraitSpend key={k} label={label} value={(state.traits as any)[k]} min={0} max={5} step={1}
-                  canChange={(delta) => state.doctrine.points >= 1 && !((state.traits as any)[k] + delta < 0)}
-                  onChange={(delta) => setState(s => ({ ...s, traits: { ...s.traits, [k]: clampNum((s.traits as any)[k] + delta, 0, 5) as any }, doctrine: { ...s.doctrine, points: s.doctrine.points - 1 } }))} />
-              ))}
-            </div>
-          )}
-        </Panel>
-
-        <Panel title="Event Log">
-          <div className="col" style={{ maxHeight: 280, overflow: 'auto' }}>
-            {state.log.map((l, i) => (
-              <span key={i} className="small">• {l}</span>
-            ))}
-          </div>
-        </Panel>
-      </aside>
-
-      <footer>
-        <span className="muted small">Tip: Build facilities to shape bars. Adjust traits to steer your doctrine.</span>
-        <div className="row" style={{ gap: 8 }}>
-          <button className="button" onClick={() => { saveState(state); }}>Save</button>
-          <button className="button" onClick={() => { localStorage.clear(); location.reload(); }}>Reset</button>
-        </div>
-      </footer>
+          </footer>
+        </>
+      )}
     </div>
   )
 }
