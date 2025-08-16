@@ -78,20 +78,4 @@ Each trait can unlock perks or gameplay modes. For example:
 | **Identity Dissolution** | Hive-style loyalty. High = merged minds. Low = rebellion or confusion.    |
 | **Personal Gain**        | Loyalty based on benefits — powers, upgrades, perks.                      |
 
-## ▶️ Play the Prototype (Web)
 
-An interactive web prototype now lives in this repo (Vite + React + TS):
-
-- Start the dev server: `npm run dev` (or build + preview: `npm run build` then `npm run preview`)
-- Open: http://localhost:5173/
-
-What’s included:
-- Real-time simulation loop (pause/speed 1x/2x/4x)
-- Follower bars (Faith, Fear, Ecstasy, Security, Status, Truth, Identity Dissolution, Personal Gain)
-- Facilities that shape bars and resources (build/dismantle)
-- Doctrine sliders (traits) that steer system dynamics
-- Autosave and Reset
- - Heat & Hero Attacks: Heat rises with Influence and facilities, drops with Security. The higher the Heat, the sooner a hero will strike. A timer shows when the next attack hits; heroes apply deterministic debuffs when they attack.
- - Manual Recruiting: Use Rally (Influence), Tempt (Materials), or Fear (no cost, risky) to gain followers on demand with a short cooldown.
-
-This is a prototype; numbers and interactions are placeholder but wired for iteration.
