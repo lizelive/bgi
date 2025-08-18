@@ -1,21 +1,36 @@
 ## Hunger
-Glutany
+7-Sin : Glutany
+The home of vampires
+Fire
+
 ## Family
+Sloth
+Foundation
 
 ## Material
 Greed
+
 ## Suffering
-Wraitj
+Wrath
+vengance
+
 ## Knowladge
+Pride
+Control
+I KNOW WHAT IS BEST
 
 
-Glamor
+
+
+
+
+
+
+
+
 comfort
-control
-
 collectiisms
 
-vengance
 decayed ideals
 
 

@@ -60,22 +60,4 @@ Bad Guy Inc. is a satirical colony sim where you play as a villainous mastermind
 | **Mysticism**          | Shrouds motivations in ambiguity, cosmic logic, or prophetic symbolism.                       | Prophet, Meme Cultist, Fungal Hive Mind     |
 | **Technocracy**        | Relies on data, upgrades, and efficient control systems. May lose emotional rapport.          | Mad Scientist, Transhuman Cult             |
 
-Each trait can unlock perks or gameplay modes. For example:
-- *Charisma* unlocks rally bonuses but suffers from loyalty spikes.
-- *Technocracy* allows automated governance but increases detachment meter.
-
-
-## 📊 Follower Bars & Needs (Systemic Loyalty Mechanics)
-
-| Bar / Need Name          | Description & Tied Leader Traits                                          |
-|--------------------------|----------------------------------------------------------------------------|
-| **Faith**                | Belief in leader's vision or divinity. High = resilient loyalty.          |
-| **Fear**                 | Driven by punishment or existential dread. Overuse causes revolts.        |
-| **Ecstasy**              | Cult-like euphoria tied to ritual, propaganda, or substances.             |
-| **Security**             | Followers feel physically safe and economically stable.                   |
-| **Status**               | Followers want recognition, rank, or symbolic elevation.                  |
-| **Truth**                | Cognitive alignment with leader’s ideology or narrative.                  |
-| **Identity Dissolution** | Hive-style loyalty. High = merged minds. Low = rebellion or confusion.    |
-| **Personal Gain**        | Loyalty based on benefits — powers, upgrades, perks.                      |
-
 
