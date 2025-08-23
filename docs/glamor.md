@@ -3,9 +3,10 @@
 The home of vampires
 Fire
 
-## Family
+## Family / Care
 Sloth
 Foundation
+collectiisms
 
 ## Material
 Greed
@@ -29,7 +30,7 @@ I KNOW WHAT IS BEST
 
 
 comfort
-collectiisms
+
 
 decayed ideals
 
