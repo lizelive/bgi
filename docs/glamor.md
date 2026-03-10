@@ -20,18 +20,9 @@ Pride
 Control
 I KNOW WHAT IS BEST
 
+# Lust
+lust
 
-
-
-
-
-
-
-
-
-comfort
-
-
-decayed ideals
-
-
+# Envy
+insecurity
+perfection
